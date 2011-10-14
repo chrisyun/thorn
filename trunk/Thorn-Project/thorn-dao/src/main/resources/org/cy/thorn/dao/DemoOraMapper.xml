@@ -15,7 +15,7 @@
 		</where>
 	</sql>
 	
-	<insert id="insert" parameterType="org.cy.thorn.web.demo.controller.Demo">
+	<insert id="insert" parameterType="org.cy.thorn.demto.entity.Demo">
 		insert into t_demo(name,num) values (#{name},#{num})
 	</insert>
 	
