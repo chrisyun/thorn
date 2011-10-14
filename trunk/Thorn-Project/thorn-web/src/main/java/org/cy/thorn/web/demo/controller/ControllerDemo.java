@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cy.thorn.dao.orm.IGenericDAO;
+import org.cy.thorn.web.demo.entity.Demo;
 import org.cy.thorn.core.entity.JSONPageRequest;
 import org.cy.thorn.core.entity.JSONRespond;
 import org.cy.thorn.core.entity.Page;
