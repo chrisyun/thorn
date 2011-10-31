@@ -11,4 +11,14 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>thorn-base-moudle</name>
 	<description>This is a jar about managing user, org, role, authority, resource, data dictionary etc</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.cy.thorn</groupId>
+			<artifactId>thorn-dao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
 </project>

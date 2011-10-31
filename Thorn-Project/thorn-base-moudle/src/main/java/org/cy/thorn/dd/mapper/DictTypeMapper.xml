@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DictTypeMapper">
+
+	<resultMap id="BaseResultMap" type="org.cy.thorn.dd.entity.DictType">
+		<id column="ENAME" jdbcType="VARCHAR" property="ename" />
+		<result column="CNAME" jdbcType="VARCHAR" property="cname" />
+		<result column="CREATTIME" jdbcType="VARCHAR" property="creattime" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ENAME, CNAME, to_char(CREATTIME,'YYYY-MM-DD') as CREATTIME
+  	</sql>
+
+	<sql id="Where_Clause">
+		<where>
+			<if test="ename != null">
+				ENAME = #{ename,jdbcType=VARCHAR},
+      		</if>
+			<if test="cname != null">
+				CNAME like '%' || #{cname,jdbcType=VARCHAR} || '%',
+      		</if>
+		</where>
+	</sql>
+
+	<select id="selectByPK" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select 	
+		<include refid="Base_Column_List" />
+		from T_SYS_DICT_TYPE where ENAME = #{ename,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectPage" parameterType="hashmap"
+		resultMap="BaseResultMap">
+		<include refid="CommonMapper.PagingStart"/>
+		select
+		<include refid="Base_Column_List" />
+		from T_SYS_DICT_TYPE
+		<include refid="Where_Clause" />
+		<include refid="CommonMapper.SortInfo"/>
+		<include refid="CommonMapper.PagingEnd"/>
+	</select>
+
+
+	<select id="selectCount" parameterType="hashmap"
+		resultType="java.lang.Long">
+		select count(*) from T_SYS_DICT_TYPE
+		<include refid="Where_Clause" />
+	</select>
+
+	<delete id="deleteByPKs">
+		delete from T_SYS_DICT_TYPE where ENAME in
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{ename,jdbcType=VARCHAR}
+		</foreach>
+	</delete>
+	
+	<insert id="insert" parameterType="org.cy.thorn.dd.entity.DictType">
+		insert into T_SYS_DICT_TYPE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ename != null">ENAME,</if>
+			<if test="cname != null">CNAME,</if>
+			<if test="creattime != null">CREATTIME,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ename != null">#{ename,jdbcType=VARCHAR},</if>
+			<if test="cname != null">#{cname,jdbcType=VARCHAR},</if>
+			<if test="creattime != null">to_date(#{creattime,jdbcType=DATE},'YYYY-MM-DD'),</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="org.cy.thorn.dd.entity.DictType">
+		update T_SYS_DICT_TYPE
+		<set>
+			<if test="cname != null">
+				CNAME = #{cname,jdbcType=VARCHAR},
+      		</if>
+			<if test="creattime != null">
+				CREATTIME = to_date(#{creattime,jdbcType=DATE},'YYYY-MM-DD'),
+      		</if>
+		</set>
+		where ENAME = #{ename,jdbcType=VARCHAR}
+	</update>
+</mapper>
