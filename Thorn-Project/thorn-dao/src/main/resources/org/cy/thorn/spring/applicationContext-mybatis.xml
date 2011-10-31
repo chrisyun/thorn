@@ -36,15 +36,16 @@
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<property name="mapperLocations">
 			<list>
-				<value>classpath*:org/cy/thorn/dao/*Mapper.xml</value>
+				<value>classpath*:org/cy/thorn/*/mapper/*Mapper.xml</value>
 			</list>
-		</property>
+		</property> 
 		<!-- <property name="mapperLocations" value="classpath*:org/cy/thorn/dao/*Mapper.xml" /> -->
 	</bean>
 	
 	<!-- 配置Mybatis模版 -->
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+		<constructor-arg index="0" ref="sqlSessionFactory"/>
+		<!-- <property name="sqlSessionFactory" ref="sqlSessionFactory"></property> -->
 	</bean>
 	
 	<!-- 可以执行批量操作 -->
@@ -89,7 +90,7 @@
 		</tx:attributes>
 	</tx:advice>
 	
-	<!-- 数据库主键增长器 -->
+	<!-- 数据库主键增长器
 	<bean id="viewIncrementer" class="org.cy.thorn.dao.incrementer.ViewIncrementer">
 		<property name="cache" ref="cacheManage"/>
 		<property name="dataSource" ref="dataSource"/>
@@ -101,7 +102,7 @@
 		<property name="dataSource" ref="dataSource"/>
 		<property name="cacheSize" value="100"/>
 	</bean>
-	
+	 -->
 	<bean id="genericDao" class="org.cy.thorn.dao.orm.GenericDAOImpl">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
