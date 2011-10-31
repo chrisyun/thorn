@@ -23,22 +23,21 @@
 		</property>
 	</bean>
 	
-	<!-- 缓存管理 -->
-	<bean id="cacheManage" class="org.cy.thorn.core.cache.ehcach.EhCacheManageImpl">
-		<property name="cache">
-			<ref bean="cacheProvider" />
-		</property>
+	<!-- 基础缓存管理 -->
+	<bean id="baseCache" class="org.cy.thorn.core.cache.ehcach.EhCacheManageImpl">
+		<property name="cache" ref="baseEhCache"/>
 	</bean>
 	
 	<!-- 缓存提供 -->
-	<bean id="cacheProvider" 
-   		class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-      <property name="cacheManager">
-         <bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-         	<property name="configLocation" value="classpath:ehcache.xml"/>
-         </bean>
-      </property>
+	<bean id="baseEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+      <property name="cacheManager" ref="cacheManager" />
       <property name="cacheName" value="basicCache"/>
    </bean>  
+   
+   <!-- cache manager -->
+   <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+   		<property name="configLocation" value="classpath:ehcache.xml"/>
+   </bean>
+   
    
 </beans>

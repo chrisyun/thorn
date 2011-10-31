@@ -44,5 +44,13 @@ public interface ICacheManage {
 	 */
 	void putCacheElement(String elementId, Object obj) throws Exception;
 	
+	/**
+	 * 
+	 * @author：chenyun 	        
+	 * @date：2011-10-18
+	 * @Description：刷新缓存，即将缓存清理掉
+	 */
+	public void refreshCache();
+	
 }
 
