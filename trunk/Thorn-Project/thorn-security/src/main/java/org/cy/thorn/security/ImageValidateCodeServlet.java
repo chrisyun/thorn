@@ -102,7 +102,7 @@ public class ImageValidateCodeServlet extends HttpServlet {
 			g.drawOval(x, y, 4, 4);
 		}
 		// 设置字体，下面准备画随机数
-		g.setFont(new Font("", Font.PLAIN, 40));
+		g.setFont(new Font("", Font.PLAIN, 20));
 		// 随机字符串
 		StringBuffer sbRandomValidateCode = new StringBuffer();
 		for (int i = 0; i < SecurityConstant.AUTHCODE_NUM_LENGTH; i++) {
@@ -114,7 +114,7 @@ public class ImageValidateCodeServlet extends HttpServlet {
 					.nextInt(100), 20 + random.nextInt(90)));
 
 			// 将随机字画在图像上
-			g.drawString(rand, (17 + random.nextInt(3)) * i + 8, 34);
+			g.drawString(rand, (17 + random.nextInt(3)) * i + 8, 24);
 
 			// 生成干扰线
 			for (int k = 0; k < 12; k++) {

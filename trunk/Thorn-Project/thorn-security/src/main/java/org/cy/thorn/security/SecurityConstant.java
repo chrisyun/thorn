@@ -31,6 +31,6 @@ public interface SecurityConstant {
 	/**
 	 * 验证码的位数
 	 */
-	public static final int AUTHCODE_NUM_LENGTH = 5;
+	public static final int AUTHCODE_NUM_LENGTH = 4;
 }
 
