@@ -61,7 +61,7 @@
 
 		<dependency>
 			<groupId>org.cy.thorn</groupId>
-			<artifactId>thorn-dao</artifactId>
+			<artifactId>thorn-security</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
