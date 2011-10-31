@@ -28,24 +28,14 @@ public class EhCacheManageImpl implements ICacheManage {
 	public void afterPropertiesSet() throws Exception {
 		Assert.notNull(cache, "cache is required");
 	}
-	/**
-	 * 清除缓存中以elementId作为key的元素
-	 * @param elementId
-	 * @throws Exception
-	 */
-	public void clearCacheElement(String elementId) throws Exception{
+
+	public void clearCacheElement(String elementId) throws Exception {
 		// TODO Auto-generated method stub
 		Assert.hasLength(elementId,"clearCache方法中必须指定elementId");
 		Assert.hasText(elementId,"clearCache方法中的elementId参数不能全为空格");
 		cache.remove(elementId);
 	}
 
-	/**
-	 * 得到缓存中以elementId作为key的元素
-	 * @param elementId
-	 * @return
-	 * @throws Exception
-	 */
 	public Object getCacheElement(String elementId) throws Exception{
 		// TODO Auto-generated method stub
 		Assert.hasLength(elementId,"getCache方法中必须指定elementId");
@@ -58,12 +48,6 @@ public class EhCacheManageImpl implements ICacheManage {
 		return obj;
 	}
 
-	/**
-	 * 将obj放入缓存，并以elementId作为标志它的key
-	 * @param elementId
-	 * @param obj
-	 * @throws Exception
-	 */
 	public void putCacheElement(String elementId, Object obj) throws Exception{
 		// TODO Auto-generated method stub
 		Assert.hasLength(elementId,"putCache方法中必须指定elementId");
@@ -71,6 +55,11 @@ public class EhCacheManageImpl implements ICacheManage {
 		Element e = new Element(elementId,obj);
 		cache.put(e);
 	}
+	
+	public void refreshCache() {
+		cache.removeAll();
+	}
+	
 
 	public Ehcache getCache() {
 		return cache;
