@@ -1,11 +1,14 @@
 package org.cy.thorn.core.entity;
+
+import java.util.Map;
+
 /**
- * <p>文件名称: JSONRespond.java</p>
+ * <p>文件名称: JSONRequest.java</p>
  * <p>文件描述: 本类描述</p>
  * <p>版权所有: 版权所有(C)2010</p>
  * <p>内容摘要: 简要描述本文件的内容，包括主要模块、函数及能的说明</p>
  * <p>其他说明: 其它内容的说明</p>
- * <p>完成日期: 2011-10-11</p>
+ * <p>完成日期: 2011-11-4</p>
  * <p>修改记录1:</p>
  * <pre>
  *    修改日期:
@@ -15,28 +18,17 @@ package org.cy.thorn.core.entity;
  * <p>修改记录2：…</p>
  * @author  chenyun
  */
-public class JSONRespond<T> {
+public class JSONRequest {
 	
-	private Status status = new Status();
-	
-	private ResultSet<T> resultSet;
+	private Map<String, Object> filter;
 
-	public Status getStatus() {
-		return status;
+	public Map<String, Object> getFilter() {
+		return filter;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setFilter(Map<String, Object> filter) {
+		this.filter = filter;
 	}
-
-	public ResultSet<T> getResultSet() {
-		return resultSet;
-	}
-
-	public void setResultSet(ResultSet<T> resultSet) {
-		this.resultSet = resultSet;
-	}
-
 	
 }
 
