@@ -13,7 +13,7 @@ public class User {
 
     private String userpwd;
 
-    private String sex;
+    private String gender;
 
     private String cumail;
 
@@ -77,12 +77,12 @@ public class User {
         this.userpwd = userpwd == null ? null : userpwd.trim();
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
+    public void setGender(String gender) {
+        this.gender = gender == null ? null : gender.trim();
     }
 
     public String getCumail() {

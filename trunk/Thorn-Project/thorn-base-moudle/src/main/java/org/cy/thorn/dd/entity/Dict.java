@@ -1,9 +1,15 @@
 package org.cy.thorn.dd.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Dict {
-    private String dname;
+public class Dict implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5062161434786999802L;
+
+	private String dname;
 
     private String dvalue;
 

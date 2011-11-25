@@ -14,21 +14,14 @@
 
 	<sql id="Where_Clause">
 		<where>
-			<if test="ename != null">
-				ENAME = #{ename,jdbcType=VARCHAR},
+			<if test="ename != null and ename != ''">
+				AND ENAME like '%' || #{ename,jdbcType=VARCHAR} || '%'
       		</if>
-			<if test="cname != null">
-				CNAME like '%' || #{cname,jdbcType=VARCHAR} || '%',
+			<if test="cname != null and cname != ''">
+				AND CNAME like '%' || #{cname,jdbcType=VARCHAR} || '%'
       		</if>
 		</where>
 	</sql>
-
-	<select id="selectByPK" parameterType="java.lang.String"
-		resultMap="BaseResultMap">
-		select 	
-		<include refid="Base_Column_List" />
-		from T_SYS_DICT_TYPE where ENAME = #{ename,jdbcType=VARCHAR}
-	</select>
 
 	<select id="selectPage" parameterType="hashmap"
 		resultMap="BaseResultMap">
@@ -41,45 +34,46 @@
 		<include refid="CommonMapper.PagingEnd"/>
 	</select>
 
-
-	<select id="selectCount" parameterType="hashmap"
+	<select id="selectPageCount" parameterType="hashmap"
 		resultType="java.lang.Long">
 		select count(*) from T_SYS_DICT_TYPE
 		<include refid="Where_Clause" />
 	</select>
 
-	<delete id="deleteByPKs">
-		delete from T_SYS_DICT_TYPE where ENAME in
-		<foreach collection="list" item="item" open="(" close=")"
-			separator=",">
-			#{ename,jdbcType=VARCHAR}
-		</foreach>
-	</delete>
-	
 	<insert id="insert" parameterType="org.cy.thorn.dd.entity.DictType">
 		insert into T_SYS_DICT_TYPE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="ename != null">ENAME,</if>
-			<if test="cname != null">CNAME,</if>
-			<if test="creattime != null">CREATTIME,</if>
+			<if test="ename != null and ename != ''">ENAME,</if>
+			<if test="cname != null and cname != ''">CNAME,</if>
+			<if test="creattime != null and creattime != ''">CREATTIME,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="ename != null">#{ename,jdbcType=VARCHAR},</if>
-			<if test="cname != null">#{cname,jdbcType=VARCHAR},</if>
-			<if test="creattime != null">to_date(#{creattime,jdbcType=DATE},'YYYY-MM-DD'),</if>
+			<if test="ename != null and ename != ''">#{ename,jdbcType=VARCHAR},</if>
+			<if test="cname != null and cname != ''">#{cname,jdbcType=VARCHAR},</if>
+			<if test="creattime != null and creattime != ''">
+				to_date(#{creattime,jdbcType=DATE},'YYYY-MM-DD'),
+			</if>
 		</trim>
 	</insert>
 
 	<update id="update" parameterType="org.cy.thorn.dd.entity.DictType">
 		update T_SYS_DICT_TYPE
 		<set>
-			<if test="cname != null">
+			<if test="cname != null and cname != ''">
 				CNAME = #{cname,jdbcType=VARCHAR},
       		</if>
-			<if test="creattime != null">
+			<if test="creattime != null and creattime != ''">
 				CREATTIME = to_date(#{creattime,jdbcType=DATE},'YYYY-MM-DD'),
       		</if>
 		</set>
 		where ENAME = #{ename,jdbcType=VARCHAR}
 	</update>
+
+	<delete id="deleteByPKs">
+		delete from T_SYS_DICT_TYPE where ENAME in
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item,jdbcType=VARCHAR}
+		</foreach>
+	</delete>
 </mapper>

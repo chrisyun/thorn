@@ -7,7 +7,7 @@
 		<result column="SN" property="sn" jdbcType="VARCHAR" />
 		<result column="USERACCOUNT" property="useraccount" jdbcType="VARCHAR" />
 		<result column="USERPWD" property="userpwd" jdbcType="VARCHAR" />
-		<result column="SEX" property="sex" jdbcType="VARCHAR" />
+		<result column="GENDER" property="gender" jdbcType="VARCHAR" />
 		<result column="CUMAIL" property="cumail" jdbcType="VARCHAR" />
 		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
 		<result column="COMPANYID" property="companyid" jdbcType="VARCHAR" />
@@ -22,7 +22,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		U.USERID, U.UNAME, U.SN, U.USERACCOUNT, 
-		U.USERPWD, U.SEX, U.COMPANYID, U.ORGID,
+		U.USERPWD, U.GENDER, U.COMPANYID, U.ORGID,
 		U.DEFAULTROLE, U.CUMAIL, U.PHONE, U.ISVALID,
 		U.ISDISABLED, U.ISSHOW, U.SORTNUM,
 		O2.OU AS COMPANYNAME, O1.OU AS ORGNAME
@@ -43,8 +43,8 @@
 			<if test="password != null">
 				USERPWD = #{userpwd,jdbcType=VARCHAR},
       		</if>
-			<if test="sex != null">
-				SEX = #{sex,jdbcType=VARCHAR},
+			<if test="gender != null">
+				GENDER = #{gender,jdbcType=VARCHAR},
       		</if>
 			<if test="cumail != null">
 				CUMAIL = #{cumail,jdbcType=VARCHAR},
@@ -135,8 +135,8 @@
 			<if test="userpwd != null">
 				USERPWD,
       		</if>
-			<if test="sex != null">
-				SEX,
+			<if test="gender != null">
+				GENDER,
       		</if>
 			<if test="cumail != null">
 				CUMAIL,
@@ -182,8 +182,8 @@
 			<if test="userpwd != null">
 				#{userpwd,jdbcType=VARCHAR},
       		</if>
-			<if test="sex != null">
-				#{sex,jdbcType=VARCHAR},
+			<if test="gender != null">
+				#{gender,jdbcType=VARCHAR},
       		</if>
 			<if test="cumail != null">
 				#{cumail,jdbcType=VARCHAR},
@@ -230,8 +230,8 @@
 			<if test="userpwd != null">
 				USERPWD = #{userpwd,jdbcType=VARCHAR},
       		</if>
-			<if test="sex != null">
-				SEX = #{sex,jdbcType=VARCHAR},
+			<if test="gender != null">
+				GENDER = #{gender,jdbcType=VARCHAR},
       		</if>
 			<if test="cumail != null">
 				CUMAIL = #{cumail,jdbcType=VARCHAR},

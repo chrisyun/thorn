@@ -3,7 +3,6 @@ package org.cy.thorn.org.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.cy.thorn.core.entity.ResultSet;
 import org.cy.thorn.core.exceptions.DBAccessException;
 import org.cy.thorn.org.entity.Org;
 
@@ -66,26 +65,5 @@ public interface IOrgDAO {
 	 */
 	public Org searchByPK(String oid) throws DBAccessException;
 	
-	/**
-	 * 
-	 * @author：chenyun 	        
-	 * @date：2011-10-19
-	 * @Description：根据条件查找组织集合
-	 * @param filter
-	 * @return
-	 * @throws DBAccessException
-	 */
-	public ResultSet<Org> searchOrg(Map<String, Object> filter) throws DBAccessException;
-	
-	/**
-	 * 
-	 * @author：chenyun 	        
-	 * @date：2011-10-19
-	 * @Description：根据父组织查找子组织
-	 * @param parentOid
-	 * @return
-	 * @throws DBAccessException
-	 */
-	public ResultSet<Org> searchOrgByParent(String parentOid) throws DBAccessException;
 }
 
