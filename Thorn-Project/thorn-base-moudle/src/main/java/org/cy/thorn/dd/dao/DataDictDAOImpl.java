@@ -6,12 +6,12 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cy.thorn.core.entity.Page;
-import org.cy.thorn.core.entity.ResultPage;
-import org.cy.thorn.core.entity.ResultSet;
-import org.cy.thorn.core.entity.Sorting;
+import org.cy.thorn.core.entity.JSONPageRequest;
+import org.cy.thorn.core.entity.JSONSetResponse;
+import org.cy.thorn.core.entity.Status;
 import org.cy.thorn.core.exceptions.DBAccessException;
 import org.cy.thorn.core.util.CacheUtil;
+import org.cy.thorn.dao.orm.GenericDAOImpl;
 import org.cy.thorn.dd.entity.Dict;
 import org.cy.thorn.dd.entity.DictType;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -33,13 +33,9 @@ import org.springframework.util.Assert;
  * <p>修改记录2：…</p>
  * @author  chenyun
  */
-public class DataDictDAOImpl implements IDataDictDAO {
+public class DataDictDAOImpl extends GenericDAOImpl implements IDataDictDAO {
 	
 	static Log log = LogFactory.getLog(DataDictDAOImpl.class);
-	
-	private static final String DICTTYPE_SUFFIX = ".dictType";
-	
-	private static final String DICT_SUFFIX = ".dict";
 	
 	private static final String DICT_LIST_SUFFIX = ".dictList";
 	
@@ -53,176 +49,54 @@ public class DataDictDAOImpl implements IDataDictDAO {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
+	public JSONSetResponse<DictType> searchDtPage(Map<String, Object> filter) {
+		return this.searchPage("DictTypeMapper.selectPage", filter);
+	}
+	
+	public void insertDtType(DictType dictType) throws DBAccessException {
+		this.insert("DictTypeMapper.insert", new Object[]{dictType});
+	}
+	
+	public void updateDtType(DictType dictType) throws DBAccessException {
+		this.update("DictTypeMapper.update", new Object[]{dictType});
+	}
+	
 	public void deleteByTypeId(List<String> ids) throws DBAccessException {
-		Assert.notEmpty(ids,"the list is empty");
-		
-		try {
-			sqlSessionTemplate.delete("DictTypeMapper.deleteByPKs", ids);
-			sqlSessionTemplate.delete("DictMapper.deleteByTypeIds", ids);
-		} catch (Exception e) {
-			String exceptMsg = "excute to delete dictType and dict data exception";
-			throw new DBAccessException(exceptMsg,e);
-		}
+		this.delete("DictTypeMapper.deleteByPKs", ids);
+		this.delete("DictMapper.deleteByTypeIds", ids);
 		
 		for(String id : ids) {
-			CacheUtil.deleteObject(id + DICTTYPE_SUFFIX);
 			CacheUtil.deleteObject(id + DICT_LIST_SUFFIX);
 		}
 	}
+	
+	public JSONSetResponse<Dict> searchDdList(String typeid) {
+		JSONSetResponse<Dict> jr = (JSONSetResponse<Dict>) CacheUtil.getObject(typeid + DICT_LIST_SUFFIX);
 
-	public void deleteDt(List<String> ids) throws DBAccessException {
-		Assert.notEmpty(ids,"the list is empty");
-		
-		try {
-			sqlSessionTemplate.delete("DictMapper.deleteByPKs", ids);
-		} catch (Exception e) {
-			String exceptMsg = "excute to delete dict data exception";
-			throw new DBAccessException(exceptMsg,e);
+		if(jr == null) {
+			Map<String, Object> filter = new HashMap<String, Object>();
+			filter.put("typeid", typeid);
+			jr = this.searchList("DictMapper.select", filter);
+			CacheUtil.updateObject(typeid + DICT_LIST_SUFFIX, jr);
 		}
 		
-		for(String id : ids) {
-			CacheUtil.deleteObject(id + DICT_SUFFIX);
-		}
-	}
-
-	public void insertDt(Dict dict) throws DBAccessException {
-		Assert.notNull(dict,"the dict is null");
-		
-		try {
-			sqlSessionTemplate.insert("DictMapper.insert", dict);
-			CacheUtil.updateObject(dict.getDname() + DICT_SUFFIX, dict);
-		} catch (Exception e) {
-			String exceptMsg = "excute to insert dict data exception,dict:"+dict.toString();
-			throw new DBAccessException(exceptMsg,e);
-		}
-	}
-
-	public void insertDtType(DictType dictType) throws DBAccessException {
-		Assert.notNull(dictType,"the dictType is null");
-		
-		try {
-			sqlSessionTemplate.insert("DictTypeMapper.insert", dictType);
-			CacheUtil.updateObject(dictType.getEname() + DICTTYPE_SUFFIX, dictType);
-		} catch (Exception e) {
-			String exceptMsg = "excute to insert dictType data exception,dictType:"+dictType.toString();
-			throw new DBAccessException(exceptMsg,e);
-		}
-	}
-
-	public Dict searchByPk(String dname) throws DBAccessException {
-		Assert.hasText(dname,"the dname is null");
-		
-		Dict dict = (Dict) CacheUtil.getObject(dname + DICT_SUFFIX);
-		
-		if(dict != null) {
-			return dict;
-		}
-		
-		try {
-			dict = (Dict) sqlSessionTemplate.selectOne("DictMapper.selectByPK", dname);
-			CacheUtil.updateObject(dname + DICT_SUFFIX, dict);
-		} catch (Exception e) {
-			String exceptMsg = "select dict data by pk exception,pk:"+dname;
-			throw new DBAccessException(exceptMsg,e);
-		}
-		
-		return dict;
-	}
-
-	public ResultSet<Dict> searchDt(String typeId) throws DBAccessException {
-		Assert.hasText(typeId,"the typeId is null");
-		
-		ResultSet<Dict> rs = new ResultSet<Dict>();
-		
-		List<Dict> list = (List<Dict>) CacheUtil.getObject(typeId + DICT_LIST_SUFFIX);
-		
-		if(list != null && list.size() > 0) {
-			rs.setResult(list);
-			rs.setCount(list.size());
-			return rs;
-		}
-		
-		
-		try {
-			HashMap<String, String> filter = new HashMap<String, String>();
-			filter.put("typeId", typeId);
-			list = (List<Dict>) sqlSessionTemplate.selectList("DictMapper.select", filter);
-			
-			rs.setResult(list);
-			rs.setCount(list.size());
-			CacheUtil.updateObject(typeId + DICT_LIST_SUFFIX, list);
-		} catch (Exception e) {
-			String exceptMsg = "select dict data by typeId exception,typeId:"+typeId;
-			throw new DBAccessException(exceptMsg,e);
-		}
-		
-		return rs;
-	}
-
-	public DictType searchDtTypeByPK(String ename) throws DBAccessException {
-		Assert.hasText(ename,"the ename is null");
-		
-		DictType dtType = (DictType) CacheUtil.getObject(ename + DICTTYPE_SUFFIX);
-		
-		if(dtType != null) {
-			return dtType;
-		}
-		
-		try {
-			dtType = (DictType) sqlSessionTemplate.selectOne("DictTypeMapper.selectByPK", ename);
-			CacheUtil.updateObject(ename + DICT_SUFFIX, dtType);
-		} catch (Exception e) {
-			String exceptMsg = "select dictType data by pk exception,pk:"+ename;
-			throw new DBAccessException(exceptMsg,e);
-		}
-		
-		return dtType;
-	}
-
-	public ResultPage<DictType> searchDtTypeByPage(Map<String, Object> filter,
-			Sorting sort, Page page) throws DBAccessException {
-		ResultPage<DictType> rp = new ResultPage<DictType>(page);
-		
-		try {
-			rp.setCount((Long)sqlSessionTemplate.selectOne("DictTypeMapper.selectCount", filter));
-			
-			filter.put("sort", sort.toString());
-			filter.put("startRow", rp.indexRow());
-			filter.put("endRow", rp.lastRow());
-			
-			List<DictType> list = (List<DictType>) sqlSessionTemplate.selectList("DictTypeMapper.selectByPage", filter);
-			rp.setResult(list);
-		} catch (Exception e) {
-			String exceptMsg = "select dtType page data exception, condition[" + rp.toString() + "]";
-			throw new DBAccessException(exceptMsg,e);
-		}
-		
-		return rp;
-	}
-
-	public void updateDt(Dict dict) throws DBAccessException {
-		Assert.notNull(dict,"the dict is null");
-		
-		try {
-			sqlSessionTemplate.update("DictMapper.update", dict);
-			CacheUtil.updateObject(dict.getDname() + DICT_SUFFIX, dict);
-		} catch (Exception e) {
-			String exceptMsg = "excute to update dict data exception,dict:"+dict.toString();
-			throw new DBAccessException(exceptMsg,e);
-		}
-	}
-
-	public void updateDtType(DictType dictType) throws DBAccessException {
-		Assert.notNull(dictType,"the dictType is null");
-		
-		try {
-			sqlSessionTemplate.update("DictTypeMapper.update", dictType);
-			CacheUtil.updateObject(dictType.getEname() + DICTTYPE_SUFFIX, dictType);
-		} catch (Exception e) {
-			String exceptMsg = "excute to update dictType data exception,dictType:"+dictType.toString();
-			throw new DBAccessException(exceptMsg,e);
-		}
+		return jr;
 	}
 	
+	public void insertDd(Dict dict) throws DBAccessException {
+		this.insert("DictMapper.insert", new Object[]{dict});
+		CacheUtil.deleteObject(dict.getTypeid() + DICT_LIST_SUFFIX);
+	}
+	
+	public void updateDd(Dict dict) throws DBAccessException {
+		this.insert("DictMapper.update", new Object[]{dict});
+		CacheUtil.deleteObject(dict.getTypeid() + DICT_LIST_SUFFIX);
+	}
+	
+	
+	public void deleteDd(List<String> ids, String typeid) throws DBAccessException {
+		this.delete("DictMapper.deleteByPKs", ids);
+		CacheUtil.deleteObject(typeid + DICT_LIST_SUFFIX);
+	}
 }
 

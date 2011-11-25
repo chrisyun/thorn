@@ -18,6 +18,8 @@ public class Resource {
     private String ismodule;
 
     private BigDecimal sortnum;
+    
+    private String iconscls;
 
     public String getResid() {
         return resid;
@@ -83,7 +85,15 @@ public class Resource {
         this.sortnum = sortnum;
     }
     
-    public String toString() {
+    public String getIconscls() {
+		return iconscls;
+	}
+
+	public void setIconscls(String iconscls) {
+		this.iconscls = iconscls;
+	}
+
+	public String toString() {
     	return String.format("Resource [sid=%s, sname=%s, url=%s, isleaf=%s, "+
     			"isshow=%s, parentres=%s, ismodule=%s, sort=%s]", 
     			resid, sname, resurl, isleaf, isshow, parentres,ismodule, sortnum);

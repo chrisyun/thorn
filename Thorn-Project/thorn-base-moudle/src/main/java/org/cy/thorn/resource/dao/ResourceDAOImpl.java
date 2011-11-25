@@ -1,8 +1,8 @@
 package org.cy.thorn.resource.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.cy.thorn.core.exceptions.DBAccessException;
 import org.cy.thorn.resource.entity.Resource;
@@ -36,11 +36,11 @@ public class ResourceDAOImpl implements IResourceDAO {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	public List<Resource> searchResource() throws DBAccessException {
+	public List<Resource> searchResource(Map<String, Object> map) throws DBAccessException {
 		List<Resource> resList = new ArrayList<Resource>();
 		
 		try {
-			resList = (List<Resource>) sqlSessionTemplate.selectList("ResourceMapper.select",new HashMap<String, Object>());
+			resList = (List<Resource>) sqlSessionTemplate.selectList("ResourceMapper.select",map);
 		} catch (Exception e) {
 			String exceptMsg = "excute to select resource data exception";
 			throw new DBAccessException(exceptMsg,e);
@@ -48,5 +48,20 @@ public class ResourceDAOImpl implements IResourceDAO {
 		
 		return resList;
 	}
+	
+	public List<Resource> searchParent(Map<String, Object> map) throws DBAccessException {
+		List<Resource> resList = new ArrayList<Resource>();
+		
+		try {
+			resList = (List<Resource>) sqlSessionTemplate.selectList("ResourceMapper.selectByParent",map);
+		} catch (Exception e) {
+			String exceptMsg = "excute to select resource data exception";
+			throw new DBAccessException(exceptMsg,e);
+		}
+		
+		return resList;
+	}
+	
+	
 }
 

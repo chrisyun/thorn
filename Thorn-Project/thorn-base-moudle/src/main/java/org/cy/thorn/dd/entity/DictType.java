@@ -1,7 +1,14 @@
 package org.cy.thorn.dd.entity;
 
-public class DictType {
-    private String ename;
+import java.io.Serializable;
+
+public class DictType implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4856563207895351678L;
+
+	private String ename;
 
     private String cname;
 

@@ -3,7 +3,6 @@ package org.cy.thorn.org.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.cy.thorn.core.entity.ResultSet;
 import org.cy.thorn.core.exceptions.DBAccessException;
 import org.cy.thorn.org.entity.Org;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -74,41 +73,41 @@ public class OrgDAOImpl implements IOrgDAO {
 		return org;
 	}
 	
-	public ResultSet<Org> searchOrgByParent(String parentOid)
-			throws DBAccessException {
-		Assert.hasText(parentOid);
-		
-		ResultSet<Org> rs = new ResultSet<Org>();
-		
-		try {
-			List<Org> list = (List<Org>) sqlSessionTemplate.selectList("OrgMapper.selectByParent", parentOid);
-			rs.setResult(list);
-			rs.setCount(list.size());
-		} catch (Exception e) {
-			String exceptMsg = "excute to select orgResult data exception";
-			throw new DBAccessException(exceptMsg,e);
-		}
-		
-		return rs;
-	}
+//	public ResultSet<Org> searchOrgByParent(String parentOid)
+//			throws DBAccessException {
+//		Assert.hasText(parentOid);
+//		
+//		ResultSet<Org> rs = new ResultSet<Org>();
+//		
+//		try {
+//			List<Org> list = (List<Org>) sqlSessionTemplate.selectList("OrgMapper.selectByParent", parentOid);
+//			rs.setResult(list);
+//			rs.setCount(list.size());
+//		} catch (Exception e) {
+//			String exceptMsg = "excute to select orgResult data exception";
+//			throw new DBAccessException(exceptMsg,e);
+//		}
+//		
+//		return rs;
+//	}
 	
-	public ResultSet<Org> searchOrg(Map<String, Object> filter)
-			throws DBAccessException {
-		Assert.notEmpty(filter);
-		
-		ResultSet<Org> rs = new ResultSet<Org>();
-		
-		try {
-			List<Org> list = (List<Org>) sqlSessionTemplate.selectList("OrgMapper.select", filter);
-			rs.setResult(list);
-			rs.setCount(list.size());
-		} catch (Exception e) {
-			String exceptMsg = "excute to select orgResult data exception";
-			throw new DBAccessException(exceptMsg,e);
-		}
-		
-		return rs;
-	}
+//	public ResultSet<Org> searchOrg(Map<String, Object> filter)
+//			throws DBAccessException {
+//		Assert.notEmpty(filter);
+//		
+//		ResultSet<Org> rs = new ResultSet<Org>();
+//		
+//		try {
+//			List<Org> list = (List<Org>) sqlSessionTemplate.selectList("OrgMapper.select", filter);
+//			rs.setResult(list);
+//			rs.setCount(list.size());
+//		} catch (Exception e) {
+//			String exceptMsg = "excute to select orgResult data exception";
+//			throw new DBAccessException(exceptMsg,e);
+//		}
+//		
+//		return rs;
+//	}
 
 	public void updateOrg(Org org) throws DBAccessException {
 		Assert.notNull(org);

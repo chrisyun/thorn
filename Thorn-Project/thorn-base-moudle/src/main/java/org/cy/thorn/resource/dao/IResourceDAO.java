@@ -1,6 +1,7 @@
 package org.cy.thorn.resource.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.cy.thorn.core.exceptions.DBAccessException;
 import org.cy.thorn.resource.entity.Resource;
@@ -31,6 +32,17 @@ public interface IResourceDAO {
 	 * @return
 	 * @throws DBAccessException
 	 */
-	public List<Resource> searchResource() throws DBAccessException;
+	public List<Resource> searchResource(Map<String, Object> map) throws DBAccessException;
+	
+	/**
+	 * 
+	 * @author：chenyun 	        
+	 * @date：2011-11-2
+	 * @Description：根据父资源查找子资源
+	 * @param map
+	 * @return
+	 * @throws DBAccessException
+	 */
+	public List<Resource> searchParent(Map<String, Object> map) throws DBAccessException;
 }
 
