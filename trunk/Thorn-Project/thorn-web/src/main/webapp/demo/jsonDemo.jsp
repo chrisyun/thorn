@@ -14,19 +14,24 @@ function sendJson() {
 	var json = '{"age":30,"name":"unameIn","id":"ts00027"}';
 	
 	var pageSearchJson = '{"filter":{"mao":123,"mao1":1234},"page":{"pageSize":20,"pageNo":1,"doAction":"current.page","skipPage":0},"sorting":{"mySort":[{"order":"desc","sortName":"name"},{"order":"desc","sortName":"num"}]}}';
+	var pageTest = '{"start":0,"limit":25}';
 
+	var dictType = '{"ename":"rrrr1","cname":"hhhhh"}';
+	
 	var ajson;
 	$.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: 'insert.xhtml',
-        //data: pageSearchJson,
+        url: 'http://localhost:8889/thorn-web/dd/addDictType.xhtml',
+        data: dictType,
         dataType: 'json',
         success: function(data){
+        	//alert("==");
             $("#rs").html(json2Str(data));
         },
-        error: function(){
-            alert("error")
+        error: function(data){
+            //alert("error=="+data);
+        	 $("#rs").html(json2Str(data));
         }
     });
 }
