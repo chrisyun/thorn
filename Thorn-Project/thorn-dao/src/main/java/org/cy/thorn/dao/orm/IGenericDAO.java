@@ -2,10 +2,9 @@ package org.cy.thorn.dao.orm;
 
 import java.util.Map;
 
-import org.cy.thorn.core.entity.Page;
-import org.cy.thorn.core.entity.ResultPage;
-import org.cy.thorn.core.entity.ResultSet;
-import org.cy.thorn.core.entity.Sorting;
+import org.cy.thorn.core.entity.JSONPageRequest;
+import org.cy.thorn.core.entity.JSONRequest;
+import org.cy.thorn.core.entity.JSONSetResponse;
 import org.cy.thorn.core.exceptions.DBAccessException;
 
 /**
@@ -74,33 +73,28 @@ public interface IGenericDAO {
 	/**
 	 * 
 	 * @author：chenyun 	        
-	 * @date：2011-10-11
+	 * @date：2011-11-8
 	 * @Description：
 	 * @param <T>
-	 * @param sqlStatement	sql实例
-	 * @param filter		查询条件
-	 * @param sort			排序
+	 * @param sqlStatement
+	 * @param filter
 	 * @return
-	 * @throws DBAccessException
 	 */
-	public <T> ResultSet<T> searchList(String sqlStatement, Map<String, Object> filter, 
-			Sorting sort) throws DBAccessException;
+	public <T> JSONSetResponse<T> searchList(String sqlStatement, 
+			Map<String, Object> filter);
 	
 	/**
 	 * 
 	 * @author：chenyun 	        
-	 * @date：2011-10-11
-	 * @Description：分页查询
+	 * @date：2011-11-8
+	 * @Description：
 	 * @param <T>
-	 * @param sqlStatement	sql实例
-	 * @param filter		查询条件
-	 * @param sort			排序
-	 * @param page			分页数据
+	 * @param sqlStatement
+	 * @param filter
 	 * @return
-	 * @throws DBAccessException
 	 */
-	public <T> ResultPage<T> searchPage(String sqlStatement, 
-			Map<String, Object> filter, Sorting sort, Page page) throws DBAccessException;
+	public <T> JSONSetResponse<T> searchPage(String sqlStatement,
+			Map<String, Object> filter);
 	
 	/**
 	 * 
