@@ -43,25 +43,9 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- json -->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-lgpl</artifactId>
-			<version>1.8.1</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-lgpl</artifactId>
-			<version>1.8.1</version>
-			<scope>compile</scope>
-		</dependency>
-		<!-- json end -->
-
-
 		<dependency>
 			<groupId>org.cy.thorn</groupId>
-			<artifactId>thorn-security</artifactId>
+			<artifactId>thorn-base-moudle</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>

@@ -79,12 +79,11 @@
 		<url-pattern>/common/ImageValidateCodeServlet</url-pattern>
 	</servlet-mapping>
 	
-	<!-- session 配置 -->
+	<!-- session 配置
 	<session-config>
-		<!-- session 失效时间 50分钟 -->
 		<session-timeout>50</session-timeout>
 	</session-config>
-
+	 -->
 	<welcome-file-list>
 		<welcome-file>/login.jsp</welcome-file>
 	</welcome-file-list>

@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="org.cy.thorn.security.SecurityConstant"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
@@ -10,36 +9,42 @@
 
 
 	<style>
-<!--
-body {
-	background-color: #4E79B2;
-}
-
-.error {
-	color: red;
-	padding-left: 120px;
-}
--->
-</style>
+	<!--
+	body {
+		background-color: #4E79B2;
+	}
+	
+	.error {
+		color: red;
+		padding-left: 120px;
+		padding-top: 2px;
+	}
+	-->
+	</style>
 
 
 	<script type="text/javascript">
 	var iSerror = '${param.error}';
 	var error = '${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}';
 	var userName = '${sessionScope['SPRING_SECURITY_LAST_USERNAME']}';
-
+	var loginUrl = sys.path + "/j_spring_security_check";
 	var authCodeUrl = sys.path + "/common/ImageValidateCodeServlet";
 	
 	Ext.onReady(function() {
 		Ext.QuickTips.init();
+
+		if(!Ext.isEmpty(user.userid)) {
+			window.location = loginUrl;
+		}
+		
 		var loginPanel = new Ext.FormPanel( {
 			bodyStyle : 'padding-top: 30px',
-			labelWidth : 120,
+			labelWidth : 100,
 			border: false,
 			labelAlign : "right",
 			onSubmit: Ext.emptyFn, 
 			submit: function() { 
-				this.getEl().dom.action = sys.path + "/j_spring_security_check"; 
+				this.getEl().dom.action = loginUrl; 
 				this.getEl().dom.method = 'post'; 
 				this.getEl().dom.submit(); 
 			}, 
@@ -66,19 +71,19 @@ body {
 					xtype:'panel',
 					layout : "form",
 					border: false,
-					columnWidth : 0.7,
+					columnWidth : 0.8,
 					items: [{
 						xtype:'textfield',
-						name : "imageCode",
+						name : "ValidateCode",
 						width : 70,
 						fieldLabel : "验证码",
-						labelWidth : 120,
+						labelWidth : 100,
 						allowBlank: false,
 						blankText : Common.config.msgNull
 					}]
 				},{
 					xtype:'label',
-					html:'<img alt="验证码" id="authImage" align="middle" width="80" height="24">'
+					html:'<img alt="验证码" id="authImage" align="middle" width="80" height="24">&nbsp;<a href="javascript:refresh();">看不清</a>'
 				}]
 				
 			},{
@@ -124,7 +129,7 @@ body {
 		});
 		loginWindow.show();
 
-		Ext.getDom("authImage").src = authCodeUrl;
+		refresh();
 		
 		if(iSerror == 'true') {
 			Ext.getDom("loginMsg").innerHTML = error;
@@ -135,6 +140,10 @@ body {
 		}
 		
 	});
+
+	function refresh() {
+		Ext.getDom("authImage").src = authCodeUrl + "?radom=" + Math.random();
+	}
 
 </script>
 
