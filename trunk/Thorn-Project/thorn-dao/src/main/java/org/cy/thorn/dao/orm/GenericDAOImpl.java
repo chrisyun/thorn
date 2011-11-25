@@ -1,12 +1,13 @@
 package org.cy.thorn.dao.orm;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.cy.thorn.core.entity.Page;
-import org.cy.thorn.core.entity.ResultPage;
-import org.cy.thorn.core.entity.ResultSet;
-import org.cy.thorn.core.entity.Sorting;
+import org.cy.thorn.core.entity.JSONPageRequest;
+import org.cy.thorn.core.entity.JSONRequest;
+import org.cy.thorn.core.entity.JSONSetResponse;
+import org.cy.thorn.core.entity.Status;
 import org.cy.thorn.core.exceptions.DBAccessException;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.util.Assert;
@@ -45,7 +46,7 @@ public class GenericDAOImpl implements IGenericDAO {
 		
 		try {
 			for (Object obj : objs) {
-				sqlSessionTemplate.insert(sqlStatement, obj);
+				getSqlSessionTemplate().insert(sqlStatement, obj);
 			}
 		} catch (Exception e) {
 			String exceptMsg = "excute " + sqlStatement + 
@@ -60,7 +61,7 @@ public class GenericDAOImpl implements IGenericDAO {
 		
 		try {
 			for (Object obj : objs) {
-				sqlSessionTemplate.update(sqlStatement, obj);
+				getSqlSessionTemplate().update(sqlStatement, obj);
 			}
 		} catch (Exception e) {
 			String exceptMsg = "excute " + sqlStatement + 
@@ -73,7 +74,7 @@ public class GenericDAOImpl implements IGenericDAO {
 			throws DBAccessException {
 		Assert.notNull(condition, "the input is null");
 		try {
-			sqlSessionTemplate.delete(sqlStatement, condition);
+			getSqlSessionTemplate().delete(sqlStatement, condition);
 		} catch (Exception e) {
 			String exceptMsg = "excute " + sqlStatement + 
 				" to delete data exception, condition[" + condition + "]";
@@ -83,53 +84,52 @@ public class GenericDAOImpl implements IGenericDAO {
 
 	public Object searchObj(String sqlStatement, Object condition)
 			throws DBAccessException {
+		Object obj = null;
 		try {
-			Object obj = sqlSessionTemplate.selectOne(sqlStatement, condition);
-			return obj;
+			obj = getSqlSessionTemplate().selectOne(sqlStatement, condition);
 		} catch (Exception e) {
 			String exceptMsg = "excute " + sqlStatement + 
 				" to select one data exception, condition[" + condition + "]";
 			throw new DBAccessException(exceptMsg,e);
 		}
+		return obj;
 	}
 
-	public <T> ResultSet<T> searchList(String sqlStatement, Map<String, Object> filter, Sorting sort)
-			throws DBAccessException {
-		ResultSet<T> rs = new ResultSet<T>();
+	public <T> JSONSetResponse<T> searchList(String sqlStatement, 
+			Map<String, Object> filter) {
+		JSONSetResponse<T> resultSet = new JSONSetResponse<T>();
 		
 		try {
-			filter.put("sort", sort.getMySort());
-			
-			rs.setResult((List<T>) sqlSessionTemplate.selectList(sqlStatement, filter));
-			rs.setCount(rs.getResult().size());
+			resultSet.setResultSet(
+					(List<T>) getSqlSessionTemplate().selectList(sqlStatement, filter));
+			resultSet.setTotalCount(resultSet.getResultSet().size());
 		} catch (Exception e) {
-			String exceptMsg = "excute " + sqlStatement + 
-				" to select list data exception, condition[" + rs.toString() + "]";
-			throw new DBAccessException(exceptMsg,e);
+			String msg = "search " + sqlStatement + " list happens exception:" + e.getMessage();
+			resultSet.setSuccess(false);
+			resultSet.setMessage(msg);
 		}
 		
-		return rs;
+		return resultSet;
 	}
 
-	public <T> ResultPage<T> searchPage(String sqlStatement, Map<String, Object> filter, Sorting sort, Page page)
-			throws DBAccessException {
-		ResultPage<T> rp = new ResultPage<T>(page);
+	public <T> JSONSetResponse<T> searchPage(String sqlStatement,
+			Map<String, Object> filter){
+		JSONSetResponse<T> resultSet = new JSONSetResponse<T>();
 		
 		try {
-			rp.setCount(searchCount(sqlStatement+"-count", filter));
-			
-			filter.put("sort", sort.toString());
-			filter.put("startRow", rp.indexRow());
-			filter.put("endRow", rp.lastRow());
-			
-			rp.setResult((List<T>) sqlSessionTemplate.selectList(sqlStatement, filter));
+			resultSet.setTotalCount(
+					searchCount(sqlStatement+"Count", filter));
+			if(resultSet.getTotalCount() > 0) {
+				resultSet.setResultSet(
+						(List<T>) getSqlSessionTemplate().selectList(sqlStatement, filter));
+			}
 		} catch (Exception e) {
-			String exceptMsg = "excute " + sqlStatement + 
-				" to select page data exception, condition[" + rp.toString() + "]";
-			throw new DBAccessException(exceptMsg,e);
+			String msg = "search " + sqlStatement + " page happens exception:" + e.getMessage();
+			resultSet.setSuccess(false);
+			resultSet.setMessage(msg);
 		}
 		
-		return rp;
+		return resultSet;
 	}
 
 	public long searchCount(String sqlStatement, Object condition)
