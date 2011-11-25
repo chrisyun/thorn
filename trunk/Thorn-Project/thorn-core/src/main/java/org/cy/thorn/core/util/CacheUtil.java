@@ -29,7 +29,7 @@ public class CacheUtil {
 	
 	private static void initCache() {
 		if(cache == null) {
-			cache = SpringContextUtils.getBean("cacheManage");
+			cache = SpringContextUtils.getBean("baseCache");
 		}
 	}
 	
@@ -89,6 +89,15 @@ public class CacheUtil {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @author：chenyun 	        
+	 * @date：2011-11-24
+	 * @Description：刷新全部缓存
+	 */
+	public static void refreshCache() {
+		initCache();
+		cache.refreshCache();
+	}
 }
 

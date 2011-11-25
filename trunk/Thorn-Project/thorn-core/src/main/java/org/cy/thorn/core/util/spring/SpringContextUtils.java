@@ -40,7 +40,7 @@ public class SpringContextUtils implements ApplicationContextAware {
 					+ SpringContextUtils.applicationContext);
 		}
 
-		SpringContextUtils.applicationContext = applicationContext; //NOSONAR
+		SpringContextUtils.applicationContext = arg0; //NOSONAR
 	}
 
 	/**
