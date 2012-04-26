@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.thorn.dao.core.Config;
 import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
-import org.thorn.dao.util.MapperUtil;
+import org.thorn.dao.util.MapperUtils;
 
 /**
  * @ClassName: MyBatisDaoSupport
@@ -36,7 +36,7 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		String mapper = "";
 
 		try {
-			mapper = MapperUtil.getInsertMapper(obj.getClass());
+			mapper = MapperUtils.getInsertMapper(obj.getClass());
 			return sqlSessionTemplate.insert(mapper, obj);
 		} catch (Exception e) {
 			throw new DBAccessException(
@@ -51,7 +51,7 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		String mapper = "";
 
 		try {
-			mapper = MapperUtil.getUpdateMapper(obj.getClass());
+			mapper = MapperUtils.getUpdateMapper(obj.getClass());
 			return sqlSessionTemplate.update(mapper, obj);
 		} catch (Exception e) {
 			throw new DBAccessException(
@@ -66,7 +66,7 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		String mapper = "";
 
 		try {
-			mapper = MapperUtil.getDeleteMapper(obj.getClass());
+			mapper = MapperUtils.getDeleteMapper(obj.getClass());
 			return sqlSessionTemplate.delete(mapper, obj);
 		} catch (Exception e) {
 			throw new DBAccessException(
@@ -81,7 +81,7 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		String mapper = "";
 
 		try {
-			mapper = MapperUtil.getQueryMapper(bean);
+			mapper = MapperUtils.getQueryMapper(bean);
 			return (T) sqlSessionTemplate.selectOne(mapper, id);
 		} catch (Exception e) {
 			throw new DBAccessException(
@@ -96,7 +96,7 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		String mapper = "";
 
 		try {
-			mapper = MapperUtil.getQueryForListMapper(bean);
+			mapper = MapperUtils.getQueryForListMapper(bean);
 			return (List<T>) sqlSessionTemplate.selectList(mapper, filter);
 		} catch (Exception e) {
 			throw new DBAccessException(
@@ -114,8 +114,8 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		filter.put(Config.PAGE_LIMIT, limit);
 
 		try {
-			pageMapper = MapperUtil.getQueryForPageCountMapper(bean);
-			pageCountMapper = MapperUtil.getQueryForPageCountMapper(bean);
+			pageMapper = MapperUtils.getQueryForPageCountMapper(bean);
+			pageCountMapper = MapperUtils.getQueryForPageCountMapper(bean);
 
 			Page<T> page = new Page<T>();
 
@@ -144,7 +144,7 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		String mapper = "";
 
 		try {
-			mapper = MapperUtil.getDeleteBatchMapper(bean);
+			mapper = MapperUtils.getDeleteBatchMapper(bean);
 			return sqlSessionTemplate.delete(mapper, ids);
 		} catch (Exception e) {
 			throw new DBAccessException(
