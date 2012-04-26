@@ -1,5 +1,6 @@
 package org.thorn.dao.helper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -152,5 +153,5 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 							+ bean.getName() + "],mapper[" + mapper + "]", e);
 		}
 	}
-
+	
 }
