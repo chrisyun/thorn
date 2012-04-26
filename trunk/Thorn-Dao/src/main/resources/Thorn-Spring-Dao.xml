@@ -10,11 +10,6 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<!-- enable autowire 配置scan可以取消 <context:annotation-config /> <context:component-scan 
-		base-package="org.cy.thorn" use-default-filters="false"> <context:include-filter 
-		type="regex" expression="org.cy.thorn.dao.orm"/> <context:include-filter 
-		type="regex" expression="org.cy.thorn.*.dao"/> </context:component-scan> -->
-
 	<!-- ###########################dataSource########################### -->
 	<bean id="dataSource-jndi" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="${jndi}"></property>
@@ -32,25 +27,19 @@
 	
 	<!-- ###########################transaction########################### -->
 	
-	<!-- transaction manager, use JtaTransactionManager for global tx -->
+	<!-- 事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
-	<!-- 启用Spring对@AspectJ的支持：需要在你的应用程序的classpath中引入两个AspectJ库： aspectjweaver.jar 
-		和 aspectjrt.jar。 另外，如果想强制使用CGLIB代理， 需要将 <aop:aspectj-autoproxy> 的 proxy-target-class 
-		属性设为true。 -->
-	<aop:aspectj-autoproxy />
-	<!-- 以AspectJ方式 定义 AOP -->
-	<aop:config proxy-target-class="true">
+	
+	<!-- 通过AOP定义的事务增强切面 -->
+	<aop:config>
 		<aop:pointcut id="tracationMethods"
-			expression="execution(* org.cy.thorn.*.*.*DAOImpl.*(..))" />
+			expression="execution(* org.thorn.*.*.*DAOImpl.*(..))" />
 		<aop:advisor pointcut-ref="tracationMethods" advice-ref="txAdvice" />
 	</aop:config>
 
-	<!-- 支持 @Transactional 标记 基本事务定义,使用transactionManager作事务管理, 默认get*方法的事务为readonly,其余方法按默认设置. 
-		默认的设置请参考Spring文档事务一章. -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true" />
@@ -59,6 +48,11 @@
 			<tx:method name="*" propagation="REQUIRED" rollback-for="DBAccessException" />
 		</tx:attributes>
 	</tx:advice>
-
+	
+	<!-- @Transactional注解式事务管理 -->
+	<!-- proxy-target-class为true，spring将通过子类来代理业务类，使用true则需要引入cglib -->
+	<!-- proxy-target-class为false，spring将使用基于接口的代理 -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	
 	<!-- ###########################transaction########################### -->
 </beans>
