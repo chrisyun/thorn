@@ -15,12 +15,10 @@
 		<setting name="defaultStatementTimeout" value="25000"/>
 	</settings>
 	
-	<!-- 
 	<typeAliases>
 		<typeAlias alias="resPage" type="org.cy.thorn.core.entity.ResultPage" />
 		<typeAlias alias="resSet" type="org.cy.thorn.core.entity.ResultSet" />
 	</typeAliases>
-	-->
 	
 	<mappers>
 		 <mapper resource="org/thorn/dao/mapper/MySQLCommonMapper.xml"/> 
