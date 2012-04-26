@@ -30,6 +30,5 @@ public class TableEntity {
 	public void setColumn(List<ColumnEntity> column) {
 		this.column = column;
 	}
-	
 }
 
