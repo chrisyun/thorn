@@ -16,7 +16,7 @@ import org.thorn.dao.core.annotation.MapperEntity;
  * @author chenyun
  * @date 2012-4-26 下午02:40:03
  */
-public class MapperUtil {
+public class MapperUtils {
 
 	private final static String TOGETHER_SYMBOLS = ".";
 
@@ -24,7 +24,7 @@ public class MapperUtil {
 
 	public static String getInsertMapper(Class obj) {
 
-		MapperEntity mapper = MapperUtil.getFormAnnotationMap(obj);
+		MapperEntity mapper = MapperUtils.getFormAnnotationMap(obj);
 
 		return mapper.getMapper().nameSpace() + TOGETHER_SYMBOLS
 				+ mapper.getMapper().insert_Id();
@@ -32,7 +32,7 @@ public class MapperUtil {
 
 	public static String getUpdateMapper(Class obj) {
 
-		MapperEntity mapper = MapperUtil.getFormAnnotationMap(obj);
+		MapperEntity mapper = MapperUtils.getFormAnnotationMap(obj);
 
 		return mapper.getMapper().nameSpace() + TOGETHER_SYMBOLS
 				+ mapper.getMapper().update_Id();
@@ -40,7 +40,7 @@ public class MapperUtil {
 
 	public static String getDeleteMapper(Class obj) {
 
-		MapperEntity mapper = MapperUtil.getFormAnnotationMap(obj);
+		MapperEntity mapper = MapperUtils.getFormAnnotationMap(obj);
 
 		return mapper.getMapper().nameSpace() + TOGETHER_SYMBOLS
 				+ mapper.getMapper().delete_Id();
@@ -48,7 +48,7 @@ public class MapperUtil {
 
 	public static String getQueryMapper(Class obj) {
 
-		MapperEntity mapper = MapperUtil.getFormAnnotationMap(obj);
+		MapperEntity mapper = MapperUtils.getFormAnnotationMap(obj);
 
 		return mapper.getMapper().nameSpace() + TOGETHER_SYMBOLS
 				+ mapper.getMapper().query_Id();
@@ -56,7 +56,7 @@ public class MapperUtil {
 
 	public static String getQueryForListMapper(Class obj) {
 
-		MapperEntity mapper = MapperUtil.getFormAnnotationMap(obj);
+		MapperEntity mapper = MapperUtils.getFormAnnotationMap(obj);
 
 		return mapper.getMapper().nameSpace() + TOGETHER_SYMBOLS
 				+ mapper.getMapper().queryForList_Id();
@@ -64,7 +64,7 @@ public class MapperUtil {
 
 	public static String getQueryForPageMapper(Class obj) {
 
-		MapperEntity mapper = MapperUtil.getFormAnnotationMap(obj);
+		MapperEntity mapper = MapperUtils.getFormAnnotationMap(obj);
 
 		return mapper.getMapper().nameSpace() + TOGETHER_SYMBOLS
 				+ mapper.getMapper().queryForPage_Id();
@@ -72,7 +72,7 @@ public class MapperUtil {
 	
 	public static String getQueryForPageCountMapper(Class obj) {
 
-		MapperEntity mapper = MapperUtil.getFormAnnotationMap(obj);
+		MapperEntity mapper = MapperUtils.getFormAnnotationMap(obj);
 
 		return mapper.getMapper().nameSpace() + TOGETHER_SYMBOLS
 				+ mapper.getMapper().queryForPageCount_Id();
@@ -80,7 +80,7 @@ public class MapperUtil {
 
 	public static String getDeleteBatchMapper(Class obj) {
 
-		MapperEntity mapper = MapperUtil.getFormAnnotationMap(obj);
+		MapperEntity mapper = MapperUtils.getFormAnnotationMap(obj);
 
 		return mapper.getMapper().nameSpace() + TOGETHER_SYMBOLS
 				+ mapper.getMapper().deleteBatch_Id();
