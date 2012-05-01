@@ -7,10 +7,10 @@
 	<entry key="jndi"></entry>
 	
 	<!-- JDBC -->
-	<entry key="jdbc.url">jdbc:oracle:thin:@localhost:1521:orcl</entry>
-	<entry key="jdbc.driver">com.p6spy.engine.spy.P6SpyDriver</entry> 
+	<entry key="jdbc.url">jdbc:mysql://localhost:3306/thorn?useUnicode=true&amp;characterEncoding=UTF-8</entry>
+	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry> 
 	<!-- <entry key="jdbc.driver">oracle.jdbc.OracleDriver</entry>-->
-	<entry key="jdbc.user">thorn</entry>
-	<entry key="jdbc.password">thorn</entry>
+	<entry key="jdbc.user">root</entry>
+	<entry key="jdbc.password">root</entry>
 
 </properties>
