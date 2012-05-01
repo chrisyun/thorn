@@ -1,9 +1,5 @@
 package org.thorn.dao.helper;
 
-import java.util.List;
-import java.util.Map;
-
-import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
 
 /** 
@@ -14,18 +10,12 @@ import org.thorn.dao.exception.DBAccessException;
  */
 public interface SimpleDaoSupport {
 	
-	public int saveOne(Object obj) throws DBAccessException;
+	public int save(Object obj) throws DBAccessException;
 	
-	public int modifyOne(Object obj) throws DBAccessException;
+	public int modify(Object obj) throws DBAccessException;
 	
-	public int deleteOne(Object obj) throws DBAccessException;
+	public int delete(Object obj) throws DBAccessException;
 	
-	public <T> T queryForOne(Object id, Class<T> bean) throws DBAccessException;
-	
-	public <T> List<T> queryForList(Map<String, Object> filter, Class<T> bean) throws DBAccessException;
-	
-	public <T> Page<T> queryForPage(Map<String, Object> filter, int start, int limit, Class<T> bean) throws DBAccessException;
-	
-	public int deleteBatch(List<String> ids, Class bean) throws DBAccessException;
+	public void query(Object obj) throws DBAccessException;
 }
 

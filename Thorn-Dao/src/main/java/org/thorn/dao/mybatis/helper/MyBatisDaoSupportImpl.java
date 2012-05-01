@@ -1,26 +1,19 @@
-package org.thorn.dao.helper;
+package org.thorn.dao.mybatis.helper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.thorn.dao.core.Config;
 import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
-import org.thorn.dao.util.MapperUtils;
+import org.thorn.dao.mybatis.annotation.MapperUtils;
+import org.thorn.dao.mybatis.annotation.MethodType;
 
-/**
- * @ClassName: MyBatisDaoSupport
- * @Description: TODO
- * @author chenyun
- * @date 2012-4-26 下午02:36:19
- */
-public class MyBatisDaoSupport implements SimpleDaoSupport {
+public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 
-	static Logger log = LoggerFactory.getLogger(MyBatisDaoSupport.class);
+	static Logger log = LoggerFactory.getLogger(MyBatisDaoSupportImpl.class);
 
 	private SqlSessionTemplate sqlSessionTemplate;
 
@@ -32,12 +25,13 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	public int saveOne(Object obj) throws DBAccessException {
+	public int save(Object obj) throws DBAccessException {
 		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
-			mapper = MapperUtils.getInsertMapper(obj.getClass());
+			mapper = MapperUtils.getMapperSource(obj.getClass(),
+					MethodType.INSERT);
 			return sqlSessionTemplate.insert(mapper, obj);
 		} catch (Exception e) {
 			throw new DBAccessException(
@@ -47,12 +41,13 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		}
 	}
 
-	public int modifyOne(Object obj) throws DBAccessException {
+	public int modify(Object obj) throws DBAccessException {
 		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
-			mapper = MapperUtils.getUpdateMapper(obj.getClass());
+			mapper = MapperUtils.getMapperSource(obj.getClass(),
+					MethodType.UPDATE);
 			return sqlSessionTemplate.update(mapper, obj);
 		} catch (Exception e) {
 			throw new DBAccessException(
@@ -62,12 +57,13 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		}
 	}
 
-	public int deleteOne(Object obj) throws DBAccessException {
+	public int delete(Object obj) throws DBAccessException {
 		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
-			mapper = MapperUtils.getDeleteMapper(obj.getClass());
+			mapper = MapperUtils.getMapperSource(obj.getClass(),
+					MethodType.DELETE);
 			return sqlSessionTemplate.delete(mapper, obj);
 		} catch (Exception e) {
 			throw new DBAccessException(
@@ -77,46 +73,48 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		}
 	}
 
-	public <T> T queryForOne(Object id, Class<T> bean) throws DBAccessException {
+	public void query(Object obj) throws DBAccessException {
 		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
-			mapper = MapperUtils.getQueryMapper(bean);
-			return (T) sqlSessionTemplate.selectOne(mapper, id);
+			mapper = MapperUtils.getMapperSource(obj.getClass(),
+					MethodType.QUERY);
+			obj = sqlSessionTemplate.selectOne(mapper, obj);
 		} catch (Exception e) {
 			throw new DBAccessException(
-					"MyBatisDaoSupport do queryForOne Exception, Object["
-							+ bean.getName() + "],mapper[" + mapper + "]", e);
+					"MyBatisDaoSupport do query Exception, Object["
+							+ obj.getClass().getName() + "],mapper[" + mapper
+							+ "]", e);
 		}
 	}
 
-	public <T> List<T> queryForList(Map<String, Object> filter, Class<T> bean)
+	public int deleteForBatch(List<String> ids, Class bean)
 			throws DBAccessException {
 		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
-			mapper = MapperUtils.getQueryForListMapper(bean);
-			return (List<T>) sqlSessionTemplate.selectList(mapper, filter);
+			mapper = MapperUtils.getMapperSource(bean, MethodType.DELETE_BATCH);
+			return sqlSessionTemplate.delete(mapper, ids);
 		} catch (Exception e) {
 			throw new DBAccessException(
-					"MyBatisDaoSupport do queryForList Exception, Object["
+					"MyBatisDaoSupport do deleteForBatch Exception, Object["
 							+ bean.getName() + "],mapper[" + mapper + "]", e);
 		}
 	}
 
-	public <T> Page<T> queryForPage(Map<String, Object> filter, int start,
-			int limit, Class<T> bean) throws DBAccessException {
+	public <T> Page<T> queryForPage(Map<String, Object> filter, Class<T> bean)
+			throws DBAccessException {
+		// TODO Auto-generated method stub
 		String pageMapper = "";
 		String pageCountMapper = "";
 
-		filter.put(Config.PAGE_START, start);
-		filter.put(Config.PAGE_LIMIT, limit);
-
 		try {
-			pageMapper = MapperUtils.getQueryForPageCountMapper(bean);
-			pageCountMapper = MapperUtils.getQueryForPageCountMapper(bean);
+			pageMapper = MapperUtils.getMapperSource(bean,
+					MethodType.QUERY_PAGE);
+			pageCountMapper = MapperUtils.getMapperSource(bean,
+					MethodType.COUNT_PAGE);
 
 			Page<T> page = new Page<T>();
 
@@ -128,9 +126,6 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 						pageMapper, filter));
 			}
 
-			filter.remove(Config.PAGE_START);
-			filter.remove(Config.PAGE_LIMIT);
-
 			return page;
 		} catch (Exception e) {
 			throw new DBAccessException(
@@ -140,18 +135,19 @@ public class MyBatisDaoSupport implements SimpleDaoSupport {
 		}
 	}
 
-	public int deleteBatch(List<String> ids, Class bean)
+	public <T> List<T> queryForList(Map<String, Object> filter, Class<T> bean)
 			throws DBAccessException {
+		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
-			mapper = MapperUtils.getDeleteBatchMapper(bean);
-			return sqlSessionTemplate.delete(mapper, ids);
+			mapper = MapperUtils.getMapperSource(bean, MethodType.QUERY_LIST);
+			return (List<T>) sqlSessionTemplate.selectList(mapper, filter);
 		} catch (Exception e) {
 			throw new DBAccessException(
-					"MyBatisDaoSupport do deleteBatch Exception, Object["
+					"MyBatisDaoSupport do queryForList Exception, Object["
 							+ bean.getName() + "],mapper[" + mapper + "]", e);
 		}
 	}
-	
+
 }
