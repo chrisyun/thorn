@@ -1,4 +1,4 @@
-package org.thorn.dao.type;
+package org.thorn.dao.mybatis.type;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
