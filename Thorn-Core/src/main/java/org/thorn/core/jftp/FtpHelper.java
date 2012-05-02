@@ -13,38 +13,12 @@ import sun.net.TelnetOutputStream;
 import sun.net.ftp.FtpClient;
 
 /**
- * <p>
- * 文件名称: FtpHelper.java
- * </p>
- * <p>
- * 文件描述: 普通的ftp上传辅助类
- * </p>
- * <p>
- * 版权所有: 版权所有(C)2010
- * </p>
- * <p>
- * 内容摘要: 简要描述本文件的内容，包括主要模块、函数及能的说明
- * </p>
- * <p>
- * 其他说明: 其它内容的说明
- * </p>
- * <p>
- * 完成日期: 2012-3-13
- * </p>
- * <p>
- * 修改记录1:
- * </p>
  * 
- * <pre>
- *    修改日期:
- *    修 改 人:
- *    修改内容:
- * </pre>
- * <p>
- * 修改记录2：…
- * </p>
- * 
+ * @ClassName: FtpHelper 
+ * @Description: TODO
  * @author chenyun
+ * @date 2012-5-2 上午10:20:51 
+ *
  */
 public class FtpHelper extends JFtpHelper {
 

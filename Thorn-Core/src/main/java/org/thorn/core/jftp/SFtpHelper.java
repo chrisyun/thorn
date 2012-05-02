@@ -17,39 +17,14 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
 /**
- * <p>
- * 文件名称: SFtpHelper.java
- * </p>
- * <p>
- * 文件描述: SFTP方式的辅助类
- * </p>
- * <p>
- * 版权所有: 版权所有(C)2010
- * </p>
- * <p>
- * 内容摘要: 简要描述本文件的内容，包括主要模块、函数及能的说明
- * </p>
- * <p>
- * 其他说明: java.security.NoSuchAlgorithmException: DH KeyPairGenerator not
- * available 添加sunJDK:jdk1.5.0_15\jre\lib\ext\sunjce_provider.jar和sunpkcs11.jar
- * </p>
- * <p>
- * 完成日期: 2012-3-13
- * </p>
- * <p>
- * 修改记录1:
- * </p>
  * 
- * <pre>
- *    修改日期:
- *    修 改 人:
- *    修改内容:
- * </pre>
- * <p>
- * 修改记录2：…
- * </p>
- * 
+ * @ClassName: SFtpHelper 
+ * @Description: TODO
  * @author chenyun
+ * @date 2012-5-2 上午10:25:05 
+ * 出现java.security.NoSuchAlgorithmException: DH KeyPairGenerator not available
+ * 添加sunJDK:jdk1.5.0_15\jre\lib\ext\sunjce_provider.jar和sunpkcs11.jar
+ *
  */
 public class SFtpHelper extends JFtpHelper {
 
