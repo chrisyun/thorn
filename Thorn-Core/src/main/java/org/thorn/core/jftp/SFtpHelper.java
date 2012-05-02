@@ -19,7 +19,7 @@ import com.jcraft.jsch.SftpException;
 /**
  * 
  * @ClassName: SFtpHelper 
- * @Description: TODO
+ * @Description:
  * @author chenyun
  * @date 2012-5-2 上午10:25:05 
  * 出现java.security.NoSuchAlgorithmException: DH KeyPairGenerator not available

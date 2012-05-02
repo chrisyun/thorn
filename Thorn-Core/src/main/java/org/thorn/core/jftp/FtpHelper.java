@@ -15,7 +15,7 @@ import sun.net.ftp.FtpClient;
 /**
  * 
  * @ClassName: FtpHelper 
- * @Description: TODO
+ * @Description:
  * @author chenyun
  * @date 2012-5-2 上午10:20:51 
  *
