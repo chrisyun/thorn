@@ -26,7 +26,6 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 	}
 
 	public int save(Object obj) throws DBAccessException {
-		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
@@ -42,7 +41,6 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 	}
 
 	public int modify(Object obj) throws DBAccessException {
-		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
@@ -58,7 +56,6 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 	}
 
 	public int delete(Object obj) throws DBAccessException {
-		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
@@ -74,7 +71,6 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 	}
 
 	public void query(Object obj) throws DBAccessException {
-		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
@@ -91,7 +87,6 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 
 	public int deleteForBatch(List<String> ids, Class bean)
 			throws DBAccessException {
-		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {
@@ -106,7 +101,6 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 
 	public <T> Page<T> queryForPage(Map<String, Object> filter, Class<T> bean)
 			throws DBAccessException {
-		// TODO Auto-generated method stub
 		String pageMapper = "";
 		String pageCountMapper = "";
 
@@ -137,7 +131,6 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 
 	public <T> List<T> queryForList(Map<String, Object> filter, Class<T> bean)
 			throws DBAccessException {
-		// TODO Auto-generated method stub
 		String mapper = "";
 
 		try {

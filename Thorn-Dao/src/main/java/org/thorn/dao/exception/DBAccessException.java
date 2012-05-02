@@ -3,7 +3,7 @@ package org.thorn.dao.exception;
 /**
  * 
  * @ClassName: DBAccessException
- * @Description: TODO
+ * @Description:
  * @author chenyun
  * @date 2012-4-26 上午11:21:48
  * 

@@ -1,7 +1,7 @@
 package org.thorn.dao.core;
 /** 
  * @ClassName: Config 
- * @Description: TODO
+ * @Description:
  * @author chenyun
  * @date 2012-4-26 下午04:44:24 
  */

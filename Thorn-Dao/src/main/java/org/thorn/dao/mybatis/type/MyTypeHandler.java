@@ -10,7 +10,7 @@ import org.apache.ibatis.type.TypeHandler;
 
 /** 
  * @ClassName: MyTypeHandler 
- * @Description: TODO简单的mybatis类型转换器，字符串的转换
+ * @Description:简单的mybatis类型转换器，字符串的转换
  * @author chenyun
  * @date 2012-4-27 上午11:40:56 
  */
@@ -24,7 +24,6 @@ public class MyTypeHandler implements TypeHandler {
 
 	public Object getResult(ResultSet rs, String columnName)
 			throws SQLException {
-		// TODO Auto-generated method stub
 		return rs.getString(columnName);
 	}
 

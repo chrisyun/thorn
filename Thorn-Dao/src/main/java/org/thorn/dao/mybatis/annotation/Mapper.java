@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 /** 
  * @ClassName: Mapper 
- * @Description: TODO
+ * @Description:
  * @author chenyun
  * @date 2012-4-26 下午02:11:26 
  */
