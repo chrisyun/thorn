@@ -6,6 +6,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.util.Assert;
 
 /** 
  * @ClassName: SpringContext 
@@ -61,14 +62,8 @@ public class SpringContext implements ApplicationContextAware {
 	 * @return
 	 */
 	public static <T> T getBean(String name) {
-		assertContext();
+		Assert.isNull(applicationContext);
 		return (T) applicationContext.getBean(name);
-	}
-	
-	private static void assertContext() {
-		if (applicationContext == null) {
-			throw new IllegalStateException("applicaitonContext is null");
-		}
 	}
 
 }
