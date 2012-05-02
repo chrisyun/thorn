@@ -6,7 +6,7 @@ import org.apache.ibatis.cache.Cache;
 
 /** 
  * @ClassName: ExempleCache 
- * @Description: TODO mybatis自定义的缓存的示例，需要在每个二级sql映射文件中配置
+ * @Description: mybatis自定义的缓存的示例，需要在每个二级sql映射文件中配置
  * <cache type=”com.domain.something.MyCustomCache”>
  *		<property name=”cacheFile” value=”/tmp/my-custom-cache.tmp”/>
  *	</cache>
@@ -17,37 +17,37 @@ import org.apache.ibatis.cache.Cache;
 public class ExempleCache implements Cache {
 
 	public String getId() {
-		// TODO Auto-generated method stub
+		// : Auto-generated method stub
 		return null;
 	}
 
 	public int getSize() {
-		// TODO Auto-generated method stub
+		// : Auto-generated method stub
 		return 0;
 	}
 
 	public void putObject(Object key, Object value) {
-		// TODO Auto-generated method stub
+		// : Auto-generated method stub
 
 	}
 
 	public Object getObject(Object key) {
-		// TODO Auto-generated method stub
+		// : Auto-generated method stub
 		return null;
 	}
 
 	public Object removeObject(Object key) {
-		// TODO Auto-generated method stub
+		// : Auto-generated method stub
 		return null;
 	}
 
 	public void clear() {
-		// TODO Auto-generated method stub
+		// : Auto-generated method stub
 
 	}
 
 	public ReadWriteLock getReadWriteLock() {
-		// TODO Auto-generated method stub
+		// : Auto-generated method stub
 		return null;
 	}
 

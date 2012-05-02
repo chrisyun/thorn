@@ -29,7 +29,6 @@ public class SqlLoggingInterceptor implements Interceptor {
 	private String filter;
 
 	public Object intercept(Invocation invocation) throws Throwable {
-		// TODO Auto-generated method stub
 		StatementHandler statementHandler = (StatementHandler) invocation
 				.getTarget();
 
@@ -75,12 +74,10 @@ public class SqlLoggingInterceptor implements Interceptor {
 	}
 
 	public Object plugin(Object target) {
-		// TODO Auto-generated method stub
 		return Plugin.wrap(target, this);
 	}
 
 	public void setProperties(Properties properties) {
-		// TODO Auto-generated method stub
 		this.filter = properties.getProperty("filter");
 	}
 

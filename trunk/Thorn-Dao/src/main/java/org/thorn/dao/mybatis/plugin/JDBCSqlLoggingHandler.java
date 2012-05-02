@@ -18,7 +18,7 @@ package org.thorn.dao.mybatis.plugin;
 public class JDBCSqlLoggingHandler implements SqlLoggingHandler {
 
 	public void dispose(String sql) {
-		// TODO Auto-generated method stub
+		// : Auto-generated method stub
 		System.out.println(sql);
 	}
 
