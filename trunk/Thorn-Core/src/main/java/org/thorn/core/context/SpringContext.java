@@ -10,7 +10,7 @@ import org.springframework.util.Assert;
 
 /** 
  * @ClassName: SpringContext 
- * @Description: TODO
+ * @Description:
  * @author chenyun
  * @date 2012-4-26 上午10:57:30 
  */
@@ -22,7 +22,6 @@ public class SpringContext implements ApplicationContextAware {
 	
 	public synchronized void setApplicationContext(ApplicationContext applicationContext)
 			throws BeansException {
-		// TODO Auto-generated method stub
 		log.debug("注入ApplicationContext到SpringContext:" + applicationContext);
 		
 		if(this.applicationContext != null) {
@@ -54,7 +53,7 @@ public class SpringContext implements ApplicationContextAware {
 	
 	/**
 	 * 
-	 * @Description：TODO
+	 * @Description：
 	 * @author：chenyun 	        
 	 * @date：2012-4-26 上午11:12:16
 	 * @param <T>

@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * 
  * @ClassName: JFtpHelper
- * @Description: TODO
+ * @Description:
  * @author chenyun
  * @date 2012-5-2 上午10:21:45
  * 
@@ -39,7 +39,7 @@ public abstract class JFtpHelper {
 
 	/**
 	 * 
-	 * @Description：TODO登陆ftp服务器
+	 * @Description：登陆ftp服务器
 	 * @author：chenyun
 	 * @date：2012-5-2 上午10:22:04
 	 * @return 登陆成功返回true，失败则返回false
@@ -48,7 +48,7 @@ public abstract class JFtpHelper {
 
 	/**
 	 * 
-	 * @Description：TODO关闭ftp连接
+	 * @Description：关闭ftp连接
 	 * @author：chenyun
 	 * @date：2012-5-2 上午10:22:39
 	 */
@@ -56,7 +56,7 @@ public abstract class JFtpHelper {
 
 	/**
 	 * 
-	 * @Description：TODO上传文件
+	 * @Description：上传文件
 	 * @author：chenyun
 	 * @date：2012-5-2 上午10:22:53
 	 * @param file			上传的文件
@@ -68,7 +68,7 @@ public abstract class JFtpHelper {
 
 	/**
 	 * 
-	 * @Description：TODO下载文件
+	 * @Description：下载文件
 	 * @author：chenyun 	        
 	 * @date：2012-5-2 上午10:23:50
 	 * @param fileName		下载的文件名称
