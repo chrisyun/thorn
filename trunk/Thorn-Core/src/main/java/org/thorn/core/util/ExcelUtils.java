@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-
-import org.apache.poi.hssf.model.Workbook;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -27,37 +24,45 @@ public class ExcelUtils {
 
 	private static SimpleDateFormat df = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
-	
+
 	public static void setDateFormat(String dateFormat) {
 		df = new SimpleDateFormat(dateFormat);
 	}
-	
+
 	public void write2Excel(ArrayAdapter adapter, String sheetName,
-			OutputStream os) throws IOException {
+			int[] widthArray, ExcelStyle style, OutputStream os)
+			throws IOException {
 		// office 2003
 		HSSFWorkbook workBook = new HSSFWorkbook();
+		// init style
+		style.initCellStyle(workBook);
 
 		HSSFSheet sheet = workBook.createSheet(sheetName);
+		for (int i = 0; i < widthArray.length; i++) {
+			sheet.setColumnWidth(i, (int) (widthArray[i] * 35.7));
+		}
 
 		// creat excel txt header
 		HSSFRow header = sheet.createRow(0);
-		addColumn2Row(header, adapter.getHeader(), HSSFCell.CELL_TYPE_STRING);
-		
+		addColumn2Row(header, adapter.getHeader(), HSSFCell.CELL_TYPE_STRING,
+				style);
+
 		// 冻结标题栏
 		sheet.createFreezePane(0, 1);
-		
+
 		int excelColumn = adapter.getDataSourceOfSize();
 		for (int i = 0; i < excelColumn; i++) {
 			// 0 is txt header
 			HSSFRow row = sheet.createRow(i + 1);
 
-			addColumn2Row(row, adapter.getRow(i), -1);
+			addColumn2Row(row, adapter.getRow(i), -1, style);
 		}
 
 		workBook.write(os);
 	}
 
-	private void addColumn2Row(HSSFRow row, Object[] content, int cellType) {
+	private void addColumn2Row(HSSFRow row, Object[] content, int cellType,
+			ExcelStyle style) {
 
 		for (int i = 0; i < content.length; i++) {
 			HSSFCell cell = row.createCell(i);
@@ -100,6 +105,8 @@ public class ExcelUtils {
 			if (cellType > 0) {
 				cell.setCellType(cellType);
 			}
+
+			cell.setCellStyle(style.getCellStyle(row.getRowNum(), i));
 		}
 	}
 
