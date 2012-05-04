@@ -1,26 +1,28 @@
-var Common = {
-	config : {
-		msgTarget : '',
-		msgNull : '该输入项不能为空！',
-		redStar : '<em class="required">*</em>',
-		buttonWidth : {
-			minButton : 30,
-			defaultButton : 80
-		},
-		defaultPageSize : 15
+var Configuration = {
+	msg : {
+		NULL : '该输入项不能为空！',
+		DATE : '该输入项为日期类型，格式YYYY-MM-DD'
 	},
-	opType : {
-		Add : "add",
-		Update : "update",
-		Del : "delete"
+	handleMethod : {
+		PUT : 'put',
+		POST : 'post',
+		DELETE : 'delete',
+		GET : 'get'
 	},
+	redStar : '<em class="required">*</em>',
+	bodyWidth : document.body.clientWidth,
+	bodyHight : document.body.clientHeight,
+	defaultPageSize : 15
+}
+
+var Message = {
 	showProcessMsgBox : function(_msg) {
 		var msg = _msg || '数据提交中，请等候...';
 		Ext.MessageBox.show( {
 			msg : '<div style="margin: 5 5 8 15px;">' + msg + '</div>'
 					+ '<div style="margin-left: 8px;"><img src="'
 					+ sys.basePath
-					+ 'plugins/images/icons/loading.gif"/></div>',
+					+ 'resources/images/local/loading.gif"/></div>',
 			width : 300,
 			progress : false,
 			wait : false,
@@ -52,7 +54,7 @@ var Common = {
 		if (typeof data == "object") {
 			if (!data.sort) {
 				for ( var i in data)
-					r.push("\"" + i + "\":" + Common.debugJsonDetail(data[i]));
+					r.push("\"" + i + "\":" + Message.debugJsonDetail(data[i]));
 				if (!!document.all
 						&& !/^\n?function\s*toString\(\)\s*\{\n?\s*\[native code\]\n?\s*\}\n?\s*$/
 								.test(data.toString)) {
@@ -61,14 +63,14 @@ var Common = {
 				r = "{" + r.join() + "}"
 			} else {
 				for ( var i = 0; i < data.length; i++)
-					r.push(Common.debugJsonDetail(data[i]))
+					r.push(Message.debugJsonDetail(data[i]))
 				r = "[" + r.join() + "]";
 			}
 			return r;
 		}
 		return data.toString().replace(/\"\:/g, '":""');
 	}
-};
+}
 
 function CommonPageBar(store, pageSize, items) {
 	this.pagingToolBar = new Ext.PagingToolbar( {
@@ -155,7 +157,7 @@ function CommonAjax(url) {
 
 CommonAjax.prototype.request = function(params, showMsg, obj, callback) {
 	if (showMsg) {
-		Common.showProcessMsgBox();
+		Message.showProcessMsgBox();
 	}
 
 	Ext.Ajax.request( {
@@ -166,7 +168,7 @@ CommonAjax.prototype.request = function(params, showMsg, obj, callback) {
 		success : function(response, options) {
 			var result = Ext.util.JSON.decode(response.responseText);
 			if (showMsg) {
-				Common.hideProcessMsgBox();
+				Message.hideProcessMsgBox();
 			}
 
 			if (result.success) {
@@ -175,17 +177,17 @@ CommonAjax.prototype.request = function(params, showMsg, obj, callback) {
 			} else {
 				var failMsg = Ext.isEmpty(result.message) ? "数据处理时发生异常."
 						: result.message;
-				Common.showErrorMsgBox(failMsg);
+				Message.showErrorMsgBox(failMsg);
 			}
 		},
 		failure : function(response, options) {
 			if (showMsg) {
-				Common.hideProcessMsgBox();
+				Message.hideProcessMsgBox();
 			}
 			var result = Ext.util.JSON.decode(response.responseText);
 
 			var failMsg = Ext.isEmpty(result) ? "数据处理时发生异常." : result;
-			Common.showErrorMsgBox(failMsg);
+			Message.showErrorMsgBox(failMsg);
 		}
 	});
 }
@@ -193,7 +195,7 @@ CommonAjax.prototype.request = function(params, showMsg, obj, callback) {
 CommonAjax.prototype.submitForm = function(_form, params, showMsg, obj,
 		callback) {
 	if (showMsg) {
-		Common.showProcessMsgBox();
+		Message.showProcessMsgBox();
 	}
 
 	_form.submit( {
@@ -203,7 +205,7 @@ CommonAjax.prototype.submitForm = function(_form, params, showMsg, obj,
 		method : "POST",
 		success : function(form, action) {
 			if (showMsg) {
-				Common.hideProcessMsgBox();
+				Message.hideProcessMsgBox();
 			}
 			Ext.topShow.msg('成功提示', action.result.message);
 
@@ -212,11 +214,11 @@ CommonAjax.prototype.submitForm = function(_form, params, showMsg, obj,
 		},
 		failure : function(form, action) {
 			if (showMsg) {
-				Common.hideProcessMsgBox();
+				Message.hideProcessMsgBox();
 			}
 			var failMsg = Ext.isEmpty(action.result.message) ? "数据处理时发生异常."
 					: action.result.message;
-			Common.showErrorMsgBox(failMsg);
+			Message.showErrorMsgBox(failMsg);
 		}
 	});
 }
