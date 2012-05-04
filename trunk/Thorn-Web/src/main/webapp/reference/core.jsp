@@ -1,25 +1,25 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="org.cy.thorn.security.UserSecurity"%>
-<%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@page import="org.springframework.security.core.Authentication"%>
-<%@page import="org.cy.thorn.user.entity.User"%>
+<%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
+<%@page import="org.thorn.security.entity.UserSecurity"%>
+<%@page import="org.thorn.user.entity.User"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-String userid = "";
-String username = "";
-String usermail = "";
-String userTel = "";
+String userId = "";
+String userName = "";
+String cumail = "";
+String phone = "";
 
 if(auth != null) {
 	UserSecurity us = (UserSecurity) auth.getPrincipal();
 	User user = us.getUser();
-	userid = user.getUserid();
-	username = user.getUname();
-	usermail = user.getCumail();
-	userTel = user.getPhone();
+	userId = user.getUserId();
+	userName = user.getUserName();
+	cumail = user.getCumail();
+	phone = user.getPhone();
 }
 
 %>
@@ -32,10 +32,10 @@ if(auth != null) {
 	};
 
 	var user = {
-		userid 		: "<%=userid%>",
-		username 	: "<%=username%>",
-		usermail 	: "<%=usermail%>",
-		userTel 	: "<%=userTel%>"
+		userId 		: "<%=userId%>",
+		userName 	: "<%=userName%>",
+		cumail 		: "<%=cumail%>",
+		phone 		: "<%=phone%>"
 	}
 
 </script>
