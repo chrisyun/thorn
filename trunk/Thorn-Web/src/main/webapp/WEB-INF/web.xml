@@ -27,6 +27,17 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<!-- Acegi security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
 	<!-- 浏览器不支持put,delete等method,由该filter将/blog?_method=delete转换为标准的http delete方法 -->
 	<filter>
 		<filter-name>HiddenHttpMethodFilter</filter-name>
@@ -56,7 +67,7 @@
 	<!-- 验证码 -->
 	<servlet>
 		<servlet-name>ImageValidateCodeServlet</servlet-name>
-		<servlet-class>org.cy.thorn.security.ImageValidateCodeServlet</servlet-class>
+		<servlet-class>org.thorn.security.servlet.ImageValidateCodeServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ImageValidateCodeServlet</servlet-name>
