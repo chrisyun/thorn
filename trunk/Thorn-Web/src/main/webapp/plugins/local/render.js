@@ -46,8 +46,8 @@ var Render = {
 	},
 	viewFieldDetail : function (contentEl, title) {
 		if (this.viewFieldDetailWin == null) {
-			var windowWidth = document.body.clientWidth > 760 ? 760 : document.body.clientWidth - 10;
-			var windowHeight = document.body.clientHeight > 560 ? 560 : document.body.clientHeight - 10;
+			var windowWidth = Configuration.bodyWidth > 760 ? 760 : document.body.clientWidth - 10;
+			var windowHeight = Configuration.bodyHight > 560 ? 560 : document.body.clientHeight - 10;
 			this.viewFieldDetailWin = new Ext.Window({ //定义对话框
 				title		: title || '详细信息',
 				closeAction : 'hide',
