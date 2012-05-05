@@ -4,6 +4,17 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
+	<!-- Spring上下文 配置 -->
+	<context-param> 
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:Thorn-Spring.xml</param-value>
+	</context-param>
+
+	<!-- Spring监听器-->
+	 <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
 	<!-- Spring 刷新Introspector防止内存泄露 -->
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
@@ -45,11 +56,11 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:springmvc-servlet.xml</param-value>
 		</init-param>
-		<load-on-startup>2</load-on-startup>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>thorn</servlet-name>
-		<url-pattern>*.jml</url-pattern>
+		<url-pattern>*.jmt</url-pattern>
 	</servlet-mapping>
 
 

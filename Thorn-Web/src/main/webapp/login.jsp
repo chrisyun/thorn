@@ -32,7 +32,7 @@
 	
 	Ext.onReady(function() {
 		Ext.QuickTips.init();
-
+		
 		if(!Ext.isEmpty(user.userId)) {
 			window.location = loginUrl;
 		}
@@ -52,7 +52,7 @@
 				xtype : "textfield",
 				width : 150,
 				allowBlank: false,
-				blankText : Configuration.msg.NULL
+				blankText : Configuration.msg.EMPTY
 			},
 			items : [ {
 				id : "username",
@@ -79,7 +79,7 @@
 						fieldLabel : "验证码",
 						labelWidth : 100,
 						allowBlank: false,
-						blankText : Configuration.msg.NULL
+						blankText : Configuration.msg.EMPTY
 					}]
 				},{
 					xtype:'label',

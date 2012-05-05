@@ -22,12 +22,12 @@ import org.thorn.role.service.IRoleService;
 
 /**
  * 
- * @ClassName: InvocationSecurityMetadataSource
+ * @ClassName: InvocationSecurityMetadataSource 
  * @Description: 最核心的地方，就是提供某个资源对应的权限定义，即getAttributes方法返回的结果。
  *               此类在初始化时，应该取到所有资源及其对应角色的定义。
  * @author chenyun
- * @date 2012-5-4 下午03:31:36
- * 
+ * @date 2012-5-5 下午08:40:08 
+ *
  */
 public class InvocationSecurityMetadataSource implements
 		FilterInvocationSecurityMetadataSource {
