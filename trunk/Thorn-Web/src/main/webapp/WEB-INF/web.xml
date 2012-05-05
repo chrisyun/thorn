@@ -71,7 +71,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ImageValidateCodeServlet</servlet-name>
-		<url-pattern>/common/ImageValidateCodeServlet</url-pattern>
+		<url-pattern>/resources/ImageValidateCodeServlet</url-pattern>
 	</servlet-mapping>
 
 

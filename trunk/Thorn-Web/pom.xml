@@ -85,7 +85,11 @@
 			<scope>compile</scope>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.thorn.dao</groupId>
+			<artifactId>Thorn-Dao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 
 

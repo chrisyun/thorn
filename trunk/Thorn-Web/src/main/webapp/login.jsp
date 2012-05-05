@@ -28,7 +28,7 @@
 	var error = '${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}';
 	var userName = '${sessionScope['SPRING_SECURITY_LAST_USERNAME']}';
 	var loginUrl = sys.path + "/j_spring_security_check";
-	var authCodeUrl = sys.path + "/common/ImageValidateCodeServlet";
+	var authCodeUrl = sys.path + "/resources/ImageValidateCodeServlet";
 	
 	Ext.onReady(function() {
 		Ext.QuickTips.init();
