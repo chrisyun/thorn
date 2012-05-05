@@ -52,7 +52,7 @@
 				xtype : "textfield",
 				width : 150,
 				allowBlank: false,
-				blankText : Common.config.msgNull
+				blankText : Configuration.msg.NULL
 			},
 			items : [ {
 				id : "username",
@@ -79,7 +79,7 @@
 						fieldLabel : "验证码",
 						labelWidth : 100,
 						allowBlank: false,
-						blankText : Common.config.msgNull
+						blankText : Configuration.msg.NULL
 					}]
 				},{
 					xtype:'label',
