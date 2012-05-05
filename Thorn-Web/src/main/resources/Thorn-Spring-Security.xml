@@ -6,7 +6,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
-	<http access-denied-page="AlertAccessDenied.jsp"
+	<http access-denied-page="/AlertAccessDenied.jsp"
 		entry-point-ref="authenticationProcessingFilterEntryPoint">
 		<intercept-url pattern="/reference/**" filters="none" />
 		<intercept-url pattern="/resources/**" filters="none" />
@@ -20,11 +20,11 @@ http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 		-->
 
 		<!-- "记住我"功能，采用持久化策略（将用户的登录信息存放在数据库表中）,默认生效值是2周-->
-		<remember-me data-source-ref="dataSource"
+		<remember-me data-source-ref="dataSource-jdbc"
 			token-validity-seconds="604800000" />
 
 		<!-- 检测失效的sessionId,超时时定位到另外一个URL -->
-		<session-management invalid-session-url="AlertTimeOut.jsp">
+		<session-management invalid-session-url="/AlertTimeOut.jsp">
 			<!-- 第二次登录将被阻止 -->
 			<concurrency-control max-sessions="1"
 				error-if-maximum-exceeded="true" />
@@ -74,7 +74,7 @@ http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 		class="org.thorn.security.UserSecurityDetailsService">
 		<beans:property name="userService" ref="userService" />
 		<beans:property name="roleService" ref="roleService" />
-		<beans:property name="userCache" ref="userCache" />
+		<beans:property name="userCache" ref="userSecurityCache" />
 	</beans:bean>
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref='userDetailsManager'>
