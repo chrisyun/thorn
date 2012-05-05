@@ -1,5 +1,6 @@
 package org.thorn.resource.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,13 @@ public class ResourceService implements IResourceService {
 	
 	public List<Resource> queryAllResource() throws DBAccessException {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<Resource>();
 	}
 
 	public List<Resource> queryResourceByRole(String roleId)
 			throws DBAccessException {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<Resource>();
 	}
 
 }
