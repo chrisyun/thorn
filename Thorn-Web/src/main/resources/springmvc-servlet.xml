@@ -10,6 +10,17 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		lazy-init="false">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc-config.xml</value>
+			</list>
+		</property>
+	</bean>
+
+
 	<!-- 自动扫描的包名 -->
 	<context:component-scan base-package="org.thorn.web" />
 	<!-- 默认的注解映射的支持 -->
@@ -26,10 +37,23 @@
 		<property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
 
+	<!-- 主题皮肤 -->
+	<bean id="themeSource"
+		class="org.springframework.ui.context.support.ResourceBundleThemeSource">
+		<property name="basenamePrefix" value="themes" />
+	</bean>
+	<bean id="themeResolver"
+		class="org.springframework.web.servlet.theme.CookieThemeResolver">
+		<property name="defaultThemeName" value="default" />
+		<!-- 秒为单位 -->
+		<property name="cookieMaxAge" value="60000" />
+	</bean>
+
+
 	<import resource="classpath:Thorn-Spring-Dao.xml" />
 	<import resource="classpath:Thorn-Spring-Mybatis.xml" />
 	<import resource="classpath:Thorn-Spring-ehcache.xml" />
-	
+
 	<import resource="Thorn-Spring-Service.xml" />
 	<import resource="Thorn-Spring-Security.xml" />
 
