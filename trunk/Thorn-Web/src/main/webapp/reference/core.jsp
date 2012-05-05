@@ -23,8 +23,7 @@ if(auth != null) {
 }
 
 %>
-<jsp:include page="ext.jsp"></jsp:include>
-
+<jsp:include page="/springTag/ext.jmt"></jsp:include>
 <script type="text/javascript">
 	var sys = {
 		path		: "<%=path%>",

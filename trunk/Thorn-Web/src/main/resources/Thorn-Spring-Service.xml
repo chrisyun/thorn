@@ -9,6 +9,8 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 	
+	<bean class="org.thorn.core.context.SpringContext"></bean>
+	
 	<bean id="roleService" class="org.thorn.role.service.RoleService"/>
 	
 	<bean id="resourceService" class="org.thorn.resource.service.ResourceService"/>

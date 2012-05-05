@@ -4,7 +4,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<link rel="stylesheet" type="text/css" href="<%=path %>/<spring:theme code="css" />" />
+<link rel="stylesheet" type="text/css" href="<%=path %><spring:theme code="css" />" />
 
 <!-- 驱动JS -->
 <script type="text/javascript" src="<%=path %>/plugins/ext-3.2.1/adapter/ext/ext-base.js" ></script>

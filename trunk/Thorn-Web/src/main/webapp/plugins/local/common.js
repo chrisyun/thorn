@@ -1,6 +1,6 @@
 var Configuration = {
 	msg : {
-		NULL : '该输入项不能为空！',
+		EMPTY : '该输入项不能为空！',
 		DATE : '该输入项为日期类型，格式YYYY-MM-DD'
 	},
 	handleMethod : {
@@ -10,10 +10,10 @@ var Configuration = {
 		GET : 'get'
 	},
 	redStar : '<em class="required">*</em>',
-	bodyWidth : document.body.clientWidth,
-	bodyHight : document.body.clientHeight,
+	bodyWidth : 1024,
+	bodyHight : 600,
 	defaultPageSize : 15
-}
+};
 
 var Message = {
 	showProcessMsgBox : function(_msg) {
