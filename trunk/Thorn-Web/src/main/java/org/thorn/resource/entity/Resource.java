@@ -13,7 +13,7 @@ public class Resource implements Serializable {
 	/** */
 	private static final long serialVersionUID = -4442394145188069847L;
 
-	private String sourceCode;
+	private int sourceCode;
 
 	private String sourceUrl;
 
@@ -23,7 +23,7 @@ public class Resource implements Serializable {
 
 	private String isShow;
 
-	private String parentSource;
+	private int parentSource;
 
 	private int sortNum;
 
@@ -45,11 +45,11 @@ public class Resource implements Serializable {
 		this.isShow = isShow;
 	}
 
-	public String getParentSource() {
+	public int getParentSource() {
 		return parentSource;
 	}
 
-	public void setParentSource(String parentSource) {
+	public void setParentSource(int parentSource) {
 		this.parentSource = parentSource;
 	}
 
@@ -69,11 +69,11 @@ public class Resource implements Serializable {
 		this.iconsCls = iconsCls;
 	}
 
-	public String getSourceCode() {
+	public int getSourceCode() {
 		return sourceCode;
 	}
 
-	public void setSourceCode(String sourceCode) {
+	public void setSourceCode(int sourceCode) {
 		this.sourceCode = sourceCode;
 	}
 

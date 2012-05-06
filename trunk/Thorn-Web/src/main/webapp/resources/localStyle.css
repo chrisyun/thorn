@@ -11,9 +11,8 @@
 .slik-close { background-image: url(images/local/icons/close.png) !important; background-repeat: no-repeat; }
 .slik-search { background-image: url(images/local/icons/search.png) !important; background-repeat: no-repeat; }
 .slik-refresh { background-image: url(images/local/icons/refresh.png) !important; background-repeat: no-repeat; }
-/**
- *	main
- */
+
+/**main*/
 .silk-nav { background-image: url(images/local/icons/folder_go.png) !important; background-repeat: no-repeat; }
 .silk-settings { background-image: url(images/local/icons/folder_wrench.png) !important; background-repeat: no-repeat; }
 .silk-table-refresh { background-image: url(images/local/icons/table_refresh.png) !important; background-repeat: no-repeat; }
@@ -22,3 +21,8 @@
 .silk-grid { background-image: url(images/local/icons/grid.png) !important; background-repeat: no-repeat; }
 
 .silk-logout { background-image: url(images/local/icons/logout.gif) !important; background-repeat: no-repeat; }
+
+
+
+/**tree*/
+.tree-user { background-image: url(images/local/icons/user.gif) !important; background-repeat: no-repeat; }

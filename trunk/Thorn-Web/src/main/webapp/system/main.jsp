@@ -18,34 +18,32 @@
 		Ext.QuickTips.init();
 
 		var loader = new Ext.tree.TreeLoader( {
-			url : sys.basePath + "/system/tree.jsp"
+			url : sys.basePath + "/resource/getLeftTree.jmt"
 		});
 		loader.on("beforeload", function(loader, node) {
-			loader.baseParams.parentId = node.id;
+			loader.baseParams.pid = node.id;
 		});
 		
 		var sysMenuTree = new Ext.tree.TreePanel( {
-		    autoScroll:true,
 		    border: false,
 		    useArrows: true,
 			rootVisible: false,
 		 	loader: loader,
 			root : new Ext.tree.AsyncTreeNode({
 				text : "系统管理",
-				id: 'SYS_RES',
+				id: '0',
 				leaf: false
 			})
 		});
 		
 		var navMenuTree = new Ext.tree.TreePanel( {
-		    autoScroll:true,
 		    border: false,
 		    useArrows: true,
 			rootVisible: false,
 			loader: loader,
 			root : new Ext.tree.AsyncTreeNode({
 				text : "导航菜单",
-				id: 'NAV_RES',
+				id: '1',
 				leaf: false
 			})
 		});
@@ -114,10 +112,10 @@
 		});
 
 		var treeClick = function(node, ev){
-			var isMoudle = node.attributes.attributes.isModule;
-			var openUrl = sys.basePath + node.attributes.attributes.url;
-
-			if(isMoudle == "YES") {
+			var isLeaf = node.leaf;
+			var openUrl = sys.basePath + node.targetUrl;
+			
+			if(isLeaf == false || Ext.isEmpty(openUrl)) {
 				return ;
 			}
 

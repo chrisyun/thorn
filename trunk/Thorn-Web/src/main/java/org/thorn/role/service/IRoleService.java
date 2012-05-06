@@ -24,7 +24,7 @@ public interface IRoleService {
 	 * @return
 	 * @throws DBAccessException
 	 */
-	public List<Role> queryRolesByResource(List<String> source) throws DBAccessException;
+	public List<Role> queryRolesByResource(List<Integer> source) throws DBAccessException;
 	
 }
 

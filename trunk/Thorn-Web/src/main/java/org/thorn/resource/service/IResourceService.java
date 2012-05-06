@@ -17,5 +17,6 @@ public interface IResourceService {
 	
 	public List<Resource> queryAllResource() throws DBAccessException;
 	
+	public List<Resource> queryLeftTree(String pid) throws DBAccessException;
 }
 
