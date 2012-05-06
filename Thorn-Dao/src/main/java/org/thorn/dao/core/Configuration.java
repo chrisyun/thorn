@@ -11,6 +11,14 @@ public interface Configuration {
 	public final static String PAGE_START = "start";
 	/** 分页查询的limit参数 */
 	public final static String PAGE_LIMIT = "limit";
+	/** 排序字段参数 */
+	public final static String SROT_NAME = "sort";
+	/** 顺序参数 */
+	public final static String ORDER_NAME = "dir";
+	
+	public final static String ORDER_ASC = "asc";
+	
+	public final static String ORDER_DESC = "desc";
 	/** YES **/
 	public final static String DB_YES = "YES";
 	/** NO **/
