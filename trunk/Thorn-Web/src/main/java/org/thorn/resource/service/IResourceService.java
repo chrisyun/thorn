@@ -13,7 +13,7 @@ import org.thorn.resource.entity.Resource;
  */
 public interface IResourceService {
 	
-	public List<Resource> queryResourceByRole(String roleId) throws DBAccessException;
+//	public List<Resource> queryResourceByRole(List<String> roleId) throws DBAccessException;
 	
 	public List<Resource> queryAllResource() throws DBAccessException;
 	

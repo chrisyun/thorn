@@ -1,14 +1,17 @@
 package org.thorn.resource.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.thorn.dao.core.Configuration;
 import org.thorn.dao.exception.DBAccessException;
-import org.thorn.dao.mybatis.helper.MyBatisDaoSupport;
+import org.thorn.resource.dao.IResourceDao;
 import org.thorn.resource.entity.Resource;
 
 /**
@@ -19,23 +22,21 @@ import org.thorn.resource.entity.Resource;
  * @date 2012-5-5 下午06:08:54 
  *
  */
-public class ResourceService implements IResourceService {
+public class ResourceServiceImpl implements IResourceService {
 	
-	static Logger log = LoggerFactory.getLogger(ResourceService.class);
+	static Logger log = LoggerFactory.getLogger(ResourceServiceImpl.class);
 	
 	@Autowired
-	@Qualifier("myBatisDaoSupport")
-	private MyBatisDaoSupport daoSupport;
+	@Qualifier("resourceDao")
+	private IResourceDao resourceDao;
 	
 	public List<Resource> queryAllResource() throws DBAccessException {
-		// TODO Auto-generated method stub
-		return new ArrayList<Resource>();
-	}
-
-	public List<Resource> queryResourceByRole(String roleId)
-			throws DBAccessException {
-		// TODO Auto-generated method stub
-		return new ArrayList<Resource>();
+		Map<String, Object> filter = new HashMap<String, Object>();
+		
+		// 根节点不展示，根节点无URL
+		filter.put("isleaf", Configuration.DB_YES);
+		
+		return resourceDao.queryByList(filter);
 	}
 
 }
