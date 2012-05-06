@@ -21,7 +21,7 @@ public class RoleServiceImpl implements IRoleService {
 	@Qualifier("roleDao")
 	private IRoleDao roleDao;
 	
-	public List<Role> queryRolesByResource(List<String> source)
+	public List<Role> queryRolesByResource(List<Integer> source)
 			throws DBAccessException {
 		return roleDao.queryRolesByResource(source);
 	}

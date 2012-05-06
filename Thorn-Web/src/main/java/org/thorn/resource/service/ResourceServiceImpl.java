@@ -39,5 +39,16 @@ public class ResourceServiceImpl implements IResourceService {
 		return resourceDao.queryByList(filter);
 	}
 
+	public List<Resource> queryLeftTree(String pid) throws DBAccessException {
+		
+		Map<String, Object> filter = new HashMap<String, Object>();
+		filter.put("parentSource", pid);
+		filter.put("isShow", Configuration.DB_YES);
+		filter.put(Configuration.SROT_NAME, "SORTNUM");
+		filter.put(Configuration.ORDER_NAME, Configuration.ORDER_ASC);
+		
+		return resourceDao.queryByList(filter);
+	}
+
 }
 
