@@ -32,44 +32,44 @@
 	<sql id="Where_Clause">
 		<where>
 			<if test="userId != null">
-				and U.USERID = #{userId,jdbcType=VARCHAR},
+				and U.USERID = #{userId,jdbcType=VARCHAR}
       		</if>
       		<if test="idOrAccount != null">
 				and (U.USERID = #{idOrAccount,jdbcType=VARCHAR}
-					 or U.USERACCOUNT = #{idOrAccount,jdbcType=VARCHAR}),
+					 or U.USERACCOUNT = #{idOrAccount,jdbcType=VARCHAR})
       		</if>
 			<if test="userName != null">
-				and U.UNAME like '%' || #{userName,jdbcType=VARCHAR} || '%',
+				and U.UNAME like '%' || #{userName,jdbcType=VARCHAR} || '%'
       		</if>
 			<if test="sn != null">
-				and U.SN = #{sn,jdbcType=VARCHAR},
+				and U.SN = #{sn,jdbcType=VARCHAR}
       		</if>
 			<if test="userAccount != null">
-				and U.USERACCOUNT = #{userAccount,jdbcType=VARCHAR},
+				and U.USERACCOUNT = #{userAccount,jdbcType=VARCHAR}
       		</if>
 			<if test="userPwd != null">
-				and U.USERPWD = #{userPwd,jdbcType=VARCHAR},
+				and U.USERPWD = #{userPwd,jdbcType=VARCHAR}
       		</if>
 			<if test="gender != null">
-				and U.GENDER = #{gender,jdbcType=VARCHAR},
+				and U.GENDER = #{gender,jdbcType=VARCHAR}
       		</if>
 			<if test="cumail != null">
-				and U.CUMAIL = #{cumail,jdbcType=VARCHAR},
+				and U.CUMAIL = #{cumail,jdbcType=VARCHAR}
       		</if>
 			<if test="phone != null">
-				and U.PHONE = #{phone,jdbcType=VARCHAR},
+				and U.PHONE = #{phone,jdbcType=VARCHAR}
       		</if>
 			<if test="orgid != null">
-				and U.ORGID = #{orgId,jdbcType=DECIMAL},
+				and U.ORGID = #{orgId,jdbcType=DECIMAL}
       		</if>
 			<if test="isDisabled != null">
-				and U.ISDISABLED = #{isDisabled,jdbcType=VARCHAR},
+				and U.ISDISABLED = #{isDisabled,jdbcType=VARCHAR}
       		</if>
 			<if test="isShow != null">
-				and U.ISSHOW = #{isShow,jdbcType=VARCHAR},
+				and U.ISSHOW = #{isShow,jdbcType=VARCHAR}
       		</if>
 			<if test="defaultrole != null">
-				and U.DEFAULTROLE = #{defaultRole,jdbcType=VARCHAR},
+				and U.DEFAULTROLE = #{defaultRole,jdbcType=VARCHAR}
       		</if>
 		</where>
 	</sql>

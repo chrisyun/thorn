@@ -117,7 +117,7 @@
 						return;
 					}
 					
-					Common.showProcessMsgBox();
+					Message.showProcessMsgBox();
 					loginPanel.form.submit();
 				}
 			}, {
@@ -131,8 +131,9 @@
 
 		refresh();
 		
-		if(iSerror == 'true') {
-			Ext.getDom("loginMsg").innerHTML = error;
+		if(iSerror == 'true' && !Ext.isEmpty(error) ) {
+			Message.showErrorMsgBox(error);
+			//Ext.getDom("loginMsg").innerHTML = error;
 		}
 
 		if(!Ext.isEmpty(userName)) {

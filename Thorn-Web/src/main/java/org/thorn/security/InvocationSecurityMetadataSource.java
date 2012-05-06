@@ -53,7 +53,9 @@ public class InvocationSecurityMetadataSource implements
 	 */
 	public InvocationSecurityMetadataSource(IResourceService resourceService,
 			IRoleService roleService) throws DBAccessException {
-
+		
+//		System.out.println(SecurityEncoderUtils.encodeUserPassword("wwwwww", "ADMIN"));
+		
 		resourceMap = new HashMap<String, String>();
 
 		this.resourceService = resourceService;

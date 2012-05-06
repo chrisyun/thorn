@@ -61,7 +61,7 @@ public class UserSecurity implements UserDetails {
 	}
 	
 	public String getUsername() {
-		return user.getUserName();
+		return user.getUserId();
 	}
 	
 	public User getUser() {
@@ -76,7 +76,7 @@ public class UserSecurity implements UserDetails {
 	 * 判断账号是否过期
 	 */
 	public boolean isAccountNonExpired() {
-		if(StringUtils.equals(user.getIsDisabled(), SecurityConfiguration.YES)) {
+		if(StringUtils.equals(user.getIsDisabled(), SecurityConfiguration.NO)) {
 			return true;
 		} 
 		
