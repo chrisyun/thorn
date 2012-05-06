@@ -89,7 +89,7 @@
 			},{
 				xtype : "checkbox",
 				name : "_spring_security_remember_me",
-				boxLabel : "三天内不再登录"
+				boxLabel : "两周内不再登录"
 			},{
 				xtype:'panel',
 				width: 370,
