@@ -51,9 +51,7 @@
 		<constructor-arg index="1" value="BATCH" />-->
 	</bean>
 	
-	<bean id="myBatisDaoSupport" class="org.thorn.dao.mybatis.helper.MyBatisDaoSupportImpl">
-		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
-	</bean>
+	<bean id="myBatisDaoSupport" class="org.thorn.dao.mybatis.helper.MyBatisDaoSupportImpl" />
 	
 	
 </beans>
