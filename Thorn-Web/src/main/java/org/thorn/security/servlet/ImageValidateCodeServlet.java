@@ -20,11 +20,12 @@ import org.thorn.security.SecurityConfiguration;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 /**
- * 描述：画验证码类
  * 
- * @author 陈云 2008-5-11
- *         <p>
- * 
+ * @ClassName: ImageValidateCodeServlet 
+ * @Description: 
+ * @author chenyun
+ * @date 2012-5-6 下午03:18:36 
+ *
  */
 public class ImageValidateCodeServlet extends HttpServlet {
 	
@@ -104,7 +105,7 @@ public class ImageValidateCodeServlet extends HttpServlet {
 			g.drawOval(x, y, 4, 4);
 		}
 		// 设置字体，下面准备画随机数
-		g.setFont(new Font("", Font.PLAIN, 20));
+		g.setFont(new Font("", Font.PLAIN, 25));
 		// 随机字符串
 		StringBuffer sbRandomValidateCode = new StringBuffer();
 		for (int i = 0; i < SecurityConfiguration.AUTHCODE_NUM_LENGTH; i++) {
@@ -119,13 +120,13 @@ public class ImageValidateCodeServlet extends HttpServlet {
 			g.drawString(rand, (17 + random.nextInt(3)) * i + 8, 24);
 
 			// 生成干扰线
-			for (int k = 0; k < 12; k++) {
-				int x = random.nextInt(width);
-				int y = random.nextInt(height);
-				int xl = random.nextInt(9);
-				int yl = random.nextInt(9);
-				g.drawLine(x, y, x + xl, y + yl);
-			}
+//			for (int k = 0; k < 12; k++) {
+//				int x = random.nextInt(width);
+//				int y = random.nextInt(height);
+//				int xl = random.nextInt(9);
+//				int yl = random.nextInt(9);
+//				g.drawLine(x, y, x + xl, y + yl);
+//			}
 		}
 
 		// 将生成的随机字符串写入Session
