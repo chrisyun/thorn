@@ -127,7 +127,6 @@
     			openUrl = openUrl + prefix + "random=" + Math.random();
            	}
 			
-			
 			var activateId = mainTab.getActiveTab().getItemId();
 			
 			if(tabNum < 2) {
