@@ -38,7 +38,12 @@ public class EhCacheService implements CacheService {
 	public Object get(String key) throws CacheException {
 		try {
 			Element e = cache.get(key);
-			return e.getValue();
+			
+			if(e != null) {
+				return e.getValue();
+			} else {
+				return null;
+			}
 		} catch (Exception e) {
 			throw new CacheException("Ehcache do get runtimeException", e);
 		}
