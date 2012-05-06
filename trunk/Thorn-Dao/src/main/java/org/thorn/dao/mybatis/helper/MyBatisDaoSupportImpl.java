@@ -6,6 +6,8 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
 import org.thorn.dao.mybatis.annotation.MapperUtils;
@@ -14,16 +16,10 @@ import org.thorn.dao.mybatis.annotation.MethodType;
 public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 
 	static Logger log = LoggerFactory.getLogger(MyBatisDaoSupportImpl.class);
-
+	
+	@Autowired
+	@Qualifier("sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
-
-	public SqlSessionTemplate getSqlSessionTemplate() {
-		return sqlSessionTemplate;
-	}
-
-	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		this.sqlSessionTemplate = sqlSessionTemplate;
-	}
 
 	public int save(Object obj) throws DBAccessException {
 		String mapper = "";
