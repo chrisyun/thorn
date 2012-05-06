@@ -1,12 +1,20 @@
 package org.thorn.web;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.theme.CookieThemeResolver;
+import org.thorn.core.context.SpringContext;
 
 /**
  * @ClassName: TagController
@@ -24,14 +32,16 @@ public class SystemController {
 
 	@RequestMapping("/theme/change")
 	@ResponseBody
-	public Status changeTheme(String theme, HttpServletResponse response) {
-		Cookie cookie = new Cookie(
-				CookieThemeResolver.THEME_REQUEST_ATTRIBUTE_NAME, theme);
+	public Status changeTheme(String theme,HttpServletResponse response) {
+		Status status = new Status();
+		
+		Cookie cookie = new Cookie(CookieThemeResolver.DEFAULT_COOKIE_NAME,theme);
+		cookie.setPath("/");
+		cookie.setMaxAge(600000);
 		response.addCookie(cookie);
 		
-		Status status = new Status();
-		status.setMsg("更换皮肤成功!");
-		
+		status.setMessage("更换皮肤成功!");
+
 		return status;
 	}
 

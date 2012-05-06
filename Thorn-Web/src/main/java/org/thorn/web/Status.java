@@ -17,24 +17,24 @@ public class Status implements Serializable {
 	/** */
 	private static final long serialVersionUID = 1902952901629816953L;
 	
-	private String flag = SUCCESS;
+	private boolean success = true;
 	
-	private String msg;
+	private String message;
 
-	public String getFlag() {
-		return flag;
+	public boolean isSuccess() {
+		return success;
 	}
 
-	public void setFlag(String flag) {
-		this.flag = flag;
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 
-	public String getMsg() {
-		return msg;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setMsg(String msg) {
-		this.msg = msg;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }
 

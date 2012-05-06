@@ -28,13 +28,16 @@
 	var error = '${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}';
 	var userName = '${sessionScope['SPRING_SECURITY_LAST_USERNAME']}';
 	var loginUrl = sys.path + "/j_spring_security_check";
+	var indexUrl = sys.path + "/system/main.jsp";
 	var authCodeUrl = sys.path + "/resources/ImageValidateCodeServlet";
 	
 	Ext.onReady(function() {
 		Ext.QuickTips.init();
 		
-		if(!Ext.isEmpty(user.userId)) {
-			window.location = loginUrl;
+		var securityCookie = getCookie("SPRING_SECURITY_REMEMBER_ME_COOKIE");
+		
+		if(!Ext.isEmpty(user.userId) || !Ext.isEmpty(securityCookie)) {
+			window.location = indexUrl;
 		}
 		
 		var loginPanel = new Ext.FormPanel( {
@@ -132,7 +135,7 @@
 		refresh();
 		
 		if(iSerror == 'true' && !Ext.isEmpty(error) ) {
-			Message.showErrorMsgBox(error);
+			Message.showErrorMsgBox(error,"登陆失败");
 			//Ext.getDom("loginMsg").innerHTML = error;
 		}
 

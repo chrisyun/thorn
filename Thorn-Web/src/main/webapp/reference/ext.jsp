@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- local css and js -->
 <script type="text/javascript" src="<%=path %>/plugins/local/common.js" ></script>
 <script type="text/javascript" src="<%=path %>/plugins/local/render.js" ></script>
-<script type="text/javascript" src="<%=path %>/plugins/local/styleswitcher.js" ></script>
+<script type="text/javascript" src="<%=path %>/plugins/local/theme.js" ></script>
 <link rel="stylesheet" type="text/css" href="<%=path %>/resources/localStyle.css" />
 
 
