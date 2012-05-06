@@ -61,7 +61,7 @@ public class SpringContext implements ApplicationContextAware {
 	 * @return
 	 */
 	public static <T> T getBean(String name) {
-		Assert.isNull(applicationContext);
+		Assert.notNull(applicationContext);
 		return (T) applicationContext.getBean(name);
 	}
 
