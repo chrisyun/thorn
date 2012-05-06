@@ -21,7 +21,7 @@ public class ResourceDaoImpl implements IResourceDao {
 
 	static Logger log = LoggerFactory.getLogger(ResourceDaoImpl.class);
 
-	private final static String nameSpace = "ResourceMapper";
+	private final static String nameSpace = "ResourceMapper.";
 
 	@Autowired
 	@Qualifier("sqlSessionTemplate")

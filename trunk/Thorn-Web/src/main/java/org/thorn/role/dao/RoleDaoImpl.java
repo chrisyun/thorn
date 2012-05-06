@@ -19,7 +19,7 @@ import org.thorn.role.entity.Role;
 public class RoleDaoImpl implements IRoleDao {
 	static Logger log = LoggerFactory.getLogger(RoleDaoImpl.class);
 
-	private final static String nameSpace = "RoleMapper";
+	private final static String nameSpace = "RoleMapper.";
 
 	@Autowired
 	@Qualifier("sqlSessionTemplate")

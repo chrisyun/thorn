@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.thorn.dao.exception.DBAccessException;
-import org.thorn.role.dao.RoleDaoImpl;
 import org.thorn.user.entity.User;
 
 /**
@@ -21,7 +20,7 @@ public class UserDaoImpl implements IUserDao {
 
 	static Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
 
-	private final static String nameSpace = "UserMapper";
+	private final static String nameSpace = "UserMapper.";
 
 	@Autowired
 	@Qualifier("sqlSessionTemplate")

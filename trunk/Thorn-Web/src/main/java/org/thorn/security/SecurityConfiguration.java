@@ -33,9 +33,13 @@ public interface SecurityConfiguration {
 	 * 是否
 	 */
 	public static final String YES = "YES";
+	
+	public static final String NO = "NO";
 	/**
 	 * 系统管理员角色ID
 	 */
 	public static final String SYS_ADMIN_ROLE = "SYSADMIN";
+	
+	public static final String SPRING_ENCODER_BEAN = "passwordEncoder";
 }
 
