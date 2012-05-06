@@ -15,7 +15,7 @@ import org.springframework.web.servlet.theme.CookieThemeResolver;
  * @date 2012-5-5 下午11:00:33
  */
 @Controller
-public class TagController {
+public class SystemController {
 
 	@RequestMapping("/springTag/ext")
 	public String ext() {
