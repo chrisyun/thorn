@@ -27,7 +27,6 @@
 		var sysMenuTree = new Ext.tree.TreePanel( {
 		    autoScroll:true,
 		    border: false,
-		    iconCls: 'nav',
 		    useArrows: true,
 			rootVisible: false,
 		 	loader: loader,
@@ -41,7 +40,6 @@
 		var navMenuTree = new Ext.tree.TreePanel( {
 		    autoScroll:true,
 		    border: false,
-		    iconCls: 'nav',
 		    useArrows: true,
 			rootVisible: false,
 			loader: loader,
@@ -51,68 +49,6 @@
 				leaf: false
 			})
 		});
-		
-		var skinItemArray = [{
-			text: '传统',
-			handler : function(){
-				setActiveStyleSheet("blue");
-			}
-		},{
-			text: '银灰',
-			handler : function(){
-				setActiveStyleSheet("gray");
-			}
-		},{
-			text: 'xtheme-black',
-			handler : function(){
-				setActiveStyleSheet("xtheme-black");
-			}
-		},{
-			text: 'xtheme-blue03',
-			handler : function(){
-				setActiveStyleSheet("xtheme-blue03");
-			}
-		},{
-			text: 'xtheme-brown',
-			handler : function(){
-				setActiveStyleSheet("xtheme-brown");
-			}
-		},{
-			text: 'xtheme-brown02',
-			handler : function(){
-				setActiveStyleSheet("xtheme-brown02");
-			}
-		},{
-			text: 'xtheme-gray',
-			handler : function(){
-				setActiveStyleSheet("xtheme-gray");
-			}
-		},{
-			text: 'xtheme-green',
-			handler : function(){
-				setActiveStyleSheet("xtheme-green");
-			}
-		},{
-			text: 'xtheme-pink',
-			handler : function(){
-				setActiveStyleSheet("xtheme-pink");
-			}
-		},{
-			text: 'xtheme-purple',
-			handler : function(){
-				setActiveStyleSheet("xtheme-purple");
-			}
-		},{
-			text: 'xtheme-red03',
-			handler : function(){
-				setActiveStyleSheet("xtheme-red03");
-			}
-		},{
-			text: '黑色',
-			handler : function(){
-				setActiveStyleSheet("access");
-			}
-		}];
 		
 		var menuPanel = new Ext.Panel( {
 			region : 'west',

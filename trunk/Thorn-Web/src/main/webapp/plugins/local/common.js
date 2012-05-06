@@ -1,5 +1,7 @@
 var Configuration = {
 	msg : {
+		SUCCESS : 'success',
+		FAILURE : 'failure',
 		EMPTY : '该输入项不能为空！',
 		DATE : '该输入项为日期类型，格式YYYY-MM-DD'
 	},
@@ -32,9 +34,9 @@ var Message = {
 	hideProcessMsgBox : function() {
 		Ext.MessageBox.hide();
 	},
-	showErrorMsgBox : function(failMsg) {
+	showErrorMsgBox : function(failMsg,title) {
 		Ext.Msg.show( {
-			title : '失败提示',
+			title : title || '失败提示',
 			msg : failMsg || '对不起，您的操作失败.',
 			modal : false,
 			buttons : Ext.Msg.OK,
@@ -170,7 +172,7 @@ CommonAjax.prototype.request = function(params, showMsg, obj, callback) {
 			if (showMsg) {
 				Message.hideProcessMsgBox();
 			}
-
+			
 			if (result.success) {
 				Ext.topShow.msg("成功提示", result.message);
 				callback(obj);
@@ -222,3 +224,16 @@ CommonAjax.prototype.submitForm = function(_form, params, showMsg, obj,
 		}
 	});
 }
+
+function getCookie(key) {
+	var arrStr = document.cookie.split("; ");  
+  	for (var i = 0; i < arrStr.length; i++) {  
+  		var temp = arrStr[i].split("=");  
+  		if (temp[0] == key)  {
+    		return unescape(temp[1]); 
+  		}
+  	}
+  	
+  	return null;
+}
+

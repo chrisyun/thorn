@@ -15,11 +15,12 @@ http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 		<intercept-url pattern="/login.jsp*" filters="none" />
 
 		<!-- 检测失效的sessionId,超时时定位到另外一个URL -->
-		<session-management invalid-session-url="/AlertTimeOut.jsp">
-			<!-- 第二次登录将被阻止 -->
+		<session-management invalid-session-url="/AlertTimeOut.jsp" session-authentication-error-url="/AlertTimeOut.jsp">
+			<!-- 第二次登录将被阻止
 			<concurrency-control max-sessions="1"
-				error-if-maximum-exceeded="true" />
-			<!-- 防止一个用户重复登录好几次-第二次登录会让第一次登录失效 <concurrency-control max-sessions="1"/> -->
+				error-if-maximum-exceeded="true" /> -->
+			<!-- 防止一个用户重复登录好几次-第二次登录会让第一次登录失效 -->
+			<concurrency-control max-sessions="1"/> 
 		</session-management>
 
 		<logout logout-success-url="/login.jsp" invalidate-session="true" />
@@ -31,7 +32,7 @@ http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
 	<!-- ************************************************* -->
 	<!-- 认证管理器\用户数据供应器\资源映射供应器\访问决策器 -->
-	<!-- session事件监听器 -->
+	<!-- security -->
 	<!-- ************************************************* -->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref='userDetailsService'>
