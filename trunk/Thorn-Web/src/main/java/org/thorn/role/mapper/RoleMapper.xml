@@ -22,7 +22,7 @@
 	</select>
 
 	<select id="queryBySource" resultMap="BaseResultMap">
-		select ROLECODE from T_SYS_ROLE_RES
+		select distinct ROLECODE from T_SYS_ROLE_RES
 		where SOURCECODE in
 		<foreach collection="list" item="item" open="(" close=")"
 			separator=",">
