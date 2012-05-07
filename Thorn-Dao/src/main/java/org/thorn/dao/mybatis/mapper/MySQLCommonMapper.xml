@@ -4,8 +4,7 @@
 <!-- Common Mapper -->
 <mapper namespace="MySQLCommonMapper">
 	<!-- Paging Start -->
-	<sql id="pagingStart">
-	</sql>
+	<sql id="pagingStart"> </sql>
 	
 	<!-- Paging End -->
 	<sql id="pagingEnd">
