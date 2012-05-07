@@ -22,4 +22,7 @@
 
 	<bean id="userDao" class="org.thorn.user.dao.UserDaoImpl" />
 	<bean id="userService" class="org.thorn.user.service.UserServiceImpl" />
+	
+	<bean id="ddDao" class="org.thorn.dd.dao.DataDictDaoImpl" />
+	<bean id="ddService" class="org.thorn.dd.service.DataDictServiceImpl" />
 </beans>

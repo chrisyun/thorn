@@ -11,9 +11,14 @@ var Configuration = {
 		DELETE : 'delete',
 		GET : 'get'
 	},
+	opType : {
+		save : 'save',
+		modify : 'modify'
+	},
 	redStar : '<em class="required">*</em>',
-	bodyWidth : 1024,
-	bodyHight : 600,
+	bodyWidth : document.body.clientWidth,
+	bodyHight : document.body.clientHeight,
+	btnWidth : 80,
 	defaultPageSize : 15
 };
 
@@ -72,25 +77,6 @@ var Message = {
 		}
 		return data.toString().replace(/\"\:/g, '":""');
 	}
-}
-
-function CommonPageBar(store, pageSize, items) {
-	this.pagingToolBar = new Ext.PagingToolbar( {
-		store : store,
-		pageSize : pageSize,
-		items : items,
-		displayInfo : true,
-		displayMsg : '当前显示{0}-{1}条,共{2}条',
-		emptyMsg : "没有找到相关记录",
-		emptyMsg : "没有找到相关记录",
-		firstText : "第一页",
-		prevText : "上一页",
-		nextText : "下一页",
-		lastText : "最后页",
-		refreshText : "刷新",
-		afterPageText : "页,共{0}页",
-		beforePageText : "当前第"
-	});
 }
 
 Ext.topShow = function() {
