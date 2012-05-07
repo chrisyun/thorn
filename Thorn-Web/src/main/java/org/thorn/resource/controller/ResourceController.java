@@ -40,8 +40,8 @@ public class ResourceController {
 				node.setText(String.valueOf(res.getSourceName()));
 				node.setPid(String.valueOf(res.getParentSource()));
 				
-				node.getAttributes().put("targetUrl", res.getSourceUrl());
-				node.getAttributes().put("iconCls", res.getIconsCls());
+				node.setTargetUrl(res.getSourceUrl());
+				node.setIconCls(res.getIconsCls());
 				
 				if(LocalStringUtils.equals(res.getIsleaf(), Configuration.DB_YES)) {
 					node.setLeaf(true);

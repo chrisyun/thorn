@@ -22,6 +22,10 @@ public class Tree implements Serializable {
 	private String pid;
 
 	private boolean leaf;
+	
+	private String targetUrl;
+	
+	private String iconCls;
 
 	private Map<String, String> attributes = new HashMap<String, String>();
 
@@ -63,5 +67,21 @@ public class Tree implements Serializable {
 
 	public void setAttributes(Map<String, String> attributes) {
 		this.attributes = attributes;
+	}
+
+	public String getTargetUrl() {
+		return targetUrl;
+	}
+
+	public void setTargetUrl(String targetUrl) {
+		this.targetUrl = targetUrl;
+	}
+
+	public String getIconCls() {
+		return iconCls;
+	}
+
+	public void setIconCls(String iconCls) {
+		this.iconCls = iconCls;
 	}
 }

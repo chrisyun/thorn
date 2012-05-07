@@ -113,7 +113,7 @@
 
 		var treeClick = function(node, ev){
 			var isLeaf = node.leaf;
-			var openUrl = sys.basePath + node.attributes.attributes.targetUrl;
+			var openUrl = sys.basePath + node.attributes.targetUrl;
 			
 			if(isLeaf == false || Ext.isEmpty(openUrl)) {
 				return ;
@@ -138,7 +138,7 @@
 			mainTab.add( {
 				title : node.text,
 				html : "<iframe src='"+ openUrl +"' width='100%' height='100%' frameborder='0'></iframe>",
-				iconCls : node.attributes.attributes.iconCls,
+				iconCls : node.attributes.iconCls,
 				id : node.id,
 				closable : true,
 				listeners : {beforeclose:function(){
