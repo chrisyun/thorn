@@ -24,20 +24,20 @@
 
 	<sql id="Where_Clause">
 		<where>
-			<if test="sourceCode != null">
-				AND s.SOURCECODE = #{sourceCode,jdbcType=DECIMAL}
+			<if test="sourceCode != null and sourceCode != ''">
+				AND s.SOURCECODE = #{sourceCode,jdbcType=VARCHAR}
       </if>
-			<if test="sourceName != null">
+			<if test="sourceName != null and sourceName != ''">
 				AND s.SOURCENAME like '%' || #{sourceName,jdbcType=VARCHAR} || '%'
       </if>
-			<if test="isleaf != null">
+			<if test="isleaf != null and isleaf != ''">
 				AND s.ISLEAF = #{isleaf,jdbcType=VARCHAR}
       </if>
-			<if test="isShow != null">
+			<if test="isShow != null and isShow != ''">
 				AND s.ISSHOW = #{isShow,jdbcType=VARCHAR}
       </if>
-			<if test="parentSource != null">
-				AND s.PARENTSOURCE = #{parentSource,jdbcType=DECIMAL}
+			<if test="parentSource != null and parentSource != ''">
+				AND s.PARENTSOURCE = #{parentSource,jdbcType=VARCHAR}
       </if>
 		</where>
 	</sql>

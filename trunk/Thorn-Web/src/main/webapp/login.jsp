@@ -82,9 +82,20 @@
 						fieldLabel : "验证码",
 						labelWidth : 100,
 						allowBlank: false,
-						blankText : Configuration.msg.EMPTY
+						blankText : Configuration.msg.EMPTY,
+						listeners : {
+							focus : function() {
+								var codeLable = Ext.getCmp("codeLabel");
+								if(codeLable.hiiden) {
+									codeLable.show();
+									refresh();
+								}
+							}
+						}
 					}]
 				},{
+					id : "codeLabel",
+					hidden : true,
 					xtype:'label',
 					html:'<img alt="验证码" id="authImage" align="middle" width="80" height="24">&nbsp;<a href="javascript:refresh();">看不清</a>'
 				}]
@@ -132,8 +143,6 @@
 		});
 		loginWindow.show();
 
-		refresh();
-		
 		if(iSerror == 'true' && !Ext.isEmpty(error) ) {
 			Message.showErrorMsgBox(error,"登陆失败");
 			//Ext.getDom("loginMsg").innerHTML = error;
