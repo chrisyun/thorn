@@ -12,15 +12,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>Session TimeOut</title>
     
 	<style type="text/css">
-	    body{
-			text-align: center;
+	   	body {
+			background-color: #4E79B2;
 		}
 		
 		#sessionOut {
             margin-top: 50px;
 			padding: 15px 50px;
 			width: 500px;
-			border: 2px solid green;
+			font-size : 13pt;
+			border: 1px solid black;
 			background-color: yellow;
 			text-align: center;
 		}
@@ -36,10 +37,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-	   	<div id ="sessionOut">
-			您长时间未操作系统，为确保您的资料及数据信息安全，
-			系统自动超时退出，请重新<a href="<%=basePath %>">登录</a>系统！
-		</div>
+  	<table align="center" width="100%">
+  		<tr><td align="center"> 
+  			<div id ="sessionOut">
+				会话超时，系统自动超时退出<br>
+				请重新<a href="<%=basePath %>">登录</a>系统！
+			</div>
+    	</td></tr>
+  	</table>
   </body>
   
 <script type="text/javascript">

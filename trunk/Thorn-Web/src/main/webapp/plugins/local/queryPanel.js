@@ -1,23 +1,23 @@
+/**
+ * 查询panel的可输入条件：标题、高度、标签的文本宽度
+ */
 function queryFromPanel(_title, _height, _labelWidth) {
 	
-	var title = _title || "查询条件";
-	var height = _height || Configuration.bodyHight - 10;
-	var labelWidth = _labelWidth || 100;
-	
 	this.queryPanel = new Ext.FormPanel( {
-			title : title,
+			title : _title || "查询条件",
 			iconCls : "icon-grid",
 			region : "north",
 			bodyStyle : "padding-top: 7px;",
 			collapsible : true,
-			height : height,
+			height : _height || Configuration.bodyHight - 10,
 			margins : "2 0 2 0",
 			layout : "column",
 			//border : false,
 			id : "queryFormPanel",
 			split : true,
-			labelWidth : labelWidth,
+			labelWidth : _labelWidth || 100,
 			labelAlign : "right",
+			buttonAlign : "center",
 			defaults : {
 				bodyStyle : "padding-left: 30px;",
 				xtype : "panel",
@@ -34,7 +34,7 @@ queryFromPanel.prototype.addButton = function(btn) {
 }
 
 queryFromPanel.prototype.addItem = function(itemPanel) {
-	this.queryPanel.items.add(itemPanel);
+	this.queryPanel.add(itemPanel);
 }
 
 /**
@@ -46,7 +46,7 @@ queryFromPanel.prototype.addItem = function(itemPanel) {
  */
 function button(_id, _text, _iconCls, _width, _handler) {
 	
-	this.btn = new new Ext.Button({
+	this.btn = new Ext.Button({
 		id : _id,
 		text : _text,
 		iconCls : _iconCls,
@@ -75,20 +75,18 @@ function itemPanel(_id, _name, _xtype, _labelName, _columnWidth, _width, _defaul
 		_labelName = Configuration.redStar + _labelName;
 	}
 	
-	this.component = new Ext.Component({
-		id : _id,
-		name : _name || _id,
-		fieldLabel : _labelName,
-		xtype : _xtype || "textfield",
-		width : _width || 140,
-		allowBlank : allow,
-		blankText : Configuration.msg.EMPTY
-	});
-	
-	this.panel = new Ext.Panel({
+	this.panel = ({
 		columnWidth : _columnWidth || 0.5,
 		defaults : _defaults,
-		items : [this.component]
+		items : [{
+			id : _id,
+			name : _name || _id,
+			fieldLabel : _labelName,
+			xtype : _xtype || "textfield",
+			width : _width || 140,
+			allowBlank : allow,
+			blankText : Configuration.msg.EMPTY
+		}]
 	});
 	
 	return this.panel;

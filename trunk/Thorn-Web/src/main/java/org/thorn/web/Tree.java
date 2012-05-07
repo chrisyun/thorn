@@ -23,10 +23,6 @@ public class Tree implements Serializable {
 
 	private boolean leaf;
 
-	private String cls;
-	
-	private String targetUrl;
-
 	private Map<String, String> attributes = new HashMap<String, String>();
 
 	public String getId() {
@@ -61,27 +57,11 @@ public class Tree implements Serializable {
 		this.leaf = leaf;
 	}
 
-	public String getCls() {
-		return cls;
-	}
-
-	public void setCls(String cls) {
-		this.cls = cls;
-	}
-
 	public Map<String, String> getAttributes() {
 		return attributes;
 	}
 
 	public void setAttributes(Map<String, String> attributes) {
 		this.attributes = attributes;
-	}
-
-	public String getTargetUrl() {
-		return targetUrl;
-	}
-
-	public void setTargetUrl(String targetUrl) {
-		this.targetUrl = targetUrl;
 	}
 }

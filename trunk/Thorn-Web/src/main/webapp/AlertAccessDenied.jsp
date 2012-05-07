@@ -15,11 +15,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		background-color: #4E79B2;
 	}
 	.error {
-    	width: 260px;
-    	height : 180px;
-    	border: 2px solid green;
+    	width: 400px;
+    	height : 100px;
+    	border: 1px solid black;
+    	font-size : 13pt;
     	background-color: yellow;
-    	text-align: center;
+    	text-align: left;
+    	margin-top: 50px;
+    	padding: 15px 50px;
 	}
 	-->
 	</style>
@@ -27,8 +30,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <div class="error">访问被拒绝<br>
-      ${requestScope['SPRING_SECURITY_403_EXCEPTION'].message}
-    </div>
+  	<table align="center" width="100%">
+  		<tr><td align="center"> 
+  			<div class="error">
+    			访问被拒绝：${requestScope['SPRING_SECURITY_403_EXCEPTION'].message}<br/>
+    			您无权限访问本页面，请联系管理员为您分配相应的访问权限后！
+    		</div>
+    	</td></tr>
+  	</table>
+   
   </body>
 </html>
