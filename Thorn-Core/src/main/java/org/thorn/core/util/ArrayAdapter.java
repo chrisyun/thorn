@@ -2,8 +2,6 @@ package org.thorn.core.util;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
  * @ClassName: ArrayAdapter
  * @Description:
@@ -54,7 +52,7 @@ public class ArrayAdapter {
 
 			for (int j = 0; j < sourceOrder.length; j++) {
 
-				if (StringUtils.equals(orderArray[i], sourceOrder[j])) {
+				if (LocalStringUtils.equals(orderArray[i], sourceOrder[j])) {
 					orderMapping[i] = j;
 					break;
 				}
