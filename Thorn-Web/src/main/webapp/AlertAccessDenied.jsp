@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -8,21 +8,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    
     <title>Access Denied</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
+	<style>
 	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
+	body {
+		background-color: #4E79B2;
+	}
+	.error {
+    	width: 260px;
+    	height : 180px;
+    	border: 2px solid green;
+    	background-color: yellow;
+    	text-align: center;
+	}
 	-->
+	</style>
 
   </head>
   
   <body>
-    Access Denied <br>
+    <div class="error">访问被拒绝<br>
+      ${requestScope['SPRING_SECURITY_403_EXCEPTION'].message}
+    </div>
   </body>
 </html>
