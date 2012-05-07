@@ -19,6 +19,7 @@ var Configuration = {
 	bodyWidth : document.body.clientWidth,
 	bodyHight : document.body.clientHeight,
 	btnWidth : 80,
+	minBtnWidth : 30,
 	defaultPageSize : 15
 };
 

@@ -15,6 +15,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="<%=path %>/plugins/local/common.js" ></script>
 <script type="text/javascript" src="<%=path %>/plugins/local/render.js" ></script>
 <script type="text/javascript" src="<%=path %>/plugins/local/theme.js" ></script>
+<script type="text/javascript" src="<%=path %>/plugins/local/grid.js" ></script>
+<script type="text/javascript" src="<%=path %>/plugins/local/queryPanel.js" ></script>
 <link rel="stylesheet" type="text/css" href="<%=path %>/resources/localStyle.css" />
 
 
