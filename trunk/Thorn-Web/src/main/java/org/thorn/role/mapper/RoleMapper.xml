@@ -26,7 +26,7 @@
 		where SOURCECODE in
 		<foreach collection="list" item="item" open="(" close=")"
 			separator=",">
-			#{item,jdbcType=DECIMAL}
+			#{item,jdbcType=VARCHAR}
 		</foreach>
 	</select>
 

@@ -24,6 +24,6 @@ public interface IRoleDao {
 	 */
 	public List<Role> queryRolesByUser(String userId) throws DBAccessException;
 
-	public List<Role> queryRolesByResource(List<Integer> source)
+	public List<Role> queryRolesByResource(List<String> source)
 			throws DBAccessException;
 }

@@ -7,12 +7,12 @@
 	</cache>
 
 	<resultMap id="BaseResultMap" type="org.thorn.resource.entity.Resource">
-		<id column="SOURCECODE" property="sourceCode" jdbcType="DECIMAL" />
+		<id column="SOURCECODE" property="sourceCode" jdbcType="VARCHAR" />
 		<result column="SOURCENAME" property="sourceName" jdbcType="VARCHAR" />
 		<result column="SOURCEURL" property="sourceUrl" jdbcType="VARCHAR" />
 		<result column="ISLEAF" property="isleaf" jdbcType="VARCHAR" />
 		<result column="ISSHOW" property="isShow" jdbcType="VARCHAR" />
-		<result column="PARENTSOURCE" property="parentSource" jdbcType="DECIMAL" />
+		<result column="PARENTSOURCE" property="parentSource" jdbcType="VARCHAR" />
 		<result column="SORTNUM" property="sortNum" jdbcType="DECIMAL" />
 		<result column="ICONSCLS" property="iconsCls" jdbcType="VARCHAR" />
 	</resultMap>
