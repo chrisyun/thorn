@@ -28,11 +28,6 @@
 			<version>1.6.4</version>
 		</dependency>
 
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.5</version>
-		</dependency>
 		<!-- 数据库层面的日志记录，打印SQL，调试用 -->
 		<dependency>
 			<groupId>p6spy</groupId>
