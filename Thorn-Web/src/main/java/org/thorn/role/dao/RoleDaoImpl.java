@@ -35,7 +35,7 @@ public class RoleDaoImpl implements IRoleDao {
 		}
 	}
 
-	public List<Role> queryRolesByResource(List<Integer> source)
+	public List<Role> queryRolesByResource(List<String> source)
 			throws DBAccessException {
 		try {
 			return (List<Role>) sqlSessionTemplate.selectList(nameSpace

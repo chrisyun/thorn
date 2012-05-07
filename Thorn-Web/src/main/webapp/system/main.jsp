@@ -31,7 +31,7 @@
 		 	loader: loader,
 			root : new Ext.tree.AsyncTreeNode({
 				text : "系统管理",
-				id: '0',
+				id: 'SYS',
 				leaf: false
 			})
 		});
@@ -43,7 +43,7 @@
 			loader: loader,
 			root : new Ext.tree.AsyncTreeNode({
 				text : "导航菜单",
-				id: '1',
+				id: 'NAV',
 				leaf: false
 			})
 		});

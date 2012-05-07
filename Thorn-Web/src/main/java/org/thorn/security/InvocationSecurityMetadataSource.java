@@ -40,7 +40,7 @@ public class InvocationSecurityMetadataSource implements
 	/**
 	 * 资源ID与资源URL关系map，key为ID,URL为value
 	 */
-	private static Map<Integer, String> resourceMap = null;
+	private static Map<String, String> resourceMap = null;
 
 	private IResourceService resourceService;
 
@@ -56,7 +56,7 @@ public class InvocationSecurityMetadataSource implements
 		
 //		System.out.println(SecurityEncoderUtils.encodeUserPassword("wwwwww", "ADMIN"));
 		
-		resourceMap = new HashMap<Integer, String>();
+		resourceMap = new HashMap<String, String>();
 
 		this.resourceService = resourceService;
 		this.roleService = roleService;
@@ -87,8 +87,8 @@ public class InvocationSecurityMetadataSource implements
 			url = url.substring(0, firstQuestionMarkIndex);
 		}
 
-		List<Integer> source = new ArrayList<Integer>();
-		for (int id : resourceMap.keySet()) {
+		List<String> source = new ArrayList<String>();
+		for (String id : resourceMap.keySet()) {
 			if (urlMatcher.pathMatchesUrl(resourceMap.get(id), url)) {
 				source.add(id);
 			}
