@@ -3,12 +3,12 @@ package org.thorn.resource.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thorn.core.util.LocalStringUtils;
 import org.thorn.dao.core.Configuration;
 import org.thorn.resource.entity.Resource;
 import org.thorn.resource.service.IResourceService;
@@ -43,7 +43,7 @@ public class ResourceController {
 				
 				node.setCls(res.getIconsCls());
 				
-				if(StringUtils.equals(res.getIsleaf(), Configuration.DB_YES)) {
+				if(LocalStringUtils.equals(res.getIsleaf(), Configuration.DB_YES)) {
 					node.setLeaf(true);
 				} else {
 					node.setLeaf(false);

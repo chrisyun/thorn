@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.thorn.core.util.LocalStringUtils;
 import org.thorn.security.entity.UserSecurity;
 import org.thorn.user.entity.User;
 
@@ -57,7 +57,7 @@ public class SecurityUserUtils {
 
 		boolean isAdmin = false;
 		for (String role : list) {
-			if (StringUtils.equals(SecurityConfiguration.SYS_ADMIN_ROLE, role)) {
+			if (LocalStringUtils.equals(SecurityConfiguration.SYS_ADMIN_ROLE, role)) {
 				isAdmin = true;
 				break;
 			}

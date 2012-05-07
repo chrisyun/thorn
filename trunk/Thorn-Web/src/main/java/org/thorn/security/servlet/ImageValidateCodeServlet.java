@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.thorn.core.util.StringUtils;
+import org.thorn.core.util.LocalStringUtils;
 import org.thorn.security.SecurityConfiguration;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
@@ -109,7 +109,7 @@ public class ImageValidateCodeServlet extends HttpServlet {
 		// 随机字符串
 		StringBuffer sbRandomValidateCode = new StringBuffer();
 		for (int i = 0; i < SecurityConfiguration.AUTHCODE_NUM_LENGTH; i++) {
-			String rand = StringUtils.randomString(1);
+			String rand = LocalStringUtils.randomString(1);
 			sbRandomValidateCode.append(rand);
 
 			// 生成随机颜色
