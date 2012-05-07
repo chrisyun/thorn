@@ -23,5 +23,9 @@ public interface Configuration {
 	public final static String DB_YES = "YES";
 	/** NO **/
 	public final static String DB_NO = "NO";
+	
+	public final static String OP_SAVE = "save";
+	
+	public final static String OP_MODIFY = "modify";
 }
 
