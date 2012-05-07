@@ -27,7 +27,7 @@ public class DataDictServiceImpl implements IDataDictService {
 	static Logger log = LoggerFactory.getLogger(DataDictServiceImpl.class);
 
 	@Autowired
-	@Qualifier("dataDictDao")
+	@Qualifier("ddDao")
 	private IDataDictDao ddDao;
 
 	public Page<DictType> queryDtPage(String ename, String cname, long start,
