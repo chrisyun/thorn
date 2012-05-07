@@ -3,8 +3,8 @@ package org.thorn.dao.mybatis.annotation;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.util.Assert;
+import org.thorn.core.util.LocalStringUtils;
 
 public class MapperUtils {
 	
@@ -40,7 +40,7 @@ public class MapperUtils {
 		}
 		
 		// get default value
-		if(StringUtils.isEmpty(nodeId)) {
+		if(LocalStringUtils.isEmpty(nodeId)) {
 			nodeId = default_Method_Map.get(type);
 		}
 		
