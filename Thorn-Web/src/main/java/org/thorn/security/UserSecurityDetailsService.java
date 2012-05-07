@@ -2,13 +2,13 @@ package org.thorn.security;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.thorn.core.util.LocalStringUtils;
 import org.thorn.dao.exception.DBAccessException;
 import org.thorn.role.entity.Role;
 import org.thorn.role.service.IRoleService;
@@ -65,7 +65,7 @@ public class UserSecurityDetailsService implements UserDetailsService {
 			if (us == null) {
 				us = new UserSecurity(userService.queryUserByLogin(arg0));
 				User user = us.getUser();
-				if (user != null && StringUtils.isNotEmpty(user.getUserId())) {
+				if (user != null && LocalStringUtils.isNotEmpty(user.getUserId())) {
 					List<Role> roles = roleService.queryRolesByUser(user
 							.getUserId());
 
@@ -81,7 +81,7 @@ public class UserSecurityDetailsService implements UserDetailsService {
 		}
 
 		if (us.getUser() == null
-				|| StringUtils.isEmpty(us.getUser().getUserId())) {
+				|| LocalStringUtils.isEmpty(us.getUser().getUserId())) {
 			throw new UsernameNotFoundException(
 					"User Not Found From DataSource");
 		}
