@@ -10,16 +10,16 @@ Ext.onReady(function() {
 	Ext.QuickTips.init();
 	
 	//title、height、labelWidth
-	var queryPanel = new queryFromPanel(null, 60, 80);
+	var queryPanelObj = new queryFromPanel(null, 100, 80);
 	
 	//id,name,xtype,labelName,columnWidth,width,default,notEmpty
-	var ename = itemPanel("ename","ename",null,"字典类型编码",0.4,120,null,false);
-	queryPanel.addItem(ename);
-	var cname = itemPanel("cname","cname",null,"字典类型名称",0.4,120,null,false);
-	queryPanel.addItem(cname);
+	var ename = itemPanel("ename","ename",null,"字典类型编码",0.3,120,null,false);
+	queryPanelObj.addItem(ename);
+	var cname = itemPanel("cname","cname",null,"字典类型名称",0.3,120,null,false);
+	queryPanelObj.addItem(cname);
 	
 	var queryBtn = new button("queryBtn","查询","slik-search",80,onSubmitQueryHandler);
-	queryPanel.addButton(queryBtn);
+	queryPanelObj.addButton(queryBtn);
 	
 	var dtGrid = new gridPanel(true,"字典类型列表",200,null);
 	var recordArray = [ {
@@ -74,20 +74,24 @@ Ext.onReady(function() {
 	}];
 	dtGrid.setColumnModel(columnModle);
 	
-	var listeners = {celldblclick : function(thisGrid, rowIndex, columnIndex, ev) {
-						alert("---");
-					 },
-					 cellclick : function(thisGrid, rowIndex, columnIndex, ev) {
-						alert("---");
-					 }};
-	dtGrid.setListeners(listeners);
+	dtGrid.getGridPanel();
+	
+	dtGrid.grid.region = "center";
+	
+//	var listeners = {celldblclick : function(thisGrid, rowIndex, columnIndex, ev) {
+//						alert("---");
+//					 },
+//					 cellclick : function(thisGrid, rowIndex, columnIndex, ev) {
+//						alert("---");
+//					 }};
+//	dtGrid.setListeners(listeners);
 	
 
 	/**
 	 *查询按钮提交方法	
 	 */
 	function onSubmitQueryHandler() {
-		var thisForm = queryPanel.queryPanel.getForm();
+		var thisForm = queryPanelObj.queryPanel.getForm();
 		var store = dtGrid.grid.getStore();
 
 		if (store.baseParams == null) {
@@ -111,7 +115,7 @@ Ext.onReady(function() {
 	var viewport = new Ext.Viewport( {
 		border : false,
 		layout : "border",
-		items : [ searchPanel, dtGrid.grid ]
+		items : [ queryPanelObj.queryPanel, dtGrid.grid ]
 	});
 
 	dtGrid.grid.getStore().load( {

@@ -16,8 +16,8 @@ var Configuration = {
 		modify : 'modify'
 	},
 	redStar : '<em class="required">*</em>',
-	bodyWidth : document.body.clientWidth,
-	bodyHight : document.body.clientHeight,
+	bodyWidth : 500,
+	bodyHight : 600,
 	btnWidth : 80,
 	minBtnWidth : 30,
 	defaultPageSize : 15

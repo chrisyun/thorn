@@ -74,7 +74,7 @@
 					xtype:'panel',
 					layout : "form",
 					border: false,
-					columnWidth : 0.8,
+					columnWidth : 0.5,
 					items: [{
 						xtype:'textfield',
 						name : "ValidateCode",
@@ -86,7 +86,7 @@
 						listeners : {
 							focus : function() {
 								var codeLable = Ext.getCmp("codeLabel");
-								if(codeLable.hiiden) {
+								if(codeLable.hidden) {
 									codeLable.show();
 									refresh();
 								}
@@ -126,13 +126,7 @@
 			buttons : [ {
 				text : "登录",
 				handler : function() {
-					var thisForm = loginPanel.form;
-					if (!thisForm.isValid()) {
-						return;
-					}
-					
-					Message.showProcessMsgBox();
-					loginPanel.form.submit();
+					doSub();
 				}
 			}, {
 				text : "重置",
@@ -141,8 +135,20 @@
 				}
 			} ]
 		});
+		
 		loginWindow.show();
-
+		
+		function doSub() {
+			var thisForm = loginPanel.form;
+			if (!thisForm.isValid()) {
+				return;
+			}
+			
+			Message.showProcessMsgBox();
+			loginPanel.form.submit();
+		}
+		
+		
 		if(iSerror == 'true' && !Ext.isEmpty(error) ) {
 			Message.showErrorMsgBox(error,"登陆失败");
 			//Ext.getDom("loginMsg").innerHTML = error;
@@ -150,6 +156,14 @@
 
 		if(!Ext.isEmpty(userName)) {
 			Ext.getCmp("username").setValue(userName);
+		}
+		
+		document.onkeydown = function(event){
+			var event 	= event || window.event;
+			var keyCode = event.keyCode;
+			if (keyCode == 13) {	//回车键
+				doSub();
+			}
 		}
 		
 	});

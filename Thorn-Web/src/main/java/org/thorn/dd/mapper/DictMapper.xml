@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="DictMapper">
-
+	
+	<cache-ref namespace="ResourceMapper" />
+	
 	<resultMap id="DictResultMap" type="org.thorn.dd.entity.Dict">
 		<id column="DNAME" jdbcType="VARCHAR" property="dname" />
 		<result column="DVALUE" jdbcType="VARCHAR" property="dvalue" />
@@ -127,13 +129,13 @@
 	</select>
 	<select id="selectTypePage" parameterType="hashmap"
 		resultMap="DictTypeResultMap">
-		<include refid="MySQLCommonMapper.PagingStart"/>
+		<include refid="MySQLCommonMapper.pagingStart"/>
 		select
 		<include refid="DictType_Column_List" />
 		from T_SYS_DICT_TYPE
 		<include refid="DictType_Where_Clause" />
-		<include refid="MySQLCommonMapper.SortInfo"/>
-		<include refid="MySQLCommonMapper.PagingEnd"/>
+		<include refid="MySQLCommonMapper.sortInfo"/>
+		<include refid="MySQLCommonMapper.pagingEnd"/>
 	</select>
 	<select id="selectTypePageCount" parameterType="hashmap"
 		resultType="long">

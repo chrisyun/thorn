@@ -113,7 +113,7 @@
 
 		var treeClick = function(node, ev){
 			var isLeaf = node.leaf;
-			var openUrl = sys.basePath + node.targetUrl;
+			var openUrl = sys.basePath + node.attributes.attributes.targetUrl;
 			
 			if(isLeaf == false || Ext.isEmpty(openUrl)) {
 				return ;
@@ -138,6 +138,7 @@
 			mainTab.add( {
 				title : node.text,
 				html : "<iframe src='"+ openUrl +"' width='100%' height='100%' frameborder='0'></iframe>",
+				iconCls : node.attributes.attributes.iconCls,
 				id : node.id,
 				closable : true,
 				listeners : {beforeclose:function(){
@@ -191,9 +192,9 @@
 		<div id="header">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-			   		<td width="664"><img src="<%=path %>/resources/images/local/title-1.jpg" width="664" height="67" /></td>
-			    	<td background="<%=path %>/resources/images/local/title-2.jpg">&nbsp;</td>
-			    	<td width="372"><img src="<%=path %>/resources/images/local/title-3.jpg" width="372" height="67" /></td>
+			   		<td width="664"><img src="<%=path %>/resources/images/local/title-a1.jpg" width="664" height="67" /></td>
+			    	<td background="<%=path %>/resources/images/local/title-a2.jpg">&nbsp;</td>
+			    	<td width="372"><img src="<%=path %>/resources/images/local/title-a3.jpg" width="372" height="67" /></td>
 			  	</tr>
 			</table>
 		</div>
