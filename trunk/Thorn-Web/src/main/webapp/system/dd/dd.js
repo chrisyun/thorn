@@ -16,21 +16,21 @@ Ext.onReady(function() {
 				height : 80,
 				labelWidth : 80
 			};
-			var queryPanelObj = new formPanel(queryAttr);
+			var queryPanelObj = new formPanel(queryAttr, "query");
 
 			var ename = getItemPanel({
-						id : "ename",
+						id : "query_ename",
 						fieldLabel : "字典类型编码",
 						xtype : "textfield",
 						width : 120
-					}, 0.2, true);
+					}, 0.25, true);
 			queryPanelObj.addItem(ename);
 			var cname = getItemPanel({
-						id : "cname",
+						id : "query_cname",
 						fieldLabel : "字典类型名称",
 						xtype : "textfield",
 						width : 120
-					}, 0.2, true);
+					}, 0.25, true);
 			queryPanelObj.addItem(cname);
 			var queryBtn = getItemPanel({
 						id : "queryBtn",
@@ -68,7 +68,8 @@ Ext.onReady(function() {
 			var dtGridBbar = ['-', {
 						text : "增加",
 						iconCls : "silk-add",
-						minWidth : Configuration.minBtnWidth
+						minWidth : Configuration.minBtnWidth,
+						handler : onDtAddHandler
 					}, '-', {
 						text : "修改",
 						iconCls : "silk-edit",
@@ -127,7 +128,8 @@ Ext.onReady(function() {
 			var ddGridBbar = ['-', {
 						text : "增加",
 						iconCls : "silk-add",
-						minWidth : Configuration.minBtnWidth
+						minWidth : Configuration.minBtnWidth,
+						handler : onDtAddHandler
 					}, '-', {
 						text : "修改",
 						iconCls : "silk-edit",
@@ -142,7 +144,7 @@ Ext.onReady(function() {
 
 			var ddGridAttr = {
 				title : "字典数据列表",
-				height : 250,
+				height : 200,
 				margins : "20 0 0 0",
 				region : "south"
 			};
@@ -151,19 +153,6 @@ Ext.onReady(function() {
 
 			var dtgrid = dtGridObj.grid;
 			var ddgrid = ddGridObj.grid
-
-			var viewport = new Ext.Viewport({
-						border : false,
-						layout : "border",
-						items : [queryPanelObj.form, dtgrid, ddgrid]
-					});
-
-			dtgrid.getStore().load({
-						params : {
-							"start" : 0,
-							"limit" : dtGridObj.pageSize
-						}
-					});
 
 			/**
 			 * 数据字典类型删除方法
@@ -197,6 +186,55 @@ Ext.onReady(function() {
 										});
 							}
 						});
+			}
+
+			var dtForm = new formPanel({
+						id : "dtForm",
+						collapsible : false,
+						labelWidth : 100,
+						border : false
+					}, "edit");
+			var dtForm_ename = getItemPanel({
+						id : "ename",
+						fieldLabel : "字典类型编码",
+						xtype : "textfield",
+						width : 180
+					}, 1.0, false);
+			var dtForm_cname = getItemPanel({
+						id : "cname",
+						fieldLabel : "字典类型名称",
+						xtype : "textfield",
+						width : 180
+					}, 1.0, false);
+			var dtForm_opType = getItemPanel({
+						id : "dtFormType",
+						xtype : "hidden"
+					}, 0, true);
+			var dtForm_desc = getItemPanel({
+						id : "typeDesc",
+						fieldLabel : "描述",
+						xtype : "textarea",
+						width : 180,
+						height : 60
+					}, 1.0, true);
+			dtForm.addItem(dtForm_ename);
+			dtForm.addItem(dtForm_cname);
+			dtForm.addItem(dtForm_opType);
+			dtForm.addItem(dtForm_desc);
+
+			var dtOpneWin = new openWindow({
+						width : 370,
+						height : 220
+					}, dtForm.form, onSaveOrModify);
+
+			function onDtAddHandler() {
+				dtForm.form.findById("dtFormType").setValue(Configuration.opType.save);
+				dtOpneWin.openWin.setTitle("新增数据字典类型");
+				dtOpneWin.show();
+			}
+
+			function onSaveOrModify() {
+				alert("-");
 			}
 
 			/**
@@ -247,8 +285,8 @@ Ext.onReady(function() {
 					store.baseParams = {};
 				}
 
-				var cname = Ext.getCmp("cname").getValue();
-				var ename = Ext.getCmp("ename").getValue();
+				var cname = Ext.getCmp("query_cname").getValue();
+				var ename = Ext.getCmp("query_ename").getValue();
 
 				store.baseParams.ename = ename;
 				store.baseParams.cname = cname;
@@ -260,5 +298,18 @@ Ext.onReady(function() {
 							}
 						});
 			}
+
+			var viewport = new Ext.Viewport({
+						border : false,
+						layout : "border",
+						items : [queryPanelObj.form, dtgrid, ddgrid]
+					});
+
+			dtgrid.getStore().load({
+						params : {
+							"start" : 0,
+							"limit" : dtGridObj.pageSize
+						}
+					});
 
 		});

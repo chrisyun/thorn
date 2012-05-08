@@ -19,7 +19,7 @@ var Configuration = {
 	bodyWidth : window.screen.availWidths,
 	bodyHight : window.screen.availHeight,
 	btnWidth : 80,
-	minBtnWidth : 30,
+	minBtnWidth : 60,
 	defaultPageSize : 15
 };
 
