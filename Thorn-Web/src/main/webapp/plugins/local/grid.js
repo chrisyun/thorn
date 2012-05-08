@@ -95,6 +95,7 @@ gridPanel.prototype.setGridPanel = function(gridAttr) {
 				iconCls : "silk-grid",
 				margins : "0 0 0 0",
 				loadMask : true,
+				split: true,
 				store : this.dataStore,
 				cm : this.cm,
 				sm : this.sm,

@@ -1,14 +1,12 @@
-function formPanel(attrObj) {
+function formPanel(attrObj, type) {
 
 	this.form = new Ext.FormPanel({
-				title : "查询条件",
 				iconCls : "icon-grid",
 				bodyStyle : "padding-top: 7px;",
 				collapsible : true,
 				height : Configuration.bodyHight - 10,
 				margins : "2 0 2 0",
 				layout : "column",
-				id : "queryFormPanel",
 				split : true,
 				labelWidth : 100,
 				labelAlign : "right",
@@ -19,9 +17,15 @@ function formPanel(attrObj) {
 					border : false,
 					layout : "form"
 				},
-				items : [{}],
-				buttons : []
+				items : [{}]
 			});
+
+	if (type == "query") {
+		this.form.title = "查询条件";
+		this.form.id = "queryFormPanel";
+	} else if (type == "edit") {
+		this.form.defaults.bodyStyle = "padding-left: 10px;";
+	}
 
 	for (var attr in attrObj) {
 		this.form[attr] = attrObj[attr];
@@ -38,7 +42,9 @@ formPanel.prototype.addItem = function(itemPanel) {
 
 /**
  * 生成button控件
- * @param {} attrObj
+ * 
+ * @param {}
+ *            attrObj
  * @return {}
  */
 function getButton(attrObj) {
@@ -54,9 +60,13 @@ function getButton(attrObj) {
 
 /**
  * 生成frompanel的控件元素panel
- * @param {} attrObj		控件属性
- * @param {} columnWidth	
- * @param {} empty			true表示不作空值检查
+ * 
+ * @param {}
+ *            attrObj 控件属性
+ * @param {}
+ *            columnWidth
+ * @param {}
+ *            empty true表示不作空值检查
  * @return {}
  */
 function getItemPanel(attrObj, columnWidth, empty) {
