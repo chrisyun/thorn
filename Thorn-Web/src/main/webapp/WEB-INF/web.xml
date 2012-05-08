@@ -79,6 +79,12 @@
 		<url-pattern>/resources/ImageValidateCodeServlet</url-pattern>
 	</servlet-mapping>
 
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/thorn</taglib-uri>
+			<taglib-location>/WEB-INF/thorn.tld</taglib-location>
+		</taglib>
+	</jsp-config>
 
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>

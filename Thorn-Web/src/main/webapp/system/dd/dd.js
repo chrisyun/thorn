@@ -76,7 +76,8 @@ Ext.onReady(function() {
 					}, '-', {
 						text : "删除",
 						iconCls : "silk-delete",
-						minWidth : Configuration.minBtnWidth
+						minWidth : Configuration.minBtnWidth,
+						handler : onDtDeleteHandler
 					}];
 			dtGridObj.setBottomBar(dtGridBbar);
 
@@ -118,7 +119,7 @@ Ext.onReady(function() {
 						width : 300,
 						sortable : false
 					}, {
-						id : "sortNum",
+						id : "typeId",
 						type : "string"
 					}];
 			var ddGridObj = new gridPanel(ddListUrl, ddRecordArray);
@@ -134,7 +135,8 @@ Ext.onReady(function() {
 					}, '-', {
 						text : "删除",
 						iconCls : "silk-delete",
-						minWidth : Configuration.minBtnWidth
+						minWidth : Configuration.minBtnWidth,
+						handler : onDdDeleteHandler
 					}];
 			ddGridObj.setBottomBar(ddGridBbar);
 
@@ -147,12 +149,99 @@ Ext.onReady(function() {
 			ddGridObj.setGridPanel(ddGridAttr);
 			/** ****************ddGrid panel end************ */
 
+			var dtgrid = dtGridObj.grid;
+			var ddgrid = ddGridObj.grid
+
+			var viewport = new Ext.Viewport({
+						border : false,
+						layout : "border",
+						items : [queryPanelObj.queryPanel, dtgrid, ddgrid]
+					});
+
+			dtgrid.getStore().load({
+						params : {
+							"start" : 0,
+							"limit" : dtGridObj.pageSize
+						}
+					});
+
+			/**
+			 * 数据字典类型删除方法
+			 */
+			function onDtDeleteHandler() {
+
+				if (dtgrid.getSelectionModel().getCount() == 0) {
+					Ext.Msg.alert("提示信息", "请至少选择一条记录!");
+					return;
+				}
+				var selectedRecordArray = dtgrid.getSelectionModel()
+						.getSelections();
+
+				Ext.Msg.confirm("确认提示", "确定删除选定的记录?", function(btn) {
+							if (btn == 'yes') {
+								var ids = "";
+								for (var i = 0; i < selectedRecordArray.length; i++) {
+									ids += selectedRecordArray[i].get("ename")
+											+ ",";
+								}
+
+								var params = {
+									ids : ids
+								};
+
+								var ajaxClass = new CommonAjax(dtDeleteUrl);
+								ajaxClass.request(params, true, null, function(
+												obj) {
+											dtgrid.getStore().reload();
+											ddgrid.getStore().removeAll();
+										});
+							}
+						});
+			}
+
+			/**
+			 * 数据字典项删除方法
+			 */
+			function onDdDeleteHandler() {
+				if (ddgrid.getSelectionModel().getCount() == 0) {
+					Ext.Msg.alert("提示信息", "请至少选择一条记录!");
+					return;
+				}
+				var selectedRecordArray = ddgrid.getSelectionModel()
+						.getSelections();
+
+				Ext.Msg.confirm("确认提示", "确定删除选定的记录?", function(btn) {
+							if (btn == 'yes') {
+								var ids = "";
+								for (var i = 0; i < selectedRecordArray.length; i++) {
+									ids += selectedRecordArray[i].get("dname")
+											+ ",";
+								}
+
+								var typeId = selectedRecordArray[0]
+										.get("typeId");
+								alert(typeId);
+
+								var params = {
+									ids : ids,
+									typeid : typeId
+								};
+
+								var ajaxClass = new CommonAjax(ddDeleteUrl);
+								ajaxClass.request(params, true, null, function(
+												obj) {
+											ddgrid.dataStore.reload();
+										});
+							}
+						});
+			}
+
 			/**
 			 * 查询按钮提交方法
 			 */
 			function onSubmitQueryHandler() {
 				var thisForm = queryPanelObj.queryPanel.getForm();
-				var store = dtGridObj.grid.getStore();
+				var store = dtgrid.getStore();
 
 				if (store.baseParams == null) {
 					store.baseParams = {};
@@ -171,19 +260,5 @@ Ext.onReady(function() {
 							}
 						});
 			}
-
-			var viewport = new Ext.Viewport({
-						border : false,
-						layout : "border",
-						items : [queryPanelObj.queryPanel, dtGridObj.grid,
-								ddGridObj.grid]
-					});
-
-			dtGridObj.grid.getStore().load({
-						params : {
-							"start" : 0,
-							"limit" : dtGridObj.pageSize
-						}
-					});
 
 		});
