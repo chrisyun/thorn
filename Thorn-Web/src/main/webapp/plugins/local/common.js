@@ -1,23 +1,23 @@
 var Configuration = {
 	msg : {
-		SUCCESS : 'success',
-		FAILURE : 'failure',
-		EMPTY : '该输入项不能为空！',
-		DATE : '该输入项为日期类型，格式YYYY-MM-DD'
+		SUCCESS : "success",
+		FAILURE : "failure",
+		EMPTY : "该输入项不能为空！",
+		DATE : "该输入项为日期类型，格式YYYY-MM-DD"
 	},
 	handleMethod : {
-		PUT : 'put',
-		POST : 'post',
-		DELETE : 'delete',
-		GET : 'get'
+		PUT : "put",
+		POST : "post",
+		DELETE : "delete",
+		GET : "get"
 	},
 	opType : {
-		save : 'save',
-		modify : 'modify'
+		save : "save",
+		modify : "modify"
 	},
 	redStar : '<em class="required">*</em>',
-	bodyWidth : 500,
-	bodyHight : 600,
+	bodyWidth : window.screen.availWidths,
+	bodyHight : window.screen.availHeight,
 	btnWidth : 80,
 	minBtnWidth : 30,
 	defaultPageSize : 15
@@ -25,29 +25,29 @@ var Configuration = {
 
 var Message = {
 	showProcessMsgBox : function(_msg) {
-		var msg = _msg || '数据提交中，请等候...';
-		Ext.MessageBox.show( {
-			msg : '<div style="margin: 5 5 8 15px;">' + msg + '</div>'
-					+ '<div style="margin-left: 8px;"><img src="'
-					+ sys.basePath
-					+ 'resources/images/local/loading.gif"/></div>',
-			width : 300,
-			progress : false,
-			wait : false,
-			closable : true
-		});
+		var msg = _msg || "数据提交中，请等候...";
+		Ext.MessageBox.show({
+					msg : '<div style="margin: 5 5 8 15px;">' + msg + '</div>'
+							+ '<div style="margin-left: 8px;"><img src="'
+							+ sys.basePath
+							+ 'resources/images/local/loading.gif"/></div>',
+					width : 300,
+					progress : false,
+					wait : false,
+					closable : true
+				});
 	},
 	hideProcessMsgBox : function() {
 		Ext.MessageBox.hide();
 	},
-	showErrorMsgBox : function(failMsg,title) {
-		Ext.Msg.show( {
-			title : title || '失败提示',
-			msg : failMsg || '对不起，您的操作失败.',
-			modal : false,
-			buttons : Ext.Msg.OK,
-			icon : Ext.MessageBox.ERROR
-		});
+	showErrorMsgBox : function(failMsg, title) {
+		Ext.Msg.show({
+					title : title || "失败提示",
+					msg : failMsg || "对不起，您的操作失败.",
+					modal : false,
+					buttons : Ext.Msg.OK,
+					icon : Ext.MessageBox.ERROR
+				});
 	},
 	debugJsonDetail : function(data) {
 		if (data == undefined) {
@@ -61,7 +61,7 @@ var Message = {
 					+ "\"";
 		if (typeof data == "object") {
 			if (!data.sort) {
-				for ( var i in data)
+				for (var i in data)
 					r.push("\"" + i + "\":" + Message.debugJsonDetail(data[i]));
 				if (!!document.all
 						&& !/^\n?function\s*toString\(\)\s*\{\n?\s*\[native code\]\n?\s*\}\n?\s*$/
@@ -70,7 +70,7 @@ var Message = {
 				}
 				r = "{" + r.join() + "}"
 			} else {
-				for ( var i = 0; i < data.length; i++)
+				for (var i = 0; i < data.length; i++)
 					r.push(Message.debugJsonDetail(data[i]))
 				r = "[" + r.join() + "]";
 			}
@@ -92,42 +92,42 @@ Ext.topShow = function() {
 				s,
 				'</div></div></div>',
 				'<div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>',
-				'</div>' ].join('');
+				'</div>'].join('');
 	}
 	return {
 		msg : function(title, format) {
 			if (!msgCt) {
 				msgCt = Ext.DomHelper.insertFirst(document.body, {
-					id : 'msg-div'
-				}, true);
+							id : "msg-div"
+						}, true);
 			}
-			msgCt.alignTo(document, 't-t');
+			msgCt.alignTo(document, "t-t");
 			var s = String.format.apply(String, Array.prototype.slice.call(
-					arguments, 1));
+							arguments, 1));
 			var m = Ext.DomHelper.append(msgCt, {
-				html : createBox(title, s)
-			}, true);
-			m.slideIn('t').pause(1).ghost("t", {
-				remove : true
-			});
+						html : createBox(title, s)
+					}, true);
+			m.slideIn("t").pause(1).ghost("t", {
+						remove : true
+					});
 		},
 		init : function() {
-			var t = Ext.get('exttheme');
+			var t = Ext.get("exttheme");
 			if (!t) {
 				return;
 			}
-			var theme = Cookies.get('exttheme') || 'aero';
+			var theme = Cookies.get("exttheme") || "aero";
 			if (theme) {
 				t.dom.value = theme;
-				Ext.getBody().addClass('x-' + theme);
+				Ext.getBody().addClass("x-" + theme);
 			}
-			t.on('change', function() {
-				Cookies.set('exttheme', t.getValue());
-				setTimeout(function() {
-					window.location.reload();
-				}, 250);
-			});
-			var lb = Ext.get('lib-bar');
+			t.on("change", function() {
+						Cookies.set("exttheme", t.getValue());
+						setTimeout(function() {
+									window.location.reload();
+								}, 250);
+					});
+			var lb = Ext.get("lib-bar");
 			if (lb) {
 				lb.show();
 			}
@@ -149,36 +149,37 @@ CommonAjax.prototype.request = function(params, showMsg, obj, callback) {
 		Message.showProcessMsgBox();
 	}
 
-	Ext.Ajax.request( {
-		url : this.ajaxUrl,
-		timeout : 120000,
-		params : params,
-		method : "POST",
-		success : function(response, options) {
-			var result = Ext.util.JSON.decode(response.responseText);
-			if (showMsg) {
-				Message.hideProcessMsgBox();
-			}
-			
-			if (result.success) {
-				Ext.topShow.msg("成功提示", result.message);
-				callback(obj);
-			} else {
-				var failMsg = Ext.isEmpty(result.message) ? "数据处理时发生异常."
-						: result.message;
-				Message.showErrorMsgBox(failMsg);
-			}
-		},
-		failure : function(response, options) {
-			if (showMsg) {
-				Message.hideProcessMsgBox();
-			}
-			var result = Ext.util.JSON.decode(response.responseText);
+	Ext.Ajax.request({
+				url : this.ajaxUrl,
+				timeout : 120000,
+				params : params,
+				method : "POST",
+				success : function(response, options) {
+					var result = Ext.util.JSON.decode(response.responseText);
+					if (showMsg) {
+						Message.hideProcessMsgBox();
+					}
 
-			var failMsg = Ext.isEmpty(result) ? "数据处理时发生异常." : result;
-			Message.showErrorMsgBox(failMsg);
-		}
-	});
+					if (result.success) {
+						Ext.topShow.msg("成功提示", result.message);
+						callback(obj);
+					} else {
+						var failMsg = Ext.isEmpty(result.message)
+								? "数据处理时发生异常."
+								: result.message;
+						Message.showErrorMsgBox(failMsg);
+					}
+				},
+				failure : function(response, options) {
+					if (showMsg) {
+						Message.hideProcessMsgBox();
+					}
+					var result = Ext.util.JSON.decode(response.responseText);
+
+					var failMsg = Ext.isEmpty(result) ? "数据处理时发生异常." : result;
+					Message.showErrorMsgBox(failMsg);
+				}
+			});
 }
 
 CommonAjax.prototype.submitForm = function(_form, params, showMsg, obj,
@@ -187,40 +188,40 @@ CommonAjax.prototype.submitForm = function(_form, params, showMsg, obj,
 		Message.showProcessMsgBox();
 	}
 
-	_form.submit( {
-		url : this.ajaxUrl,
-		timeout : 120000,
-		params : params,
-		method : "POST",
-		success : function(form, action) {
-			if (showMsg) {
-				Message.hideProcessMsgBox();
-			}
-			Ext.topShow.msg('成功提示', action.result.message);
+	_form.submit({
+				url : this.ajaxUrl,
+				timeout : 120000,
+				params : params,
+				method : "POST",
+				success : function(form, action) {
+					if (showMsg) {
+						Message.hideProcessMsgBox();
+					}
+					Ext.topShow.msg("成功提示", action.result.message);
 
-			// 调用回调函数
-			callback(obj);
-		},
-		failure : function(form, action) {
-			if (showMsg) {
-				Message.hideProcessMsgBox();
-			}
-			var failMsg = Ext.isEmpty(action.result.message) ? "数据处理时发生异常."
-					: action.result.message;
-			Message.showErrorMsgBox(failMsg);
-		}
-	});
+					// 调用回调函数
+					callback(obj);
+				},
+				failure : function(form, action) {
+					if (showMsg) {
+						Message.hideProcessMsgBox();
+					}
+					var failMsg = Ext.isEmpty(action.result.message)
+							? "数据处理时发生异常."
+							: action.result.message;
+					Message.showErrorMsgBox(failMsg);
+				}
+			});
 }
 
 function getCookie(key) {
-	var arrStr = document.cookie.split("; ");  
-  	for (var i = 0; i < arrStr.length; i++) {  
-  		var temp = arrStr[i].split("=");  
-  		if (temp[0] == key)  {
-    		return unescape(temp[1]); 
-  		}
-  	}
-  	
-  	return null;
-}
+	var arrStr = document.cookie.split("; ");
+	for (var i = 0; i < arrStr.length; i++) {
+		var temp = arrStr[i].split("=");
+		if (temp[0] == key) {
+			return unescape(temp[1]);
+		}
+	}
 
+	return null;
+}
