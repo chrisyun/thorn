@@ -45,7 +45,7 @@ public class SqlLoggingInterceptor implements Interceptor {
 			Matcher m = pattern.matcher(preparedSql);
 
 			if (!m.matches()) {
-				return null;
+				return invocation.proceed();
 			}
 		}
 
