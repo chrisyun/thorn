@@ -1,6 +1,8 @@
 package org.thorn.test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -32,7 +34,7 @@ public class PluginTest extends TestCase {
 		
 		SpringContext context = new SpringContext();
 		
-		context.setApplicationContext("Thorn-Spring-Dao.xml","Thorn-Spring-Mybatis.xml");
+		context.setApplicationContext("Thorn-Spring.xml");
 		
 		template = SpringContext.getBean("sqlSessionTemplate");
 	}
@@ -55,6 +57,14 @@ public class PluginTest extends TestCase {
 		test.setCode("123456");
 		
 		template.insert("TestMapper.insert", test);
+	}
+	
+	public void testDeleteHandler() {
+		
+		List<String> a = new ArrayList<String>();
+		a.add("fff");
+		
+		template.delete("TestMapper.delete", a);
 	}
 	
 }

@@ -46,4 +46,12 @@
 		</trim>
 	</insert>	
 	
+	<delete id="delete">
+		delete from thorn_test where name in
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item,jdbcType=VARCHAR}
+		</foreach>
+	</delete>
+	
 </mapper>
