@@ -1,6 +1,6 @@
-function queryFromPanel(attrObj) {
+function formPanel(attrObj) {
 
-	this.queryPanel = new Ext.FormPanel({
+	this.form = new Ext.FormPanel({
 				title : "查询条件",
 				iconCls : "icon-grid",
 				bodyStyle : "padding-top: 7px;",
@@ -24,16 +24,16 @@ function queryFromPanel(attrObj) {
 			});
 
 	for (var attr in attrObj) {
-		this.queryPanel[attr] = attrObj[attr];
+		this.form[attr] = attrObj[attr];
 	}
 }
 
-queryFromPanel.prototype.addButton = function(btn) {
-	this.queryPanel.buttons.push(btn);
+formPanel.prototype.addButton = function(btn) {
+	this.form.buttons.push(btn);
 }
 
-queryFromPanel.prototype.addItem = function(itemPanel) {
-	this.queryPanel.add(itemPanel);
+formPanel.prototype.addItem = function(itemPanel) {
+	this.form.add(itemPanel);
 }
 
 /**

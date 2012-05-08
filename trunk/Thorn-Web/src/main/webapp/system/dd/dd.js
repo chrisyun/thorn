@@ -16,7 +16,7 @@ Ext.onReady(function() {
 				height : 80,
 				labelWidth : 80
 			};
-			var queryPanelObj = new queryFromPanel(queryAttr);
+			var queryPanelObj = new formPanel(queryAttr);
 
 			var ename = getItemPanel({
 						id : "ename",
@@ -155,7 +155,7 @@ Ext.onReady(function() {
 			var viewport = new Ext.Viewport({
 						border : false,
 						layout : "border",
-						items : [queryPanelObj.queryPanel, dtgrid, ddgrid]
+						items : [queryPanelObj.form, dtgrid, ddgrid]
 					});
 
 			dtgrid.getStore().load({
