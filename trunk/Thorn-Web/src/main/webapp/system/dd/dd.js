@@ -5,124 +5,185 @@ var dtDeleteUrl = sys.basePath + "dd/deleteDt.jmt";
 var ddListUrl = sys.basePath + "dd/searchDdList.jmt";
 var ddSubmitUrl = sys.basePath + "dd/submitDictData.jmt";
 var ddDeleteUrl = sys.basePath + "dd/deleteDictData.jmt";
+var pageSize = 10;
 
 Ext.onReady(function() {
-	Ext.QuickTips.init();
-	
-	//title、height、labelWidth
-	var queryPanelObj = new queryFromPanel(null, 100, 80);
-	
-	//id,name,xtype,labelName,columnWidth,width,default,notEmpty
-	var ename = itemPanel("ename","ename",null,"字典类型编码",0.3,120,null,false);
-	queryPanelObj.addItem(ename);
-	var cname = itemPanel("cname","cname",null,"字典类型名称",0.3,120,null,false);
-	queryPanelObj.addItem(cname);
-	
-	var queryBtn = new button("queryBtn","查询","slik-search",80,onSubmitQueryHandler);
-	queryPanelObj.addButton(queryBtn);
-	
-	var dtGrid = new gridPanel(true,"字典类型列表",200,null);
-	var recordArray = [ {
-		name : "ename",
-		type : "string",
-		mapping : "ename"
-	}, {
-		name : "cname",
-		type : "string",
-		mapping : "cname"
-	}, {
-		name : "creattime",
-		type : "string",
-		mapping : "creattime"
-	} ];
-	dtGrid.setDateStore(dtListUrl,true,recordArray);
-	
-	var gridBtn = [ '-', {
-		text : "增加",
-		iconCls : "silk-add",
-		minWidth : Configuration.minBtnWidth
-	}, '-', {
-		text : "修改",
-		iconCls : "silk-edit",
-		minWidth : Configuration.minBtnWidth
-	}, '-', {
-		text : "删除",
-		iconCls : "silk-delete",
-		minWidth : Configuration.minBtnWidth
-	} ];
-	dtGrid.setGridBbar(10,gridBtn);
-	
-	dtGrid.setColumnCheckBox();
-	var columnModle = [{
-		header : "字典类型编号",
-		dataIndex : "ename",
-		sortable : true,
-		id : "ename",
-		width : 70
-	}, {
-		header : "字典类型名称",
-		dataIndex : "cname",
-		sortable : true,
-		id : "cname",
-		width : 100
-	}, {
-		header : "描述",
-		dataIndex : "typeDesc",
-		sortable : false,
-		id : "typeDesc",
-		width : 300
-	}];
-	dtGrid.setColumnModel(columnModle);
-	
-	dtGrid.getGridPanel();
-	
-	dtGrid.grid.region = "center";
-	
-//	var listeners = {celldblclick : function(thisGrid, rowIndex, columnIndex, ev) {
-//						alert("---");
-//					 },
-//					 cellclick : function(thisGrid, rowIndex, columnIndex, ev) {
-//						alert("---");
-//					 }};
-//	dtGrid.setListeners(listeners);
-	
+			Ext.QuickTips.init();
 
-	/**
-	 *查询按钮提交方法	
-	 */
-	function onSubmitQueryHandler() {
-		var thisForm = queryPanelObj.queryPanel.getForm();
-		var store = dtGrid.grid.getStore();
+			/** ****************query panel start*************** */
+			var queryAttr = {
+				region : "north",
+				height : 80,
+				labelWidth : 80
+			};
+			var queryPanelObj = new queryFromPanel(queryAttr);
 
-		if (store.baseParams == null) {
-			store.baseParams = {};
-		}
+			var ename = getItemPanel({
+						id : "ename",
+						fieldLabel : "字典类型编码",
+						xtype : "textfield",
+						width : 120
+					}, 0.2, true);
+			queryPanelObj.addItem(ename);
+			var cname = getItemPanel({
+						id : "cname",
+						fieldLabel : "字典类型名称",
+						xtype : "textfield",
+						width : 120
+					}, 0.2, true);
+			queryPanelObj.addItem(cname);
+			var queryBtn = getItemPanel({
+						id : "queryBtn",
+						iconCls : "slik-search",
+						text : "查询",
+						xtype : "button",
+						minWidth : 80,
+						handler : onSubmitQueryHandler
+					}, 0.3, true);
+			queryPanelObj.addItem(queryBtn);
+			/** ****************query panel end*************** */
 
-		var cname = Ext.getCmp("cname").getValue();
-		var ename = Ext.getCmp("ename").getValue();
+			/** ****************dtGrid panel start************ */
+			var dtRecordArray = [{
+						header : "字典类型编号",
+						id : "ename",
+						type : "string",
+						width : 70,
+						sortable : true
+					}, {
+						header : "字典类型名称",
+						id : "cname",
+						type : "string",
+						width : 100,
+						sortable : true
+					}, {
+						header : "描述",
+						id : "typeDesc",
+						type : "string",
+						width : 300,
+						sortable : false
+					}];
+			var dtGridObj = new gridPanel(dtListUrl, dtRecordArray, pageSize);
 
-		store.baseParams.ename = ename;
-		store.baseParams.cname = cname;
+			var dtGridBbar = ['-', {
+						text : "增加",
+						iconCls : "silk-add",
+						minWidth : Configuration.minBtnWidth
+					}, '-', {
+						text : "修改",
+						iconCls : "silk-edit",
+						minWidth : Configuration.minBtnWidth
+					}, '-', {
+						text : "删除",
+						iconCls : "silk-delete",
+						minWidth : Configuration.minBtnWidth
+					}];
+			dtGridObj.setBottomBar(dtGridBbar);
 
-		store.reload( {
-			params : {
-				start : 0,
-				limit : dtGrid.pageSize
+			var listeners = {
+				celldblclick : function(thisGrid, rowIndex, columnIndex, ev) {
+					// alert("---");
+				},
+				cellclick : function(thisGrid, rowIndex, columnIndex, ev) {
+					// alert("---");
+				}
+			};
+			dtGridObj.setListeners(listeners);
+
+			var dtGridAttr = {
+				title : "字典类型列表",
+				height : 200,
+				region : "center"
+			};
+			dtGridObj.setGridPanel(dtGridAttr);
+			/** ****************dtGrid panel end************ */
+
+			/** ****************ddGrid panel start************ */
+			var ddRecordArray = [{
+						header : "字典编码",
+						id : "dname",
+						type : "string",
+						width : 70,
+						sortable : false
+					}, {
+						header : "字典名称",
+						id : "dvalue",
+						type : "string",
+						width : 100,
+						sortable : false
+					}, {
+						header : "排序号",
+						id : "sortNum",
+						type : "string",
+						width : 300,
+						sortable : false
+					}, {
+						id : "sortNum",
+						type : "string"
+					}];
+			var ddGridObj = new gridPanel(ddListUrl, ddRecordArray);
+
+			var ddGridBbar = ['-', {
+						text : "增加",
+						iconCls : "silk-add",
+						minWidth : Configuration.minBtnWidth
+					}, '-', {
+						text : "修改",
+						iconCls : "silk-edit",
+						minWidth : Configuration.minBtnWidth
+					}, '-', {
+						text : "删除",
+						iconCls : "silk-delete",
+						minWidth : Configuration.minBtnWidth
+					}];
+			ddGridObj.setBottomBar(ddGridBbar);
+
+			var ddGridAttr = {
+				title : "字典数据列表",
+				height : 250,
+				margins : "20 0 0 0",
+				region : "south"
+			};
+			ddGridObj.setGridPanel(ddGridAttr);
+			/** ****************ddGrid panel end************ */
+
+			/**
+			 * 查询按钮提交方法
+			 */
+			function onSubmitQueryHandler() {
+				var thisForm = queryPanelObj.queryPanel.getForm();
+				var store = dtGridObj.grid.getStore();
+
+				if (store.baseParams == null) {
+					store.baseParams = {};
+				}
+
+				var cname = Ext.getCmp("cname").getValue();
+				var ename = Ext.getCmp("ename").getValue();
+
+				store.baseParams.ename = ename;
+				store.baseParams.cname = cname;
+
+				store.reload({
+							params : {
+								start : 0,
+								limit : dtGridObj.pageSize
+							}
+						});
 			}
+
+			var viewport = new Ext.Viewport({
+						border : false,
+						layout : "border",
+						items : [queryPanelObj.queryPanel, dtGridObj.grid,
+								ddGridObj.grid]
+					});
+
+			dtGridObj.grid.getStore().load({
+						params : {
+							"start" : 0,
+							"limit" : dtGridObj.pageSize
+						}
+					});
+
 		});
-	}
-
-	var viewport = new Ext.Viewport( {
-		border : false,
-		layout : "border",
-		items : [ queryPanelObj.queryPanel, dtGrid.grid ]
-	});
-
-	dtGrid.grid.getStore().load( {
-		params : {
-			"start" : 0,
-			"limit" : dtGrid.pageSize
-		}
-	});
-
-});
