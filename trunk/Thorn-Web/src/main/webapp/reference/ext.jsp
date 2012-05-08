@@ -1,11 +1,13 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="thorn" uri="/thorn"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <link rel="stylesheet" type="text/css" href="<%=path %><spring:theme code="css" />" />
 
+<!--  <thorn:dd  typeId="test" />     -->
 <!-- 驱动JS -->
 <script type="text/javascript" src="<%=path %>/plugins/ext-3.2.1/adapter/ext/ext-base.js" ></script>
 <!-- EXTjs -->
