@@ -45,6 +45,8 @@
 	<mappers>
 		 <mapper resource="org/thorn/dao/mybatis/mapper/MySQLCommonMapper.xml"/> 
 		 <mapper resource="org/thorn/dao/mybatis/mapper/OracleCommonMapper.xml"/>
+		 
+		 <!--<mapper resource="TestMapper.xml"/>-->
 	</mappers>
 	  
 </configuration>
