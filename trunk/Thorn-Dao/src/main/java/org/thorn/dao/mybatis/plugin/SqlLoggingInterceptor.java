@@ -70,7 +70,7 @@ public class SqlLoggingInterceptor implements Interceptor {
 			handler.dispose(logSql);
 		}
 
-		return null;
+		return invocation.proceed();
 	}
 
 	public Object plugin(Object target) {
