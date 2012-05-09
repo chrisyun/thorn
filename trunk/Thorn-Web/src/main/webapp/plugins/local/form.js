@@ -1,4 +1,4 @@
-function formPanel(attrObj, type) {
+function FormPanel(attrObj) {
 
 	this.form = new Ext.FormPanel({
 				iconCls : "icon-grid",
@@ -12,7 +12,7 @@ function formPanel(attrObj, type) {
 				labelAlign : "right",
 				buttonAlign : "center",
 				defaults : {
-					bodyStyle : "padding-left: 30px;",
+					bodyStyle : "padding-left: 8px;",
 					xtype : "panel",
 					border : false,
 					layout : "form"
@@ -20,23 +20,16 @@ function formPanel(attrObj, type) {
 				items : [{}]
 			});
 
-	if (type == "query") {
-		this.form.title = "查询条件";
-		this.form.id = "queryFormPanel";
-	} else if (type == "edit") {
-		this.form.defaults.bodyStyle = "padding-left: 10px;";
-	}
-
 	for (var attr in attrObj) {
 		this.form[attr] = attrObj[attr];
 	}
 }
 
-formPanel.prototype.addButton = function(btn) {
+FormPanel.prototype.addButton = function(btn) {
 	this.form.buttons.push(btn);
 }
 
-formPanel.prototype.addItem = function(itemPanel) {
+FormPanel.prototype.addItem = function(itemPanel) {
 	this.form.add(itemPanel);
 }
 
@@ -49,13 +42,13 @@ formPanel.prototype.addItem = function(itemPanel) {
  */
 function getButton(attrObj) {
 
-	this.btn = new Ext.Button();
+	var btn = new Ext.Button();
 
 	for (var attr in attrObj) {
-		this.btn[attr] = attrObj[attr];
+		btn[attr] = attrObj[attr];
 	}
 
-	return this.btn;
+	return btn;
 }
 
 /**
@@ -69,7 +62,7 @@ function getButton(attrObj) {
  *            empty true表示不作空值检查
  * @return {}
  */
-function getItemPanel(attrObj, columnWidth, empty) {
+function getPanelItem(attrObj, columnWidth, empty) {
 
 	if (!empty) {
 		attrObj.fieldLabel = Configuration.redStar + attrObj.fieldLabel;
@@ -77,10 +70,34 @@ function getItemPanel(attrObj, columnWidth, empty) {
 		attrObj.blankText = Configuration.msg.EMPTY;
 	}
 
-	this.panel = ({
+	var panel = ({
 		columnWidth : columnWidth || 0.5,
 		items : [attrObj]
 	});
 
-	return this.panel;
+	return panel;
+}
+
+function getTxt(id, text, width) {
+	var txt = new Object();
+
+	txt.id = id;
+	txt.width = width;
+	txt.fieldLabel = text;
+	txt.xtype = "textfield";
+
+	return txt;
+}
+
+function getQueryBtn(queryHandler) {
+	var queryBtn = new Object();
+
+	queryBtn.id = "queryBtn";
+	queryBtn.iconCls = "slik-search";
+	queryBtn.text = "查询";
+	queryBtn.xtype = "button";
+	queryBtn.minWidth = 80;
+	queryBtn.handler = queryHandler;
+	
+	return queryBtn
 }
