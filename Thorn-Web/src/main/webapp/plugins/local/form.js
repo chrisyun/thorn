@@ -5,7 +5,7 @@ function FormPanel(attrObj) {
 				bodyStyle : "padding-top: 7px;",
 				collapsible : true,
 				height : Configuration.bodyHight - 10,
-				margins : "2 0 2 0",
+				margins : "2 0 0 0",
 				layout : "column",
 				split : true,
 				labelWidth : 100,

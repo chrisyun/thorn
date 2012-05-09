@@ -26,3 +26,5 @@
 
 /**tree*/
 .tree-user { background-image: url(images/local/icons/user.gif) !important; background-repeat: no-repeat; }
+.tree-org { background-image: url(images/local/icons/org.png) !important; background-repeat: no-repeat; }
+.tree-dd { background-image: url(images/local/icons/dict.gif) !important; background-repeat: no-repeat; }
