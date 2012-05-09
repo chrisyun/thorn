@@ -16,7 +16,7 @@ import org.thorn.dao.mybatis.annotation.MethodType;
 public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 
 	static Logger log = LoggerFactory.getLogger(MyBatisDaoSupportImpl.class);
-	
+
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
@@ -29,10 +29,8 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 					MethodType.INSERT);
 			return sqlSessionTemplate.insert(mapper, obj);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"MyBatisDaoSupport do save Exception, Object["
-							+ obj.getClass().getName() + "],mapper[" + mapper
-							+ "]", e);
+			throw new DBAccessException("MyBatisDaoSupport", "save", "Object["
+					+ obj.getClass().getName() + "],mapper[" + mapper + "]", e);
 		}
 	}
 
@@ -44,9 +42,8 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 					MethodType.UPDATE);
 			return sqlSessionTemplate.update(mapper, obj);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"MyBatisDaoSupport do modify Exception, Object["
-							+ obj.getClass().getName() + "],mapper[" + mapper
+			throw new DBAccessException("MyBatisDaoSupport", "modify",
+					"Object[" + obj.getClass().getName() + "],mapper[" + mapper
 							+ "]", e);
 		}
 	}
@@ -59,9 +56,8 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 					MethodType.DELETE);
 			return sqlSessionTemplate.delete(mapper, obj);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"MyBatisDaoSupport do delete Exception, Object["
-							+ obj.getClass().getName() + "],mapper[" + mapper
+			throw new DBAccessException("MyBatisDaoSupport", "delete",
+					"Object[" + obj.getClass().getName() + "],mapper[" + mapper
 							+ "]", e);
 		}
 	}
@@ -74,10 +70,8 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 					MethodType.QUERY);
 			obj = sqlSessionTemplate.selectOne(mapper, obj);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"MyBatisDaoSupport do query Exception, Object["
-							+ obj.getClass().getName() + "],mapper[" + mapper
-							+ "]", e);
+			throw new DBAccessException("MyBatisDaoSupport", "query", "Object["
+					+ obj.getClass().getName() + "],mapper[" + mapper + "]", e);
 		}
 	}
 
@@ -89,9 +83,8 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 			mapper = MapperUtils.getMapperSource(bean, MethodType.DELETE_BATCH);
 			return sqlSessionTemplate.delete(mapper, ids);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"MyBatisDaoSupport do deleteForBatch Exception, Object["
-							+ bean.getName() + "],mapper[" + mapper + "]", e);
+			throw new DBAccessException("MyBatisDaoSupport", "deleteForBatch",
+					"Object[" + bean.getName() + "],mapper[" + mapper + "]", e);
 		}
 	}
 
@@ -118,9 +111,8 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 
 			return page;
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"MyBatisDaoSupport do queryForPage Exception, Object["
-							+ bean.getName() + "],mapper[" + pageMapper
+			throw new DBAccessException("MyBatisDaoSupport", "queryForPage",
+					"Object[" + bean.getName() + "],mapper[" + pageMapper
 							+ "],countMapper[" + pageCountMapper + "]", e);
 		}
 	}
@@ -133,9 +125,8 @@ public class MyBatisDaoSupportImpl implements MyBatisDaoSupport {
 			mapper = MapperUtils.getMapperSource(bean, MethodType.QUERY_LIST);
 			return (List<T>) sqlSessionTemplate.selectList(mapper, filter);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"MyBatisDaoSupport do queryForList Exception, Object["
-							+ bean.getName() + "],mapper[" + mapper + "]", e);
+			throw new DBAccessException("MyBatisDaoSupport", "queryForList",
+					"Object[" + bean.getName() + "],mapper[" + mapper + "]", e);
 		}
 	}
 
