@@ -33,8 +33,7 @@ public class ResourceDaoImpl implements IResourceDao {
 			return (List<Resource>) sqlSessionTemplate.selectList(nameSpace
 					+ "queryList", filter);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"ResourceDaoImpl do queryList Exception", e);
+			throw new DBAccessException("ResourceDaoImpl", "queryList", e);
 		}
 	}
 

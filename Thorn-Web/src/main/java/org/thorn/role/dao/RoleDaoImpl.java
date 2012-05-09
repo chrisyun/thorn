@@ -30,8 +30,7 @@ public class RoleDaoImpl implements IRoleDao {
 			return (List<Role>) sqlSessionTemplate.selectList(nameSpace
 					+ "queryByUser", userId);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"RoleDaoImpl do queryByUser Exception",e);
+			throw new DBAccessException("RoleDaoImpl", "queryByUser", e);
 		}
 	}
 
@@ -41,8 +40,8 @@ public class RoleDaoImpl implements IRoleDao {
 			return (List<Role>) sqlSessionTemplate.selectList(nameSpace
 					+ "queryBySource", source);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"RoleDaoImpl do queryRolesByResource Exception", e);
+			throw new DBAccessException("RoleDaoImpl", "queryRolesByResource",
+					e);
 		}
 	}
 
