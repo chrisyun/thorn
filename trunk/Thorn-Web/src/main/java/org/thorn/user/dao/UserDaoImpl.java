@@ -31,7 +31,7 @@ public class UserDaoImpl implements IUserDao {
 			return (User) sqlSessionTemplate.selectOne(nameSpace + "queryList",
 					filter);
 		} catch (Exception e) {
-			throw new DBAccessException("UserDaoImpl do queryUser Exception", e);
+			throw new DBAccessException("UserDaoImpl", "queryUser", e);
 		}
 	}
 

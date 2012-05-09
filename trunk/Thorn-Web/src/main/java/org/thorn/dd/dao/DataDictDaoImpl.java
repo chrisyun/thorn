@@ -45,8 +45,7 @@ public class DataDictDaoImpl implements IDataDictDao {
 
 			return page;
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"DataDictImpl do queryDtPage Exception", e);
+			throw new DBAccessException("DataDictImpl", "queryDtPage", e);
 		}
 
 	}
@@ -57,8 +56,7 @@ public class DataDictDaoImpl implements IDataDictDao {
 			return (List<Dict>) sqlSessionTemplate.selectList(nameSpace
 					+ "selectDict", filter);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"DataDictImpl do queryDdList Exception", e);
+			throw new DBAccessException("DataDictImpl", "queryDdList", e);
 		}
 	}
 
@@ -66,7 +64,7 @@ public class DataDictDaoImpl implements IDataDictDao {
 		try {
 			return sqlSessionTemplate.insert(nameSpace + "insertDict", dd);
 		} catch (Exception e) {
-			throw new DBAccessException("DataDictImpl do saveDd Exception", e);
+			throw new DBAccessException("DataDictImpl", "saveDd", e);
 		}
 	}
 
@@ -74,7 +72,7 @@ public class DataDictDaoImpl implements IDataDictDao {
 		try {
 			return sqlSessionTemplate.insert(nameSpace + "insertDictType", dt);
 		} catch (Exception e) {
-			throw new DBAccessException("DataDictImpl do saveDt Exception", e);
+			throw new DBAccessException("DataDictImpl", "saveDt", e);
 		}
 	}
 
@@ -82,7 +80,7 @@ public class DataDictDaoImpl implements IDataDictDao {
 		try {
 			return sqlSessionTemplate.update(nameSpace + "updateDict", dd);
 		} catch (Exception e) {
-			throw new DBAccessException("DataDictImpl do modifyDd Exception", e);
+			throw new DBAccessException("DataDictImpl", "modifyDd", e);
 		}
 	}
 
@@ -90,7 +88,7 @@ public class DataDictDaoImpl implements IDataDictDao {
 		try {
 			return sqlSessionTemplate.update(nameSpace + "updateDictType", dt);
 		} catch (Exception e) {
-			throw new DBAccessException("DataDictImpl do modifyDt Exception", e);
+			throw new DBAccessException("DataDictImpl", "modifyDt", e);
 		}
 	}
 
@@ -98,7 +96,7 @@ public class DataDictDaoImpl implements IDataDictDao {
 		try {
 			return sqlSessionTemplate.delete(nameSpace + "deleteDict", ids);
 		} catch (Exception e) {
-			throw new DBAccessException("DataDictImpl do deleteDd Exception", e);
+			throw new DBAccessException("DataDictImpl", "deleteDd", e);
 		}
 	}
 
@@ -106,7 +104,7 @@ public class DataDictDaoImpl implements IDataDictDao {
 		try {
 			return sqlSessionTemplate.delete(nameSpace + "deleteDictType", ids);
 		} catch (Exception e) {
-			throw new DBAccessException("DataDictImpl do deleteDt Exception", e);
+			throw new DBAccessException("DataDictImpl", "deleteDt", e);
 		}
 	}
 
@@ -115,8 +113,7 @@ public class DataDictDaoImpl implements IDataDictDao {
 			return sqlSessionTemplate
 					.delete(nameSpace + "deleteByTypeIds", ids);
 		} catch (Exception e) {
-			throw new DBAccessException(
-					"DataDictImpl do deleteDdByType Exception", e);
+			throw new DBAccessException("DataDictImpl", "deleteDdByType", e);
 		}
 	}
 

@@ -3,6 +3,8 @@ package org.thorn.dd.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -25,7 +27,9 @@ import org.thorn.web.Status;
  */
 @Controller
 public class DDController {
-
+	
+	static Logger log = LoggerFactory.getLogger(DDController.class);
+	
 	@Autowired
 	@Qualifier("ddService")
 	private IDataDictService ddService;
@@ -40,7 +44,7 @@ public class DDController {
 			page = ddService.queryDtPage(ename, cname,
 					start, limit, sort, dir);
 		} catch (DBAccessException e) {
-			e.printStackTrace();
+			log.error("getDtPage[DD] - " + e.getMessage(), e);
 		}
 
 		return page;
@@ -53,7 +57,7 @@ public class DDController {
 		try {
 			list = ddService.queryDdList(typeId);
 		} catch (DBAccessException e) {
-			e.printStackTrace();
+			log.error("getDdList[DD] - " + e.getMessage(), e);
 		}
 		
 		Page<Dict> page = new Page<Dict>();
@@ -81,7 +85,7 @@ public class DDController {
 		} catch (DBAccessException e) {
 			status.setSuccess(false);
 			status.setMessage("数据保存失败：" + e.getMessage());
-			e.printStackTrace();
+			log.error("saveOrModifyDd[DD] - " + e.getMessage(), e);
 		}
 		
 		return status;
@@ -105,7 +109,7 @@ public class DDController {
 		} catch (DBAccessException e) {
 			status.setSuccess(false);
 			status.setMessage("数据保存失败：" + e.getMessage());
-			e.printStackTrace();
+			log.error("saveOrModifyDt[DD] - " + e.getMessage(), e);
 		}
 		
 		return status;
@@ -122,7 +126,7 @@ public class DDController {
 		} catch (DBAccessException e) {
 			status.setSuccess(false);
 			status.setMessage("数据删除失败：" + e.getMessage());
-			e.printStackTrace();
+			log.error("deleteDd[DD] - " + e.getMessage(), e);
 		}
 		
 		return status;
@@ -139,7 +143,7 @@ public class DDController {
 		} catch (DBAccessException e) {
 			status.setSuccess(false);
 			status.setMessage("数据删除失败：" + e.getMessage());
-			e.printStackTrace();
+			log.error("deleteDt[DD] - " + e.getMessage(), e);
 		}
 		
 		return status;
