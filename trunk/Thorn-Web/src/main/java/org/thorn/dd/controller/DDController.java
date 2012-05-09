@@ -48,7 +48,7 @@ public class DDController {
 	
 	@RequestMapping("/dd/getDdList")
 	@ResponseBody
-	public List<Dict> getDdList(String typeId) {
+	public Page<Dict> getDdList(String typeId) {
 		List<Dict> list = new ArrayList<Dict>();
 		try {
 			list = ddService.queryDdList(typeId);
@@ -56,7 +56,11 @@ public class DDController {
 			e.printStackTrace();
 		}
 		
-		return list;
+		Page<Dict> page = new Page<Dict>();
+		page.setReslutSet(list);
+		page.setTotal(list.size());
+		
+		return page;
 	}
 	
 	@RequestMapping("/dd/saveOrModifyDd")
@@ -69,7 +73,7 @@ public class DDController {
 			if(LocalStringUtils.equals(opType, Configuration.OP_SAVE)) {
 				ddService.saveDd(dd);
 				status.setMessage("新增字典项成功！");
-			} else if(LocalStringUtils.equals(opType, Configuration.OP_SAVE)) {
+			} else if(LocalStringUtils.equals(opType, Configuration.OP_MODIFY)) {
 				ddService.modifyDd(dd);
 				status.setMessage("修改字典项成功！");
 			}
@@ -93,7 +97,7 @@ public class DDController {
 			if(LocalStringUtils.equals(opType, Configuration.OP_SAVE)) {
 				ddService.saveDt(dt);
 				status.setMessage("新增字典类型成功！");
-			} else if(LocalStringUtils.equals(opType, Configuration.OP_SAVE)) {
+			} else if(LocalStringUtils.equals(opType, Configuration.OP_MODIFY)) {
 				ddService.modifyDt(dt);
 				status.setMessage("修改字典类型成功！");
 			}
