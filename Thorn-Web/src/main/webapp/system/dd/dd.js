@@ -2,14 +2,15 @@ var dtListUrl = sys.basePath + "dd/getDtPage.jmt";
 var dtSubmitUrl = sys.basePath + "dd/saveOrModifyDt.jmt";
 var dtDeleteUrl = sys.basePath + "dd/deleteDt.jmt";
 
-var ddListUrl = sys.basePath + "dd/searchDdList.jmt";
-var ddSubmitUrl = sys.basePath + "dd/submitDictData.jmt";
-var ddDeleteUrl = sys.basePath + "dd/deleteDictData.jmt";
+var ddListUrl = sys.basePath + "dd/getDdList.jmt";
+var ddSubmitUrl = sys.basePath + "dd/saveOrModifyDd.jmt";
+var ddDeleteUrl = sys.basePath + "dd/deleteDd.jmt";
 var pageSize = 10;
+var typeId;
 
 Ext.onReady(function() {
 			Ext.QuickTips.init();
-
+		
 			/** ****************query panel start*************** */
 			var query_attr = {
 				title : "查询列表",
@@ -37,15 +38,21 @@ Ext.onReady(function() {
 			var grid_dt_Bar = getCUDBar(dtSaveHandler, dtModifyHandler, dtDeleteHandler);
 			grid_dt_Cls.setBottomBar(grid_dt_Bar);
 
-			var listeners = {
+			var listeners_dt = {
 				celldblclick : function(thisGrid, rowIndex, columnIndex, ev) {
-					// alert("---");
+					dtModifyHandler();
 				},
 				cellclick : function(thisGrid, rowIndex, columnIndex, ev) {
-					// alert("---");
+					var record = thisGrid.getStore().getAt(rowIndex);
+					typeId = record.get("ename");
+					grid_dd.getStore().load( {
+						params : {
+							"typeId" : typeId
+						}
+					});
 				}
 			};
-			grid_dt_Cls.setListeners(listeners);
+			grid_dt_Cls.setListeners(listeners_dt);
 
 			var grid_dt_attr = {
 				title : "字典类型列表",
@@ -62,9 +69,17 @@ Ext.onReady(function() {
 					getRecord(null, "typeId", "string", null)];
 			var grid_dd_Cls = new Grid(ddListUrl, recordArray_dd);
 
-			var grid_dd_Bar = getCUDBar(null, null, ddDeleteHandler);
+			var grid_dd_Bar = getCUDBar(ddSaveHandler, ddModifyHandler, ddDeleteHandler);
 			grid_dd_Cls.setBottomBar(grid_dd_Bar);
-
+			
+			var listeners_dd = {
+				celldblclick : function(thisGrid, rowIndex, columnIndex, ev) {
+					ddModifyHandler();
+				}
+			};
+			grid_dd_Cls.setListeners(listeners_dd);
+			
+			
 			var grid_dd_attr = {
 				title : "字典数据列表",
 				height : 200,
@@ -130,19 +145,14 @@ Ext.onReady(function() {
 											+ ",";
 								}
 
-								var typeId = selectedRecordArray[0]
-										.get("typeId");
-								alert(typeId);
-
 								var params = {
-									ids : ids,
-									typeid : typeId
+									ids : ids
 								};
 
 								var ajaxClass = new CommonAjax(ddDeleteUrl);
 								ajaxClass.request(params, true, null, function(
 												obj) {
-											grid_dd.dataStore.reload();
+											grid_dd.getStore().reload();
 										});
 							}
 						});
@@ -162,14 +172,14 @@ Ext.onReady(function() {
 			dt_form_Cls.addItem(getPanelItem({
 						id : "dtFormType",
 						xtype : "hidden"
-					}, 0, false));
+					}, 0, true));
 			dt_form_Cls.addItem(getPanelItem({
 						id : "typeDesc",
 						fieldLabel : "描述",
 						xtype : "textarea",
 						width : 180,
 						height : 60
-					}, 1.0, false));
+					}, 1.0, true));
 
 			var dt_win_Cls = new OpenWindow({
 						width : 370,
@@ -211,9 +221,126 @@ Ext.onReady(function() {
 			}
 
 			function dtSaveOrModify() {
-				alert("-");
+				var dtForm = dt_form_Cls.form.getForm();
+
+				if (!dtForm.isValid()) {
+					Ext.Msg.alert("提示信息", "请填写完整的字典类型信息!");
+					return;
+				}
+			
+				var ajaxClass = new CommonAjax(dtSubmitUrl);
+				
+				var opType = dt_form_Cls.form.findById("dtFormType").getValue();
+				
+				var params = {
+					opType : opType
+				};
+				
+				var callBack_obj = new Object();
+				callBack_obj.grid = grid_dt;
+				callBack_obj.win = dt_win_Cls;
+				
+				ajaxClass.submitForm(dtForm, params, true, callBack_obj, function(obj) {
+					obj.grid.getStore().reload();
+					obj.win.openWin.hide();
+				});
+			}
+			
+			
+			var dd_form_Cls = new FormPanel({
+						id : "ddForm",
+						collapsible : false,
+						labelWidth : 80,
+						border : false
+					});
+
+			dd_form_Cls.addItem(getPanelItem(getTxt("dname", "字典编码", 150),
+					1.0, false));
+			dd_form_Cls.addItem(getPanelItem(getTxt("dvalue", "字典名称", 150),
+					1.0, false));
+			dd_form_Cls.addItem(getPanelItem(getTxt("sortNum", "排序号", 150),
+					1.0, true));
+			dd_form_Cls.addItem(getPanelItem({
+						id : "ddFormType",
+						xtype : "hidden"
+					}, 0, true));
+			dd_form_Cls.addItem(getPanelItem({
+						id : "typeId",
+						xtype : "hidden"
+					}, 0, true));
+					
+			var dd_win_Cls = new OpenWindow({
+						width : 300,
+						height : 180
+					}, dd_form_Cls.form, ddSaveOrModify);
+
+			function ddSaveHandler() {
+				if(Ext.isEmpty(typeId)) {
+					Ext.Msg.alert("提示信息", "请选择数据字典类型!");
+					return;
+				}
+				
+				dd_win_Cls.show("新增数据字典项");
+
+				dd_form_Cls.form.getForm().reset();
+				dd_form_Cls.form.findById("ddFormType")
+						.setValue(Configuration.opType.save);
+				dd_form_Cls.form.findById("typeId").setValue(typeId);
 			}
 
+			function ddModifyHandler() {
+				if (grid_dd.getSelectionModel().getCount() != 1) {
+					Ext.Msg.alert("提示信息", "请选择一条记录!");
+					return;
+				}
+
+				var ddForm = dd_form_Cls.form;
+
+				dd_win_Cls.show("修改数据字典项");
+				ddForm.getForm().reset();
+				ddForm.findById("ddFormType")
+						.setValue(Configuration.opType.modify);
+
+				// 将主键置为不可编辑
+				var dnameText = ddForm.findById("dname");
+				dnameText.el.dom.readOnly = true;
+
+				var selectedRecord = grid_dd.getSelectionModel().getSelected();
+				var values = {
+					dname : selectedRecord.get("dname"),
+					dvalue : selectedRecord.get("dvalue"),
+					typeId : selectedRecord.get("typeId"),
+					sortNum : selectedRecord.get("sortNum")
+				};
+				ddForm.getForm().setValues(values);
+			}
+
+			function ddSaveOrModify() {
+				var ddForm = dd_form_Cls.form.getForm();
+
+				if (!ddForm.isValid()) {
+					Ext.Msg.alert("提示信息", "请填写完整的字典数据信息!");
+					return;
+				}
+			
+				var ajaxClass = new CommonAjax(ddSubmitUrl);
+				
+				var opType = dd_form_Cls.form.findById("ddFormType").getValue();
+				
+				var params = {
+					opType : opType
+				};
+				
+				ajaxClass.submitForm(ddForm, params, true, grid_dd, function(obj) {
+					obj.getStore().reload();
+				});
+			}
+			
+			
+			
+			
+			
+			
 			/**
 			 * 查询按钮提交方法
 			 */
