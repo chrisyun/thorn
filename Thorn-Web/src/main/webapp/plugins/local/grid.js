@@ -9,7 +9,7 @@
  * @param {}
  *            pageSize
  */
-function gridPanel(dataUrl, recordArray, pageSize) {
+function Grid(dataUrl, recordArray, pageSize) {
 
 	this.dataUrl = dataUrl
 	this.pageSize = pageSize;
@@ -27,11 +27,11 @@ function gridPanel(dataUrl, recordArray, pageSize) {
 		store.type = recordArray[i].type;
 		store.mapping = recordArray[i].id;
 		storeArray.push(store);
-		
-		if(Ext.isEmpty(recordArray[i].header)) {
+
+		if (Ext.isEmpty(recordArray[i].header)) {
 			continue;
 		}
-		
+
 		var column = new Object();
 		column.header = recordArray[i].header;
 		column.id = recordArray[i].id;
@@ -54,11 +54,11 @@ function gridPanel(dataUrl, recordArray, pageSize) {
 	this.cm = new Ext.grid.ColumnModel(columnArray);
 }
 
-gridPanel.prototype.setTopBar = function(arrays) {
+Grid.prototype.setTopBar = function(arrays) {
 	this.tbar = arrays;
 }
 
-gridPanel.prototype.setBottomBar = function(arrays) {
+Grid.prototype.setBottomBar = function(arrays) {
 
 	if (Ext.isEmpty(this.pageSize) || this.pageSize <= 0) {
 		this.bbar = arrays;
@@ -82,11 +82,11 @@ gridPanel.prototype.setBottomBar = function(arrays) {
 	}
 }
 
-gridPanel.prototype.setListeners = function(array) {
+Grid.prototype.setListeners = function(array) {
 	this.listeners = array;
 }
 
-gridPanel.prototype.setGridPanel = function(gridAttr) {
+Grid.prototype.setGridPanel = function(gridAttr) {
 
 	this.grid = new Ext.grid.GridPanel({
 				height : Configuration.bodyHight,
@@ -95,7 +95,7 @@ gridPanel.prototype.setGridPanel = function(gridAttr) {
 				iconCls : "silk-grid",
 				margins : "0 0 0 0",
 				loadMask : true,
-				split: true,
+				split : true,
 				store : this.dataStore,
 				cm : this.cm,
 				sm : this.sm,
@@ -110,5 +110,64 @@ gridPanel.prototype.setGridPanel = function(gridAttr) {
 	for (var attr in gridAttr) {
 		this.grid[attr] = gridAttr[attr];
 	}
+}
 
+function getCUDBar(saveHandler, modifyHandler, deleteHandler) {
+	var bar = new Array();
+	if (saveHandler != null) {
+		bar.push("-");
+		bar.push({
+					text : "增加",
+					iconCls : "silk-add",
+					minWidth : Configuration.minBtnWidth,
+					handler : saveHandler
+				});
+	}
+
+	if (modifyHandler != null) {
+		bar.push("-");
+		bar.push({
+					text : "修改",
+					iconCls : "silk-edit",
+					minWidth : Configuration.minBtnWidth,
+					handler : modifyHandler
+				});
+	}
+
+	if (modifyHandler != null) {
+		bar.push("-");
+		bar.push({
+					text : "删除",
+					iconCls : "silk-delete",
+					minWidth : Configuration.minBtnWidth,
+					handler : deleteHandler
+				});
+	}
+
+	return bar;
+}
+
+function getRecord(header, id, type, width, sortable, renderer) {
+	var record = new Object();
+
+	if (header != null) {
+		record.header = header;
+	}
+	if (id != null) {
+		record.id = id;
+	}
+	if (type != null) {
+		record.type = type;
+	}
+	if (width != null) {
+		record.width = width;
+	}
+	if (sortable != null) {
+		record.sortable = sortable;
+	}
+	if (renderer != null) {
+		record.renderer = renderer;
+	}
+	
+	return record;
 }

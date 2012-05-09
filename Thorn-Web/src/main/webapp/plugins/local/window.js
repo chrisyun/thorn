@@ -1,6 +1,5 @@
-function openWindow(winAttr, form, saveHandler) {
+function OpenWindow(winAttr, form, saveHandler) {
 	this.openWin = new Ext.Window({
-				title : '弹出窗口',
 				closeAction : 'hide',
 				modal : true,
 				shadow : true,
@@ -28,6 +27,7 @@ function openWindow(winAttr, form, saveHandler) {
 	}
 }
 
-openWindow.prototype.show = function() {
+OpenWindow.prototype.show = function(title) {
+	this.openWin.setTitle(title);
 	this.openWin.show();
 }
