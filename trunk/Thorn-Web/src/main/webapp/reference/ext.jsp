@@ -18,8 +18,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="<%=path %>/plugins/local/render.js" ></script>
 <script type="text/javascript" src="<%=path %>/plugins/local/theme.js" ></script>
 <script type="text/javascript" src="<%=path %>/plugins/local/grid.js" ></script>
-<script type="text/javascript" src="<%=path %>/plugins/local/formPanel.js" ></script>
-<script type="text/javascript" src="<%=path %>/plugins/local/openWin.js" ></script>
+<script type="text/javascript" src="<%=path %>/plugins/local/form.js" ></script>
+<script type="text/javascript" src="<%=path %>/plugins/local/window.js" ></script>
 <link rel="stylesheet" type="text/css" href="<%=path %>/resources/localStyle.css" />
 
 

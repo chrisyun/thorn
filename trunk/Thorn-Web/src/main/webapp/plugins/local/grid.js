@@ -134,7 +134,7 @@ function getCUDBar(saveHandler, modifyHandler, deleteHandler) {
 				});
 	}
 
-	if (modifyHandler != null) {
+	if (deleteHandler != null) {
 		bar.push("-");
 		bar.push({
 					text : "删除",
