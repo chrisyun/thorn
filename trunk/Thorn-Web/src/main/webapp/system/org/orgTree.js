@@ -1,10 +1,10 @@
-var orgTreeUrl = sys.basePath + "org/orgTree.jmt";
+var orgTreeUrl = sys.basePath + "org/getOrgTree.jmt";
 
 var tree_loader = new Ext.tree.TreeLoader({
 			url : orgTreeUrl
 		});
 tree_loader.on("beforeload", function(loader, node) {
-			tree_loader.baseParams.pid = node.id;
+			tree_loader.baseParams.pid = node.attributes.pid;
 		});
 
 var orgTree = new Ext.tree.TreePanel({
@@ -22,6 +22,7 @@ var orgTree = new Ext.tree.TreePanel({
 						text : "组织树",
 						id : "-1",
 						iconCls : "tree-org",
+						pid : "ROOT",
 						leaf : false
 					})
 		});

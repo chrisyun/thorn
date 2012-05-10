@@ -11,7 +11,7 @@
 		<result column="GENDER" property="gender" jdbcType="VARCHAR" />
 		<result column="CUMAIL" property="cumail" jdbcType="VARCHAR" />
 		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
-		<result column="ORGID" property="orgId" jdbcType="DECIMAL" />
+		<result column="ORGCODE" property="orgCode" jdbcType="VARCHAR" />
 		<result column="ORGNAME" property="orgName" jdbcType="VARCHAR" />
 		<result column="DEFAULTROLE" property="defaultRole" jdbcType="VARCHAR" />
 		<result column="ISDISABLED" property="isDisabled" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
 
 	<sql id="Base_Column_List">
 		U.USERID, U.UNAME, U.SN, U.USERACCOUNT,
-		U.USERPWD, U.GENDER, U.ORGID,
+		U.USERPWD, U.GENDER, U.ORGCODE,
 		U.DEFAULTROLE, U.CUMAIL, U.PHONE,
 		U.ISDISABLED, U.ISSHOW, U.SORTNUM,
 		O.ORGNAME,O.AREA
@@ -59,8 +59,8 @@
 			<if test="phone != null and phone != ''">
 				and U.PHONE = #{phone,jdbcType=VARCHAR}
       		</if>
-			<if test="orgid != null and orgid != ''">
-				and U.ORGID = #{orgId,jdbcType=DECIMAL}
+			<if test="orgCode != null and orgCode != ''">
+				and U.ORGCODE = #{orgCode,jdbcType=VARCHAR}
       		</if>
 			<if test="isDisabled != null and isDisabled != ''">
 				and U.ISDISABLED = #{isDisabled,jdbcType=VARCHAR}
@@ -78,7 +78,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from T_SYS_USER U left join T_SYS_ORG O 
-		on U.ORGID = O.ORGID
+		on U.ORGCODE = O.ORGCODE
 		<include refid="Where_Clause" />
 	</select>
 

@@ -19,7 +19,7 @@ public class Org implements Serializable {
 	
 	private String orgName;
 	
-	private int parentOrg;
+	private String parentOrg;
 	
 	private String showName;
 	
@@ -59,11 +59,11 @@ public class Org implements Serializable {
 		this.orgName = orgName;
 	}
 
-	public int getParentOrg() {
+	public String getParentOrg() {
 		return parentOrg;
 	}
 
-	public void setParentOrg(int parentOrg) {
+	public void setParentOrg(String parentOrg) {
 		this.parentOrg = parentOrg;
 	}
 

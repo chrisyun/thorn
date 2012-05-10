@@ -331,14 +331,15 @@ Ext.onReady(function() {
 					opType : opType
 				};
 				
-				ajaxClass.submitForm(ddForm, params, true, grid_dd, function(obj) {
-					obj.getStore().reload();
+				var callBack_obj = new Object();
+				callBack_obj.grid = grid_dd;
+				callBack_obj.form = dd_form_Cls.form;
+				
+				ajaxClass.submitForm(ddForm, params, true, callBack_obj, function(obj) {
+					obj.grid.getStore().reload();
+					obj.form.getForm().reset();
 				});
 			}
-			
-			
-			
-			
 			
 			
 			/**
