@@ -22,38 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
- * 文件名称: MailHelper.java
- * </p>
- * <p>
- * 文件描述: 邮件发送辅助类
- * </p>
- * <p>
- * 版权所有: 版权所有(C)2010
- * </p>
- * <p>
- * 内容摘要: 提供邮件发送及关闭连接的方法
- * </p>
- * <p>
- * 其他说明: 其它内容的说明
- * </p>
- * <p>
- * 完成日期: 2012-3-12
- * </p>
- * <p>
- * 修改记录1:
- * </p>
  * 
- * <pre>
- *    修改日期:
- *    修 改 人:
- *    修改内容:
- * </pre>
- * <p>
- * 修改记录2：…
- * </p>
- * 
+ * @ClassName: MailHelper
+ * @Description: 邮件发送辅助类,提供邮件发送及关闭连接的方法
  * @author chenyun
+ * @date 2012-5-10 上午09:40:22
+ * 
  */
 public class MailHelper {
 
@@ -107,8 +81,9 @@ public class MailHelper {
 	 * @param entity
 	 *            邮件实体内容
 	 * @return 成功返回true，失败返回false
+	 * @throws MailException 
 	 */
-	public boolean sendMail(MailEntity entity) {
+	public boolean sendMail(MailEntity entity) throws MailException {
 		return this.sendMail(entity, false);
 	}
 
@@ -122,8 +97,10 @@ public class MailHelper {
 	 * @param isDebug
 	 *            是否开启调试模式
 	 * @return 成功返回true，失败返回false
+	 * @throws MailException
 	 */
-	public boolean sendMail(MailEntity entity, boolean isDebug) {
+	public boolean sendMail(MailEntity entity, boolean isDebug)
+			throws MailException {
 		log.debug("begin to send mail...");
 
 		boolean flag = false;
@@ -154,7 +131,7 @@ public class MailHelper {
 			log.debug("set mail receivers,size {}", recipients.length);
 			// 设置邮件抄送人
 			InternetAddress[] copyers = new InternetAddress[entity
-					.getReceiver().size()];
+					.getCopyer().size()];
 			for (int i = 0; i < copyers.length; i++) {
 				MailCard recCard = entity.getCopyer().get(i);
 				copyers[i] = new InternetAddress(recCard.geteMail(),
@@ -193,13 +170,10 @@ public class MailHelper {
 			log.debug("send mail success!");
 			flag = true;
 		} catch (MessagingException e) {
-			log.error(
-					"send mail failure!\nsend mail happens MessagingException:",
-					e);
+			throw new MailException("do send mail MessagingException", e);
 		} catch (UnsupportedEncodingException e) {
-			log.error(
-					"send mail failure!\nsend mail happens UnsupportedEncodingException:",
-					e);
+			throw new MailException(
+					"do send mail UnsupportedEncodingException", e);
 		}
 
 		return flag;

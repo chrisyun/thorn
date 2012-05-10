@@ -4,6 +4,7 @@ package org.thorn.test.jmail;
 
 import org.thorn.core.jmail.MailCard;
 import org.thorn.core.jmail.MailEntity;
+import org.thorn.core.jmail.MailException;
 import org.thorn.core.jmail.MailHelper;
 
 import junit.framework.TestCase;
@@ -32,7 +33,12 @@ public class MailTest extends TestCase {
 //		MailHelper mh = new MailHelper(cy163, "chenyun313", "313chenyun", "smtp.163.com");
 		MailHelper mh = new MailHelper(cytw, "chenyun", "3450380cy", "mail.talkweb.com.cn");
 		
-		mh.sendMail(entity, true);
+		try {
+			mh.sendMail(entity, true);
+		} catch (MailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		mh.closeMailConnect();
 	}
