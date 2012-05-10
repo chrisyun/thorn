@@ -3,6 +3,7 @@
 <%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@page import="org.thorn.security.entity.UserSecurity"%>
 <%@page import="org.thorn.user.entity.User"%>
+<%@ taglib prefix="thorn" uri="/thorn"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -36,5 +37,11 @@ if(auth != null) {
 		cumail 		: "<%=cumail%>",
 		phone 		: "<%=phone%>"
 	}
-
+	
+	var yesOrNo = <thorn:dd  typeId="YESORNO" />;
+	
+	var yesOrNoRender = function(status) {
+		return Render.dictRender(yesOrNo, status);
+	};
+	
 </script>

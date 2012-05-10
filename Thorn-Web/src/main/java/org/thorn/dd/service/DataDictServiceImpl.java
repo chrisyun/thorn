@@ -34,12 +34,8 @@ public class DataDictServiceImpl implements IDataDictService {
 			long limit, String sort, String dir) throws DBAccessException {
 		
 		Map<String, Object> filter = new HashMap<String, Object>();
-		if (LocalStringUtils.isNotEmpty(ename)) {
-			filter.put("ename", ename);
-		}
-		if (LocalStringUtils.isNotEmpty(cname)) {
-			filter.put("cname", cname);
-		}
+		filter.put("ename", ename);
+		filter.put("cname", cname);
 		filter.put(Configuration.PAGE_LIMIT, limit);
 		filter.put(Configuration.PAGE_START, start);
 		filter.put(Configuration.SROT_NAME, sort);

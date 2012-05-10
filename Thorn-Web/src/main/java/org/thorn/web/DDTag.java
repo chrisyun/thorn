@@ -42,8 +42,8 @@ public class DDTag extends TagSupport {
 				List<Dict> list = DDUtils.queryDd(typeId);
 
 				for (Dict dict : list) {
-					dictJson.append("{'").append(dict.getDname()).append("','")
-							.append(dict.getDvalue()).append("'},");
+					dictJson.append("['").append(dict.getDname()).append("','")
+							.append(dict.getDvalue()).append("'],");
 				}
 
 				String json = dictJson.toString();

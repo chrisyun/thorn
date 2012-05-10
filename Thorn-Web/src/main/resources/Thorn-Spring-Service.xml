@@ -25,4 +25,7 @@
 	
 	<bean id="ddDao" class="org.thorn.dd.dao.DataDictDaoImpl" />
 	<bean id="ddService" class="org.thorn.dd.service.DataDictServiceImpl" />
+	
+	<bean id="orgDao" class="org.thorn.org.dao.OrgDaoImpl" />
+	<bean id="orgService" class="org.thorn.org.service.OrgServiceImpl" />
 </beans>

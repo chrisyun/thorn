@@ -29,7 +29,7 @@ public class User implements Serializable {
 	
 	private String phone;
 	
-	private int orgId;
+	private String orgCode;
 	
 	private String defaultRole;
 	
@@ -107,12 +107,12 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-	public int getOrgId() {
-		return orgId;
+	public String getOrgCode() {
+		return orgCode;
 	}
 
-	public void setOrgId(int orgId) {
-		this.orgId = orgId;
+	public void setOrgCode(String orgCode) {
+		this.orgCode = orgCode;
 	}
 
 	public String getDefaultRole() {
