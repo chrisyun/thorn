@@ -4,20 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>文件名称: MailEntity.java</p>
- * <p>文件描述: 邮件内容的实体对象</p>
- * <p>版权所有: 版权所有(C)2010</p>
- * <p>内容摘要: 简要描述本文件的内容，包括主要模块、函数及能的说明</p>
- * <p>其他说明: 其它内容的说明</p>
- * <p>完成日期: 2012-3-12</p>
- * <p>修改记录1:</p>
- * <pre>
- *    修改日期:
- *    修 改 人:
- *    修改内容:
- * </pre>
- * <p>修改记录2：…</p>
- * @author  chenyun
+ * 
+ * @ClassName: MailEntity 
+ * @Description: 邮件内容的实体对象
+ * @author chenyun
+ * @date 2012-5-10 上午09:41:27 
+ *
  */
 public class MailEntity {
 	private static final long serialVersionUID = 6190395311350810672L;
@@ -77,4 +69,5 @@ public class MailEntity {
 		this.attAddress = attAddress;
 	}
 }
+
 
