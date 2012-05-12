@@ -112,6 +112,15 @@ Grid.prototype.setGridPanel = function(gridAttr) {
 	}
 }
 
+Grid.prototype.getGridPanel = function() {
+	return this.grid;
+}
+
+Grid.prototype.getStore = function() {
+	return this.dataStore;
+}
+
+
 function getCUDBar(saveHandler, modifyHandler, deleteHandler) {
 	var bar = new Array();
 	if (saveHandler != null) {

@@ -1,9 +1,7 @@
 var Configuration = {
 	msg : {
 		SUCCESS : "success",
-		FAILURE : "failure",
-		EMPTY : "该输入项不能为空！",
-		DATE : "该输入项为日期类型，格式YYYY-MM-DD"
+		FAILURE : "failure"
 	},
 	handleMethod : {
 		PUT : "put",
@@ -15,7 +13,6 @@ var Configuration = {
 		save : "save",
 		modify : "modify"
 	},
-	redStar : '<em class="required">*</em>',
 	bodyWidth : window.screen.availWidths,
 	bodyHight : window.screen.availHeight,
 	btnWidth : 80,

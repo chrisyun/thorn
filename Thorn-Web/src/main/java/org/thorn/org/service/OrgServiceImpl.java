@@ -58,6 +58,7 @@ public class OrgServiceImpl implements IOrgService {
 		filter.put("parentOrg", pid);
 		filter.put("showName", orgName);
 		filter.put("orgCode", orgCode);
+		filter.put("orgType", orgType);
 		
 		filter.put(Configuration.PAGE_LIMIT, limit);
 		filter.put(Configuration.PAGE_START, start);
