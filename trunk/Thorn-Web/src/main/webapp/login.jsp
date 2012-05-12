@@ -55,7 +55,7 @@
 				xtype : "textfield",
 				width : 150,
 				allowBlank: false,
-				blankText : Configuration.msg.EMPTY
+				blankText : Validate.empty
 			},
 			items : [ {
 				id : "username",
@@ -82,7 +82,7 @@
 						fieldLabel : "验证码",
 						labelWidth : 100,
 						allowBlank: false,
-						blankText : Configuration.msg.EMPTY,
+						blankText : Validate.empty,
 						listeners : {
 							focus : function() {
 								var codeLable = Ext.getCmp("codeLabel");

@@ -31,3 +31,11 @@ OpenWindow.prototype.show = function(title) {
 	this.openWin.setTitle(title);
 	this.openWin.show();
 }
+
+OpenWindow.prototype.hide = function() {
+	this.openWin.hide();
+}
+
+OpenWindow.prototype.getWindow = function() {
+	return this.openWin;
+}

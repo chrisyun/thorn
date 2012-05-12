@@ -12,7 +12,6 @@ function FormPanel(attrObj) {
 				labelAlign : "right",
 				buttonAlign : "center",
 				defaults : {
-					bodyStyle : "padding-left: 8px;",
 					xtype : "panel",
 					border : false,
 					layout : "form"
@@ -31,6 +30,14 @@ FormPanel.prototype.addButton = function(btn) {
 
 FormPanel.prototype.addItem = function(itemPanel) {
 	this.form.add(itemPanel);
+}
+
+FormPanel.prototype.getFormPanel = function() {
+	return this.form;
+}
+
+FormPanel.prototype.getForm = function() {
+	return this.form.getForm();
 }
 
 /**
@@ -65,13 +72,14 @@ function getButton(attrObj) {
 function getPanelItem(attrObj, columnWidth, empty) {
 
 	if (!empty) {
-		attrObj.fieldLabel = Configuration.redStar + attrObj.fieldLabel;
+		attrObj.fieldLabel = Validate.redStar + attrObj.fieldLabel;
 		attrObj.allowBlank = empty;
-		attrObj.blankText = Configuration.msg.EMPTY;
+		attrObj.blankText = Validate.empty;
 	}
 
 	var panel = ({
 		columnWidth : columnWidth || 0.5,
+		bodyStyle : "padding-top: 4px;",
 		items : [attrObj]
 	});
 
@@ -89,6 +97,48 @@ function getTxt(id, text, width) {
 	return txt;
 }
 
+function getNumberTxt(id, text, width) {
+	var txt = getTxt(id,text,width);
+	
+	txt.vtype = "number";
+	txt.vtypeText = Validate.number;
+	return txt;
+}
+
+function getMailTxt(id, text, width) {
+	var txt = getTxt(id,text,width);
+	
+	txt.vtype = "email";
+	txt.vtypeText = Validate.email;
+	return txt;
+}
+
+function getSelect(id, text, width, array, isReadonly) {
+	var select = new Object();
+	
+	select.id = id + "_show";
+	select.hiddenName = id;
+	select.width = width;
+	select.fieldLabel = text;
+	select.readOnly = isReadonly
+
+	select.xtype = "combo";
+	select.valueField = "value";
+	select.displayField = "text";
+	select.mode = "local";
+	select.editable = false;
+	select.triggerAction = "all";
+	select.resizable = true;
+	select.emptyText = "---请选择---";
+	select.value = "";
+	select.store = new Ext.data.SimpleStore({
+				fields : ['value', 'text'],
+				data : array
+			})
+
+	return select;
+}
+
 function getQueryBtn(queryHandler) {
 	var queryBtn = new Object();
 
@@ -98,6 +148,6 @@ function getQueryBtn(queryHandler) {
 	queryBtn.xtype = "button";
 	queryBtn.minWidth = 80;
 	queryBtn.handler = queryHandler;
-	
+
 	return queryBtn
 }

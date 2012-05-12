@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 驱动JS -->
 <script type="text/javascript" src="<%=path %>/plugins/ext-3.2.1/adapter/ext/ext-base.js" ></script>
 <!-- EXTjs -->
-<script type="text/javascript" src="<%=path %>/plugins/ext-3.2.1/ext-all.js" ></script>
+<script type="text/javascript" src="<%=path %>/plugins/ext-3.2.1/ext-all-debug.js" ></script>
 
 <!-- local css and js -->
 <script type="text/javascript" src="<%=path %>/plugins/local/common.js" ></script>
@@ -18,6 +18,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="<%=path %>/plugins/local/grid.js" ></script>
 <script type="text/javascript" src="<%=path %>/plugins/local/form.js" ></script>
 <script type="text/javascript" src="<%=path %>/plugins/local/window.js" ></script>
+<script type="text/javascript" src="<%=path %>/plugins/local/validate.js" ></script>
+<script type="text/javascript" src="<%=path %>/plugins/local/treeField.js" ></script>
 <link rel="stylesheet" type="text/css" href="<%=path %>/resources/localStyle.css" />
 
 
