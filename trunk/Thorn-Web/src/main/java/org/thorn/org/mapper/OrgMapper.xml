@@ -85,7 +85,7 @@
 		update T_SYS_ORG
 		<set>
 			<if test="parentOrg != null and parentOrg != ''">PARENTORG = #{parentOrg,jdbcType=VARCHAR},</if>
-			<if test="sortNum != null">SORTNUM = #{SORTNUM,jdbcType=DECIMAL},</if>
+			<if test="sortNum != null">SORTNUM = #{sortNum,jdbcType=DECIMAL},</if>
 			<if test="orgName != null and orgName != ''">ORGNAME = #{orgName,jdbcType=VARCHAR},</if>
 			<if test="showName != null and showName != ''">SHOWNAME = #{showName,jdbcType=VARCHAR},</if>
 			<if test="orgType != null and orgType != ''">ORGTYPE = #{orgType,jdbcType=VARCHAR},</if>

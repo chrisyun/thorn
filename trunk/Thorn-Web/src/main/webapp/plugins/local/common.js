@@ -141,6 +141,37 @@ function CommonAjax(url) {
 	this.ajaxUrl = url;
 }
 
+CommonAjax.prototype.requestData = function(params, obj, callback) {
+	Message.showProcessMsgBox();
+
+	Ext.Ajax.request({
+				url : this.ajaxUrl,
+				timeout : 120000,
+				params : params,
+				method : "POST",
+				success : function(response, options) {
+					var result = Ext.util.JSON.decode(response.responseText);
+					Message.hideProcessMsgBox();
+
+					if (result.success) {
+						callback(obj,result.obj);
+					} else {
+						var failMsg = Ext.isEmpty(result.message)
+								? "数据处理时发生异常."
+								: result.message;
+						Message.showErrorMsgBox(failMsg);
+					}
+				},
+				failure : function(response, options) {
+					Message.hideProcessMsgBox();
+					var result = Ext.util.JSON.decode(response.responseText);
+
+					var failMsg = Ext.isEmpty(result) ? "数据处理时发生异常." : result;
+					Message.showErrorMsgBox(failMsg);
+				}
+			});
+}
+
 CommonAjax.prototype.request = function(params, showMsg, obj, callback) {
 	if (showMsg) {
 		Message.showProcessMsgBox();
