@@ -23,6 +23,7 @@ public class DBAccessException extends Exception {
 
 	public DBAccessException(String msg) {
 		super(msg);
+		dbExceptionMsg = msg;
 	}
 
 	public DBAccessException(Throwable cause) {
@@ -31,6 +32,7 @@ public class DBAccessException extends Exception {
 
 	public DBAccessException(String msg, Throwable cause) {
 		super(msg, cause);
+		dbExceptionMsg = msg;
 	}
 
 	public DBAccessException(String cls, String method, String msg,
