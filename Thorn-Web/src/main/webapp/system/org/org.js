@@ -1,6 +1,7 @@
 var orgPageUrl = sys.basePath + "org/getOrgPage.jmt";
 var orgSaveOrModifyUrl = sys.basePath + "org/saveOrModify.jmt";
 var orgDeleteUrl = sys.basePath + "org/delete.jmt";
+var orgQuerUrl = sys.basePath + "org/getOrg.jmt";
 var pageSize = 20;
 var currentActiveNode;
 
@@ -31,6 +32,7 @@ Ext.onReady(function() {
 			getRecord(null, "parentOrg", "string"),
 			getRecord(null, "orgName", "string"),
 			getRecord(null, "orgCode", "string"),
+			getRecord(null, "sortNum", "string"),
 			getRecord("组织编号", "orgCode", "string", 100, true),
 			getRecord("组织名称", "showName", "string", 150, true),
 			getRecord("组织类型", "orgType", "string", 70, true, orgTypeRender),
@@ -40,7 +42,7 @@ Ext.onReady(function() {
 			getRecord("是否禁用", "isDisabled", "string", 70, true, yesOrNoRender)];
 	var grid_Cls = new Grid(orgPageUrl, recordArray, pageSize);
 
-	var grid_Bar = getCUDBar(null, null, deleteHandler);
+	var grid_Bar = getCUDBar(saveHandler, modifyHandler, deleteHandler);
 	grid_Cls.setBottomBar(grid_Bar);
 
 	var listeners = {
@@ -88,7 +90,7 @@ Ext.onReady(function() {
 						}, "-", {
 							text : "修改组织",
 							iconCls : "silk-edit",
-							handler : modifyHandler
+							handler : modifyMenuHandler
 						}, "-", {
 							text : "删除组织",
 							iconCls : "silk-delete",
@@ -167,25 +169,33 @@ Ext.onReady(function() {
 		org_form_Cls.getForm().reset();
 		org_form_Cls.getFormPanel().findById("opType")
 				.setValue(Configuration.opType.save);
-				
+
 		Ext.getCmp("parentOrg_show").setValue(currentActiveNode);
+		
+		// 自动将上级区域信息传递给下级组织？
 		// 将所属组织设置为不可选
-//		var parentOrgSel = org_form_Cls.getFormPanel().findById("parentOrg_show");
-//		parentOrgSel.el.dom.readOnly = true;
+		// var parentOrgSel =
+		// org_form_Cls.getFormPanel().findById("isDisabled_show");
+		// parentOrgSel.el.dom.readOnly = true;
 	}
 
 	function modifyHandler() {
-		
+		if (grid.getSelectionModel().getCount() != 1) {
+			Ext.Msg.alert("提示信息", "请选择一条记录!");
+			return;
+		}
+
 		org_win_Cls.show("修改组织");
 		var form = org_form_Cls.getFormPanel();
-		
+
 		org_form_Cls.getForm().reset();
-				
+
 		// 将主键置为不可编辑
-		var codeText = form.findById("orgCode");
-		codeText.el.dom.readOnly = true;
+		// var codeText = form.findById("orgCode");
+		// codeText.el.dom.readOnly = true;
 
 		var selectedRecord = grid.getSelectionModel().getSelected();
+		var parentOrg = selectedRecord.get("parentOrg");
 		var values = {
 			orgId : selectedRecord.get("orgId"),
 			orgName : selectedRecord.get("orgName"),
@@ -200,8 +210,24 @@ Ext.onReady(function() {
 			opType : Configuration.opType.modify
 		};
 		form.getForm().setValues(values);
-		
-		
+
+		// 获取所属组织名称
+		if (!Ext.isEmpty(parentOrg)) {
+			var ajax = new CommonAjax(orgQuerUrl);
+
+			ajax.requestData({
+						orgCode : parentOrg
+					}, form, function(obj, data) {
+						var orgName = data.orgName;
+						var parentOrgNode = {
+							text : orgName,
+							attributes : {
+								pid : parentOrg
+							}
+						};
+						Ext.getCmp("parentOrg_show").setValue(parentOrgNode);
+					});
+		}
 	}
 
 	function saveOrModify() {
@@ -223,18 +249,57 @@ Ext.onReady(function() {
 					obj.grid.getStore().reload();
 					var thisForm = obj.form.getFormPanel();
 					var opType = thisForm.findById("opType").getValue();
-					
-					var refreshNode = currentActiveNode.parentNode;
-					orgTree.getLoader().load(refreshNode);
-					refreshNode.expand();
-					
+
+					if (currentActiveNode != null && currentActiveNode.parentNode != null) {
+						var refreshNode = currentActiveNode.parentNode;
+						orgTree.getLoader().load(refreshNode);
+						refreshNode.expand();
+					} else {
+						orgTree.getLoader().load(tree_root);
+						tree_root.expand();
+					}
+
 					if (opType == Configuration.opType.save) {
 						obj.form.getForm().reset();
 						thisForm.findById("opType").setValue(opType);
-						Ext.getCmp("parentOrg_show").setValue(currentActiveNode);
+						Ext.getCmp("parentOrg_show")
+								.setValue(currentActiveNode);
 					} else {
 						obj.win.hide();
 					}
+				});
+	}
+
+	function modifyMenuHandler() {
+		org_win_Cls.show("修改组织");
+		var form = org_form_Cls.getFormPanel();
+
+		org_form_Cls.getForm().reset();
+
+		var parentNode = currentActiveNode.parentNode;
+
+		var orgId = currentActiveNode.id;
+
+		var ajax = new CommonAjax(orgQuerUrl);
+
+		ajax.requestData({
+					orgId : orgId
+				}, form, function(obj, data) {
+					var values = {
+						orgId : data.orgId,
+						orgName : data.orgName,
+						orgCode : data.orgCode,
+						showName : data.showName,
+						orgType : data.orgType,
+						orgMail : data.orgMail,
+						isShow : data.isShow,
+						isDisabled : data.isDisabled,
+						area : data.area,
+						sortNum : data.sortNum,
+						opType : Configuration.opType.modify
+					};
+					form.getForm().setValues(values);
+					Ext.getCmp("parentOrg_show").setValue(parentNode);
 				});
 	}
 

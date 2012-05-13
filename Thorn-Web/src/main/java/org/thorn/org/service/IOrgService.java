@@ -25,5 +25,7 @@ public interface IOrgService {
 	public Page<Org> queryPage(String pid, String orgCode, String orgName,
 			String orgType, long start, long limit, String sort, String dir)
 			throws DBAccessException;
-
+	
+	public Org queryOrg(String orgCode, String orgId) throws DBAccessException;
+	
 }

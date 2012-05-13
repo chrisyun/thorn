@@ -67,6 +67,20 @@ public class OrgServiceImpl implements IOrgService {
 		
 		return orgDao.queryPage(filter);
 	}
+	
+	public Org queryOrg(String orgCode, String orgId) throws DBAccessException {
+		Map<String, Object> filter = new HashMap<String, Object>();
+		filter.put("orgCode", orgCode);
+		filter.put("orgId", orgId);
+		
+		List<Org> list = orgDao.queryList(filter);
+		
+		if(list.size() != 1) {
+			throw new DBAccessException("queryOrg find result size:" + list.size());
+		}
+		
+		return list.get(0);
+	}
 
 }
 

@@ -16,6 +16,7 @@ import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
 import org.thorn.org.entity.Org;
 import org.thorn.org.service.IOrgService;
+import org.thorn.web.JsonResponse;
 import org.thorn.web.Status;
 import org.thorn.web.Tree;
 
@@ -115,5 +116,21 @@ public class OrgController {
 
 		return page;
 	}
-
+	
+	@RequestMapping("/org/getOrg")
+	@ResponseBody
+	public JsonResponse<Org> getOrg(String orgCode, String orgId) {
+		JsonResponse<Org> json = new JsonResponse<Org>();
+		
+		try {
+			Org org = orgService.queryOrg(orgCode, orgId);
+			json.setObj(org);
+		} catch (DBAccessException e) {
+			json.setSuccess(false);
+			json.setMessage("组织数据查询失败：" + e.getMessage());
+		}
+		
+		return json;
+	}
+	
 }
