@@ -4,23 +4,15 @@
 <html>
 	<head>
 		<jsp:include page="../../reference/meta.jsp"></jsp:include>
-		<title>Org - Manage</title>
+		<title>Resource - Manage</title>
 	</head>
 	<jsp:include page="../../reference/core.jsp"></jsp:include>
-	<script type="text/javascript" src="org.js"></script>
-	<script type="text/javascript" src="orgTree.js"></script>
+	<script type="text/javascript" src="source.js"></script>
 	<script type="text/javascript">
-		var orgType = <thorn:dd  typeId="ORGTYPE" />;
-		var orgTypeRender = function(type) {
-			return Render.dictRender(orgType, type);
+		var iconCls = <thorn:dd  typeId="ICONCLS" />;
+		var iconClsRender = function(icon) {
+			return Render.dictRender(ICONCLS, icon);
 		};
-		
-		var area = <thorn:dd  typeId="AREA" />;
-		var areaRender = function(str) {
-			return Render.dictRender(area, str);
-		};
-		
-		
 	</script>
 	<body>
 
