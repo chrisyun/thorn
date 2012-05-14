@@ -8,8 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.thorn.core.util.LocalStringUtils;
 import org.thorn.dao.core.Configuration;
+import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
+import org.thorn.org.entity.Org;
 import org.thorn.resource.dao.IResourceDao;
 import org.thorn.resource.entity.Resource;
 
@@ -47,6 +50,49 @@ public class ResourceServiceImpl implements IResourceService {
 		filter.put(Configuration.ORDER_NAME, Configuration.ORDER_ASC);
 		
 		return resourceDao.queryByList(filter);
+	}
+
+	public void save(Resource source) throws DBAccessException {
+		resourceDao.save(source);	
+	}
+
+	public void modify(Resource source) throws DBAccessException {
+		resourceDao.modify(source);
+	}
+
+	public void delete(String ids) throws DBAccessException {
+		List<String> list = LocalStringUtils.splitStr2Array(ids);
+		resourceDao.delete(list);
+	}
+
+	public Page<Resource> queryPage(String pid, String sourceCode,
+			String sourceName, long start, long limit, String sort, String dir)
+			throws DBAccessException {
+		Map<String, Object> filter = new HashMap<String, Object>();
+		
+		filter.put("parentSource", pid);
+		filter.put("sourceCode", sourceCode);
+		filter.put("sourceName", sourceName);
+		
+		filter.put(Configuration.PAGE_LIMIT, limit);
+		filter.put(Configuration.PAGE_START, start);
+		filter.put(Configuration.SROT_NAME, sort);
+		filter.put(Configuration.ORDER_NAME, dir);
+		
+		return resourceDao.queryPage(filter);
+	}
+
+	public Resource queryResource(String sourceCode) throws DBAccessException {
+		Map<String, Object> filter = new HashMap<String, Object>();
+		filter.put("sourceCode", sourceCode);
+		
+		List<Resource> list = resourceDao.queryByList(filter);
+		
+		if(list.size() != 1) {
+			throw new DBAccessException("queryOrg find result size:" + list.size());
+		}
+		
+		return list.get(0);
 	}
 
 }
