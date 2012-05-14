@@ -17,6 +17,7 @@ import org.thorn.dao.exception.DBAccessException;
 import org.thorn.dd.entity.Dict;
 import org.thorn.dd.entity.DictType;
 import org.thorn.dd.service.IDataDictService;
+import org.thorn.web.BaseController;
 import org.thorn.web.Status;
 
 /**
@@ -26,7 +27,7 @@ import org.thorn.web.Status;
  * @date 2012-5-7 上午11:45:31
  */
 @Controller
-public class DDController {
+public class DDController extends BaseController {
 	
 	static Logger log = LoggerFactory.getLogger(DDController.class);
 	

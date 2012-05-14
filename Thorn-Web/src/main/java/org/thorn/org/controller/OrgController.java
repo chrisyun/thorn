@@ -16,6 +16,7 @@ import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
 import org.thorn.org.entity.Org;
 import org.thorn.org.service.IOrgService;
+import org.thorn.web.BaseController;
 import org.thorn.web.JsonResponse;
 import org.thorn.web.Status;
 import org.thorn.web.Tree;
@@ -27,7 +28,7 @@ import org.thorn.web.Tree;
  * @date 2012-5-10 下午02:50:02
  */
 @Controller
-public class OrgController {
+public class OrgController extends BaseController {
 
 	static Logger log = LoggerFactory.getLogger(OrgController.class);
 
