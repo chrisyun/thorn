@@ -5,9 +5,13 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 /**
  * @ClassName: BaseController
@@ -15,12 +19,12 @@ import org.springframework.web.bind.WebDataBinder;
  * @author chenyun
  * @date 2012-5-14 下午02:31:51
  */
-public class BaseController {
+public class BaseController extends MultiActionController {
 
 	/**
 	 * 初始化binder的回调函数. 允许数字类型为空
 	 */
-	protected void initBinder(WebDataBinder binder) {
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
 		binder.registerCustomEditor(Integer.class, new CustomNumberEditor(
 				Integer.class, true));
 		binder.registerCustomEditor(Long.class, new CustomNumberEditor(

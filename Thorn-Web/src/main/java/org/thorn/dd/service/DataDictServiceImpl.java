@@ -38,8 +38,14 @@ public class DataDictServiceImpl implements IDataDictService {
 		filter.put("cname", cname);
 		filter.put(Configuration.PAGE_LIMIT, limit);
 		filter.put(Configuration.PAGE_START, start);
-		filter.put(Configuration.SROT_NAME, sort);
-		filter.put(Configuration.ORDER_NAME, dir);
+		
+		if(LocalStringUtils.isEmpty(sort)) {
+			filter.put(Configuration.SROT_NAME, "SORTNUM");
+			filter.put(Configuration.ORDER_NAME, Configuration.ORDER_ASC);
+		} else {
+			filter.put(Configuration.SROT_NAME, sort);
+			filter.put(Configuration.ORDER_NAME, dir);
+		}
 
 		return ddDao.queryDtPage(filter);
 	}
@@ -49,6 +55,9 @@ public class DataDictServiceImpl implements IDataDictService {
 		if (LocalStringUtils.isNotEmpty(typeId)) {
 			filter.put("typeId", typeId);
 		}
+		
+		filter.put(Configuration.SROT_NAME, "SORTNUM");
+		filter.put(Configuration.ORDER_NAME, Configuration.ORDER_ASC);
 		
 		return ddDao.queryDdList(filter);
 	}

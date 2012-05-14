@@ -1,7 +1,7 @@
-var sourcePageUrl = sys.basePath + "org/getOrgPage.jmt";
-var sourceSaveOrModifyUrl = sys.basePath + "org/saveOrModify.jmt";
-var sourceDeleteUrl = sys.basePath + "org/delete.jmt";
-var sourceQuerUrl = sys.basePath + "org/getOrg.jmt";
+var sourcePageUrl = sys.basePath + "resource/getSourcePage.jmt";
+var sourceSaveOrModifyUrl = sys.basePath + "resource/saveOrModify.jmt";
+var sourceDeleteUrl = sys.basePath + "resource/delete.jmt";
+var sourceTreeUrl = sys.basePath + "/resource/getLeftTree.jmt";
 var pageSize = 20;
 var currentActiveNode;
 
@@ -29,11 +29,11 @@ Ext.onReady(function() {
 	var recordArray = [getRecord(null, "sortNum", "string"),
 			getRecord(null, "parentSource", "string"),
 			getRecord("资源编号", "sourceCode", "string", 100, true),
-			getRecord("资源名称", "sourceName", "string", 150, true),
+			getRecord("资源名称", "sourceName", "string", 150, false),
 			getRecord("是否叶子节点", "isleaf", "string", 70, true, yesOrNoRender),
-			getRecord("图标样式", "iconsCls", "string", 70, true, areaRender),
+			getRecord("图标样式", "iconsCls", "string", 70, false, iconClsRender),
 			getRecord("是否显示", "isShow", "string", 70, true, yesOrNoRender),
-			getRecord("菜单访问入口", "sourceUrl", "string",200, true)];
+			getRecord("菜单访问入口", "sourceUrl", "string", 200, false)];
 	var grid_Cls = new Grid(sourcePageUrl, recordArray, pageSize);
 
 	var grid_Bar = getCUDBar(null, modifyHandler, deleteHandler);
@@ -52,37 +52,37 @@ Ext.onReady(function() {
 	};
 	grid_Cls.setGridPanel(grid_attr);
 	/** ****************Grid panel end************ */
-	
+
 	/** ****************tree panel start************ */
-	var loader = new Ext.tree.TreeLoader( {
-			url : sys.basePath + "/resource/getLeftTree.jmt"
-		});
+	var loader = new Ext.tree.TreeLoader({
+				url : sourceTreeUrl
+			});
 	loader.on("beforeload", function(loader, node) {
-			loader.baseParams.pid = node.id;
-		});
-	
+				loader.baseParams.pid = node.id;
+			});
+
 	var tree = new Ext.tree.TreePanel({
-			region : 'west',
-			autoScroll : true,
-			collapsible : true,
-			margins : "2 0 0 0",
-			width : 230,
-			border : true,
-			useArrows : true,
-			rootVisible : false,
-			split : true,
-			loader : loader,
-			root : new Ext.tree.AsyncTreeNode({
-				text : "资源树",
-				id: "0",
-				leaf: false
-			})
-		});	
-		
+				region : 'west',
+				autoScroll : true,
+				collapsible : true,
+				margins : "2 0 0 0",
+				width : 230,
+				border : true,
+				useArrows : true,
+				rootVisible : true,
+				split : true,
+				loader : loader,
+				root : new Ext.tree.AsyncTreeNode({
+							text : "资源树",
+							id : "0",
+							leaf : false
+						})
+			});
+
 	tree.on("click", function(node) {
 				currentActiveNode = node;
 				store.baseParams = {
-					"pid" : node.attributes.pid
+					"pid" : node.id
 				};
 				store.reload({
 							params : {
@@ -94,12 +94,12 @@ Ext.onReady(function() {
 
 	var menu = new Ext.menu.Menu({
 				items : [{
-							text : "增加子组织",
+							text : "增加子资源",
 							iconCls : "silk-add",
 							handler : saveHandler
 						}]
 			});
-	orgTree.on("contextmenu", function(node, ev) {
+	tree.on("contextmenu", function(node, ev) {
 				ev.preventDefault();
 				node.select();
 				currentActiveNode = node;
@@ -107,7 +107,7 @@ Ext.onReady(function() {
 			});
 	tree.getRootNode().expand(false, false);
 	/** ****************tree panel start************ */
-	
+
 	var grid = grid_Cls.getGridPanel();
 	var store = grid_Cls.getStore();
 
@@ -118,20 +118,20 @@ Ext.onReady(function() {
 				labelWidth : 100,
 				border : false
 			});
-	source_form_Cls.addItem(getPanelItem(getTxt("sourceCode", "资源编号", 150), 0.5,
-			false));
+	source_form_Cls.addItem(getPanelItem(getTxt("sourceCode", "资源编号", 150),
+			0.5, false));
 
-	source_form_Cls.addItem(getPanelItem(getTxt("sourceName", "资源名称", 150), 0.5,
-			false));
+	source_form_Cls.addItem(getPanelItem(getTxt("sourceName", "资源名称", 150),
+			0.5, false));
 
-	source_form_Cls.addItem(getPanelItem(getTxt("sourceUrl", "菜单访问入口", 150), 1.0,
-			true));
+	source_form_Cls.addItem(getPanelItem(getTxt("sourceUrl", "菜单访问入口", 150),
+			0.5, true));
 
-	source_form_Cls.addItem(getPanelItem(getSelect("iconsCls", "菜单图标", 150, iconCls,
-					false), 0.5, true));
-			
-	source_form_Cls.addItem(getPanelItem(getSelect("isShow", "是否显示", 150, yesOrNo,
-					false), 0.5, false));
+	source_form_Cls.addItem(getPanelItem(getSelect("iconsCls", "菜单图标", 150,
+					iconCls, false), 0.5, true));
+
+	source_form_Cls.addItem(getPanelItem(getSelect("isShow", "是否显示", 150,
+					yesOrNo, false), 0.5, false));
 
 	source_form_Cls.addItem(getPanelItem(getSelect("isleaf", "是否叶子节点", 150,
 					yesOrNo, false), 0.5, false));
@@ -145,27 +145,25 @@ Ext.onReady(function() {
 			}, 0, true));
 	source_form_Cls.addItem(getPanelItem({
 				id : "parentSource",
-				value : 0,
 				xtype : "hidden"
 			}, 0, true));
 
 	var source_win_Cls = new OpenWindow({
-				width : 600,
-				height : 300
+				width : 560,
+				height : 220
 			}, source_form_Cls.getFormPanel(), saveOrModify);
 
 	/** ****************org window start************ */
 
 	function saveHandler() {
 		var pid = currentActiveNode.id;
-		
+
 		source_win_Cls.show("新增资源");
 
 		source_form_Cls.getForm().reset();
 		source_form_Cls.getFormPanel().findById("opType")
 				.setValue(Configuration.opType.save);
-		source_form_Cls.getFormPanel().findById("parentSource")
-				.setValue(pid);
+		source_form_Cls.getFormPanel().findById("parentSource").setValue(pid);
 
 	}
 
@@ -181,8 +179,8 @@ Ext.onReady(function() {
 		source_form_Cls.getForm().reset();
 
 		// 将主键置为不可编辑
-		 var codeText = form.findById("sourceCode");
-		 codeText.el.dom.readOnly = true;
+		var codeText = form.findById("sourceCode");
+		codeText.el.dom.readOnly = true;
 
 		var selectedRecord = grid.getSelectionModel().getSelected();
 		var values = {
@@ -193,7 +191,8 @@ Ext.onReady(function() {
 			sourceUrl : selectedRecord.get("sourceUrl"),
 			parentSource : selectedRecord.get("parentSource"),
 			isShow : selectedRecord.get("isShow"),
-			sortNum : selectedRecord.get("sortNum")
+			sortNum : selectedRecord.get("sortNum"),
+			opType : Configuration.opType.modify
 		};
 		form.getForm().setValues(values);
 	}
@@ -218,14 +217,15 @@ Ext.onReady(function() {
 					var thisForm = obj.form.getFormPanel();
 					var opType = thisForm.findById("opType").getValue();
 					var pid = thisForm.findById("parentSource").getValue();
-					
-					if (currentActiveNode != null && currentActiveNode.parentNode != null) {
+
+					if (currentActiveNode != null
+							&& currentActiveNode.parentNode != null) {
 						var refreshNode = currentActiveNode.parentNode;
-						orgTree.getLoader().load(refreshNode);
+						tree.getLoader().load(refreshNode);
 						refreshNode.expand();
 					} else {
-						orgTree.getLoader().load(tree_root);
-						tree_root.expand();
+						tree.getLoader().load(tree.getRootNode());
+						tree.getRootNode().expand();
 					}
 
 					if (opType == Configuration.opType.save) {
@@ -249,7 +249,8 @@ Ext.onReady(function() {
 					if (btn == "yes") {
 						var ids = "";
 						for (var i = 0; i < selectedRecordArray.length; i++) {
-							ids += selectedRecordArray[i].get("sourceCode") + ",";
+							ids += selectedRecordArray[i].get("sourceCode")
+									+ ",";
 						}
 
 						var params = {
@@ -259,7 +260,7 @@ Ext.onReady(function() {
 						var ajaxClass = new CommonAjax(sourceDeleteUrl);
 						ajaxClass.request(params, true, null, function(obj) {
 									grid.getStore().reload();
-									orgTree.getLoader().load(currentActiveNode);
+									tree.getLoader().load(currentActiveNode);
 									currentActiveNode.expand();
 								});
 					}
@@ -277,8 +278,8 @@ Ext.onReady(function() {
 		var name = Ext.getCmp("query_name").getValue();
 		var code = Ext.getCmp("query_code").getValue();
 
-		store.baseParams.orgCode = code;
-		store.baseParams.orgName = name;
+		store.baseParams.sourceCode = code;
+		store.baseParams.sourceName = name;
 
 		store.reload({
 					params : {
@@ -303,7 +304,7 @@ Ext.onReady(function() {
 
 	grid.getStore().reload({
 				params : {
-					pid : "-1",
+					pid : "0",
 					start : 0,
 					limit : grid_Cls.pageSize
 				}

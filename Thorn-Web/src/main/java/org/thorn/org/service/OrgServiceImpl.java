@@ -62,8 +62,14 @@ public class OrgServiceImpl implements IOrgService {
 		
 		filter.put(Configuration.PAGE_LIMIT, limit);
 		filter.put(Configuration.PAGE_START, start);
-		filter.put(Configuration.SROT_NAME, sort);
-		filter.put(Configuration.ORDER_NAME, dir);
+		
+		if(LocalStringUtils.isEmpty(sort)) {
+			filter.put(Configuration.SROT_NAME, "SORTNUM");
+			filter.put(Configuration.ORDER_NAME, Configuration.ORDER_ASC);
+		} else {
+			filter.put(Configuration.SROT_NAME, sort);
+			filter.put(Configuration.ORDER_NAME, dir);
+		}
 		
 		return orgDao.queryPage(filter);
 	}

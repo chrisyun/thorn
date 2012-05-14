@@ -391,7 +391,8 @@ Ext.onReady(function() {
 	grid.getStore().reload({
 				params : {
 					start : 0,
-					limit : grid_Cls.pageSize
+					limit : grid_Cls.pageSize,
+					pid : "ROOT"
 				}
 			});
 
