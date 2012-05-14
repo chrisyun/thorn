@@ -14,6 +14,7 @@ import org.thorn.core.util.LocalStringUtils;
 import org.thorn.dao.core.Configuration;
 import org.thorn.resource.entity.Resource;
 import org.thorn.resource.service.IResourceService;
+import org.thorn.web.BaseController;
 import org.thorn.web.Tree;
 
 /**
@@ -23,7 +24,7 @@ import org.thorn.web.Tree;
  * @date 2012-5-6 下午10:51:39
  */
 @Controller
-public class ResourceController {
+public class ResourceController extends BaseController {
 
 	static Logger log = LoggerFactory.getLogger(ResourceController.class);
 
