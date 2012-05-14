@@ -77,7 +77,7 @@
 			<if test="parentSource != null and parentSource != ''">PARENTSOURCE = #{parentSource,jdbcType=VARCHAR},</if>
 			<if test="iconsCls != null and iconsCls != ''">ICONSCLS = #{iconsCls,jdbcType=VARCHAR},</if>
 		</set>
-		where ORGID = #{orgId,jdbcType=DECIMAL}
+		where SOURCECODE = #{sourceCode,jdbcType=VARCHAR}
 	</update>
 	
 	<delete id="delete">

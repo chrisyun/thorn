@@ -12,7 +12,6 @@ import org.thorn.core.util.LocalStringUtils;
 import org.thorn.dao.core.Configuration;
 import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
-import org.thorn.org.entity.Org;
 import org.thorn.resource.dao.IResourceDao;
 import org.thorn.resource.entity.Resource;
 
@@ -76,8 +75,14 @@ public class ResourceServiceImpl implements IResourceService {
 		
 		filter.put(Configuration.PAGE_LIMIT, limit);
 		filter.put(Configuration.PAGE_START, start);
-		filter.put(Configuration.SROT_NAME, sort);
-		filter.put(Configuration.ORDER_NAME, dir);
+
+		if(LocalStringUtils.isEmpty(sort)) {
+			filter.put(Configuration.SROT_NAME, "SORTNUM");
+			filter.put(Configuration.ORDER_NAME, Configuration.ORDER_ASC);
+		} else {
+			filter.put(Configuration.SROT_NAME, sort);
+			filter.put(Configuration.ORDER_NAME, dir);
+		}
 		
 		return resourceDao.queryPage(filter);
 	}
