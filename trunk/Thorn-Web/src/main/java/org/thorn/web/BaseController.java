@@ -26,7 +26,7 @@ public class BaseController {
 	 * 初始化binder的回调函数. 允许数字类型为空，采用注解的方式需要对方法进行标注
 	 */
 	@InitBinder
-	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
+	protected void initBinder(WebDataBinder binder) {
 		
 		//必须指定该类型与pojo中的类型一致
 		binder.registerCustomEditor(int.class, new CustomDefaultNumberEditor(
