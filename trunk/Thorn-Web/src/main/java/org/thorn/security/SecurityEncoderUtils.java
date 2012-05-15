@@ -14,7 +14,9 @@ public class SecurityEncoderUtils {
 	
 	private static void initPwdEncoder() {
 		if(passwordEncoder == null) {
-			passwordEncoder = SpringContext.getBean(SecurityConfiguration.SPRING_ENCODER_BEAN);
+			synchronized (passwordEncoder) {
+				passwordEncoder = SpringContext.getBean(SecurityConfiguration.SPRING_ENCODER_BEAN);
+			}
 		}
 	}
 	
