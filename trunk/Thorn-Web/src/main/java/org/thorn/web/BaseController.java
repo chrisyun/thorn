@@ -11,6 +11,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 /**
@@ -19,12 +20,18 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
  * @author chenyun
  * @date 2012-5-14 下午02:31:51
  */
-public class BaseController extends MultiActionController {
+public class BaseController {
 
 	/**
-	 * 初始化binder的回调函数. 允许数字类型为空
+	 * 初始化binder的回调函数. 允许数字类型为空，采用注解的方式需要对方法进行标注
 	 */
+	@InitBinder
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
+		
+		//必须指定该类型与pojo中的类型一致
+		binder.registerCustomEditor(int.class, new CustomDefaultNumberEditor(
+				Integer.class, true));
+		
 		binder.registerCustomEditor(Integer.class, new CustomNumberEditor(
 				Integer.class, true));
 		binder.registerCustomEditor(Long.class, new CustomNumberEditor(
