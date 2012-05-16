@@ -13,7 +13,6 @@ import org.thorn.core.util.LocalStringUtils;
 import org.thorn.dao.core.Configuration;
 import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
-import org.thorn.resource.entity.Resource;
 import org.thorn.security.entity.UserSecurity;
 import org.thorn.user.entity.User;
 import org.thorn.user.service.IUserService;
@@ -32,7 +31,7 @@ public class UserController extends BaseController {
 	static Logger log = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
-	@Qualifier("resourceService")
+	@Qualifier("userService")
 	private IUserService service;
 
 	@RequestMapping("/user/saveOrModify")

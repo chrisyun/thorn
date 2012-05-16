@@ -14,30 +14,42 @@ import org.thorn.security.SecurityEncoderUtils;
 import org.thorn.user.dao.IUserDao;
 import org.thorn.user.entity.User;
 
-/** 
- * @ClassName: UserServiceImpl 
- * @Description: 
+/**
+ * @ClassName: UserServiceImpl
+ * @Description:
  * @author chenyun
- * @date 2012-5-6 下午12:01:15 
+ * @date 2012-5-6 下午12:01:15
  */
 public class UserServiceImpl implements IUserService {
-	
+
 	@Autowired
 	@Qualifier("userDao")
 	private IUserDao userDao;
-	
+
 	public User queryUserByLogin(String idOrAccount) throws DBAccessException {
 		Map<String, Object> filter = new HashMap<String, Object>();
 		filter.put("idOrAccount", idOrAccount);
-		
+
 		return userDao.queryUser(filter);
 	}
 
 	public void save(User user) throws DBAccessException {
+		user.setUserId(user.getUserId().toUpperCase());
+		
+		if(LocalStringUtils.isNotEmpty(user.getUserPwd())) {
+			user.setUserPwd(SecurityEncoderUtils.encodeUserPassword(
+					user.getUserPwd(), user.getUserId()));
+		}
+
 		userDao.save(user);
 	}
 
 	public void modify(User user) throws DBAccessException {
+		if(LocalStringUtils.isNotEmpty(user.getUserPwd())) {
+			user.setUserPwd(SecurityEncoderUtils.encodeUserPassword(
+					user.getUserPwd(), user.getUserId()));
+		}
+		
 		userDao.modify(user);
 	}
 
@@ -50,34 +62,34 @@ public class UserServiceImpl implements IUserService {
 			String userAccount, long start, long limit, String sort, String dir)
 			throws DBAccessException {
 		Map<String, Object> filter = new HashMap<String, Object>();
-		
+
 		filter.put("idOrAccount", userAccount);
 		filter.put("cumail", cumail);
 		filter.put("orgCode", orgCode);
 		filter.put("userName", userName);
-		
+
 		filter.put(Configuration.PAGE_LIMIT, limit);
 		filter.put(Configuration.PAGE_START, start);
 
-		if(LocalStringUtils.isEmpty(sort)) {
+		if (LocalStringUtils.isEmpty(sort)) {
 			filter.put(Configuration.SROT_NAME, "SORTNUM");
 			filter.put(Configuration.ORDER_NAME, Configuration.ORDER_ASC);
 		} else {
 			filter.put(Configuration.SROT_NAME, sort);
 			filter.put(Configuration.ORDER_NAME, dir);
 		}
-		
+
 		return userDao.queryPage(filter);
 	}
 
 	public void disabledUser(String ids, String isDisabled)
 			throws DBAccessException {
 		Map<String, Object> filter = new HashMap<String, Object>();
-		
+
 		List<String> list = LocalStringUtils.splitStr2Array(ids);
 		filter.put("list", list);
 		filter.put("isDisabled", isDisabled);
-		
+
 		userDao.disabled(filter);
 	}
 
@@ -86,9 +98,8 @@ public class UserServiceImpl implements IUserService {
 		User user = new User();
 		user.setUserId(userId);
 		user.setUserPwd(SecurityEncoderUtils.encodeUserPassword(newPwd, userId));
-		
+
 		userDao.modify(user);
 	}
 
 }
-

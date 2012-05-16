@@ -2,6 +2,7 @@ var Validate = {
 	number : "该输入项为数字格式！",
 	email : "该输入项为邮箱格式！",
 	empty : "该输入项不能为空！",
+	rpwd : "两次密码不一致！",
 	date : "该输入项为日期格式，格式YYYY-MM-DD",
 	redStar : '<em class="required">*</em>'
 }
@@ -13,5 +14,13 @@ Ext.apply(Ext.form.VTypes, {
 					return reg.test(val); 
 				}
 				return true;
-			}
+			},
+			rpwd:function(val,field){
+		       if(field.confirmTo){
+		           var pwd = Ext.get(field.confirmTo);
+		           return (val==pwd.getValue());
+		       }
+		       return true;
+		    }
 		});
+		

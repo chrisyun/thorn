@@ -1,4 +1,4 @@
-var userPageUrl = sys.basePath + "user/getOrgPage.jmt";
+var userPageUrl = sys.basePath + "user/getUserPage.jmt";
 var userSaveOrModifyUrl = sys.basePath + "user/saveOrModify.jmt";
 var userDeleteUrl = sys.basePath + "user/delete.jmt";
 var userQuerUrl = sys.basePath + "user/getOrg.jmt";
@@ -38,7 +38,7 @@ Ext.onReady(function() {
 			getRecord("用户名称", "userName", "string", 150, true),
 			getRecord("性别", "gender", "string", 70, true, genderRender),
 			getRecord("邮箱", "cumail", "string", 120),
-			getRecord("电话", "phone", "string", 70, true),
+			getRecord("电话", "phone", "string", 70),
 			getRecord("默认角色", "defaultRole", "string", 70, true,
 					defaultRoleRender),
 			getRecord("是否显示", "isShow", "string", 70, true, yesOrNoRender),
@@ -47,6 +47,29 @@ Ext.onReady(function() {
 
 	var grid_Bar = getCUDBar();
 	grid_Cls.setBottomBar(grid_Bar);
+
+	var top_Bar = ["-", {
+				text : "修改",
+				iconCls : "silk-edit",
+				minWidth : Configuration.minBtnWidth,
+				handler : modifyHandler
+			}, "-", {
+				text : "删除",
+				iconCls : "silk-delete",
+				minWidth : Configuration.minBtnWidth,
+				handler : deleteHandler
+			}, "-", {
+				text : "启用",
+				iconCls : "silk-tick",
+				minWidth : Configuration.minBtnWidth,
+				handler : deleteHandler
+			}, "-", {
+				text : "禁用",
+				iconCls : "silk-cross",
+				minWidth : Configuration.minBtnWidth,
+				handler : deleteHandler
+			}];
+	grid_Cls.setTopBar(top_Bar);
 
 	var listeners = {
 		celldblclick : function(thisGrid, rowIndex, columnIndex, ev) {
@@ -68,7 +91,7 @@ Ext.onReady(function() {
 	orgTree.on("click", function(node) {
 				currentActiveNode = node;
 				store.baseParams = {
-					"pid" : node.attributes.pid
+					"orgCode" : node.attributes.pid
 				};
 				store.reload({
 							params : {
@@ -115,19 +138,25 @@ Ext.onReady(function() {
 	user_form_Cls.addItem(getPanelItem(getSelect("gender", "性别", 150, gender,
 					false), 0.5, true));
 
-	user_form_Cls.addItem(getPanelItem(getTxt("phone", "电话", 150), 0.5, false));
+	user_form_Cls.addItem(getPanelItem(getSelect("defaultRole", "默认角色", 150,
+					defaultRole, false), 0.5, false));
 
 	user_form_Cls.addItem(getPanelItem(getMailTxt("cumail", "邮箱", 150), 0.5,
-			true));
+			false));
 
 	user_form_Cls.addItem(getPanelItem(getOrgTreeSelect("orgCode", 150, false),
 			0.5, false));
 
-	user_form_Cls.addItem(getPanelItem(getSelect("defaultRole", "默认角色", 150,
-					defaultRole, false), 0.5, true));
+	user_form_Cls.addItem(getPanelItem(getTxt("phone", "电话", 150), 0.5, true));
+
+	user_form_Cls.addItem(getPanelItem(getPwdTxt("userPwd", "密码", 150), 0.5,
+			true));
 
 	user_form_Cls.addItem(getPanelItem(getSelect("isShow", "是否显示", 150,
 					yesOrNo, false), 0.5, false));
+
+	user_form_Cls.addItem(getPanelItem(getRPwdTxt("userrPwd", "重复密码", 150,
+					"userPwd"), 0.5, true));
 
 	user_form_Cls.addItem(getPanelItem(getSelect("isDisabled", "是否禁用", 150,
 					yesOrNo, false), 0.5, false));
@@ -155,12 +184,6 @@ Ext.onReady(function() {
 				.setValue(Configuration.opType.save);
 
 		Ext.getCmp("orgCode_show").setValue(currentActiveNode);
-
-		// 自动将上级区域信息传递给下级组织？
-		// 将所属组织设置为不可选
-		// var parentOrgSel =
-		// user_form_Cls.getFormPanel().findById("isDisabled_show");
-		// parentOrgSel.el.dom.readOnly = true;
 	}
 
 	function modifyHandler() {
@@ -203,11 +226,18 @@ Ext.onReady(function() {
 				pid : orgCode
 			}
 		};
-		Ext.getCmp("orgCode_show").setValue(parentOrgNode);
+		Ext.getCmp("orgCode_show").setValue(orgNode);
 	}
 
 	function saveOrModify() {
 		var form = user_form_Cls.getForm();
+
+		var newpwd = form.findField("userPwd");
+		var newpwdconfirmCmp = form.findField("userrPwd");
+		if (newpwd.getValue() != newpwdconfirmCmp.getValue()) {
+			newpwdconfirmCmp.markInvalid(Validate.rpwd);
+			return;
+		}
 
 		if (!form.isValid()) {
 			Ext.Msg.alert("提示信息", "请填写完整的用户信息!");
@@ -229,8 +259,7 @@ Ext.onReady(function() {
 					if (opType == Configuration.opType.save) {
 						obj.form.getForm().reset();
 						thisForm.findById("opType").setValue(opType);
-						Ext.getCmp("orgCode_show")
-								.setValue(currentActiveNode);
+						Ext.getCmp("orgCode_show").setValue(currentActiveNode);
 					} else {
 						obj.win.hide();
 					}
@@ -273,11 +302,11 @@ Ext.onReady(function() {
 
 		var name = Ext.getCmp("query_name").getValue();
 		var code = Ext.getCmp("query_code").getValue();
-		var type = Ext.getCmp("query_type_show").getValue();
+		var mail = Ext.getCmp("query_mail").getValue();
 
-		store.baseParams.orgCode = code;
-		store.baseParams.orgName = name;
-		store.baseParams.orgType = type;
+		store.baseParams.userName = name;
+		store.baseParams.userAccount = code;
+		store.baseParams.cumail = mail;
 
 		store.reload({
 					params : {
@@ -304,7 +333,7 @@ Ext.onReady(function() {
 				params : {
 					start : 0,
 					limit : grid_Cls.pageSize,
-					pid : "ROOT"
+					orgCode : "ROOT"
 				}
 			});
 

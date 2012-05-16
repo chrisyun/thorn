@@ -98,24 +98,40 @@ function getTxt(id, text, width) {
 }
 
 function getNumberTxt(id, text, width) {
-	var txt = getTxt(id,text,width);
-	
+	var txt = getTxt(id, text, width);
+
 	txt.vtype = "number";
 	txt.vtypeText = Validate.number;
 	return txt;
 }
 
 function getMailTxt(id, text, width) {
-	var txt = getTxt(id,text,width);
-	
+	var txt = getTxt(id, text, width);
+
 	txt.vtype = "email";
 	txt.vtypeText = Validate.email;
 	return txt;
 }
 
+function getPwdTxt(id, text, width) {
+	var txt = getTxt(id, text, width);
+
+	txt.inputType = "password";
+	return txt;
+}
+
+function getRPwdTxt(id, text, width, confirmTo) {
+	var txt = getPwdTxt(id, text, width);
+
+	txt.vtype = "rpwd";
+	txt.vtypeText = Validate.rpwd;
+	txt.confirmTo = confirmTo;
+	return txt;
+}
+
 function getSelect(id, text, width, array, isReadonly) {
 	var select = new Object();
-	
+
 	select.id = id + "_show";
 	select.hiddenName = id;
 	select.width = width;

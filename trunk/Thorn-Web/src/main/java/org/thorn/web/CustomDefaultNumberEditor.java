@@ -23,6 +23,8 @@ public class CustomDefaultNumberEditor extends CustomNumberEditor {
 	public void setAsText(String text) throws IllegalArgumentException {
 		if (this.allowEmpty && !StringUtils.hasText(text)) {
 			super.setAsText("999");
+		} else {
+			super.setAsText(text);
 		}
 	}
 }

@@ -97,14 +97,14 @@
 			<if test="sn != null and sn != ''">#{sn,jdbcType=VARCHAR},</if>
 			<if test="userAccount != null and userAccount != ''">#{userAccount,jdbcType=VARCHAR},</if>
 			<if test="userPwd != null and userPwd != ''">#{userPwd,jdbcType=VARCHAR},</if>
-			<if test="gender != null and gender != ''">#{parentSource,jdbcType=VARCHAR},</if>
+			<if test="gender != null and gender != ''">#{gender,jdbcType=VARCHAR},</if>
 			<if test="sortNum != null">#{sortNum,jdbcType=DECIMAL},</if>
 			<if test="cumail != null and cumail != ''">#{cumail,jdbcType=VARCHAR},</if>
 			<if test="phone != null and phone != ''">#{phone,jdbcType=VARCHAR},</if>
 			<if test="orgCode != null and orgCode != ''">#{orgCode,jdbcType=VARCHAR},</if>
-			<if test="defaultRole != null and defaultRole != ''">#{cumail,jdbcType=VARCHAR},</if>
+			<if test="defaultRole != null and defaultRole != ''">#{defaultRole,jdbcType=VARCHAR},</if>
 			<if test="isDisabled != null and isDisabled != ''">#{isDisabled,jdbcType=VARCHAR},</if>
-			<if test="isShow != null and isShow != ''">#{cumail,jdbcType=VARCHAR},</if>
+			<if test="isShow != null and isShow != ''">#{isShow,jdbcType=VARCHAR},</if>
 		</trim>
 	</insert>
 	<update id="update" parameterType="org.thorn.user.entity.User">
