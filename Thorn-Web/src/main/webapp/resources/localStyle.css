@@ -3,6 +3,8 @@
 
 .required { font: 0.8em Verdana !important; color: #f68622; margin-top: 120px; }
 
+.silk-tick { background-image: url(images/local/icons/tick.png) !important; background-repeat: no-repeat; }
+.silk-cross { background-image: url(images/local/icons/cross.gif) !important; background-repeat: no-repeat; }
 .silk-add { background-image: url(images/local/icons/add.gif) !important; background-repeat: no-repeat; }
 .silk-edit { background-image: url(images/local/icons/edit.png) !important; background-repeat: no-repeat; }
 .silk-delete { background-image: url(images/local/icons/delete.gif) !important; background-repeat: no-repeat; }

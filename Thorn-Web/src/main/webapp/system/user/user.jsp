@@ -7,8 +7,8 @@
 		<title>User - Manage</title>
 	</head>
 	<jsp:include page="../../reference/core.jsp"></jsp:include>
-	<script type="text/javascript" src="user.js"></script>
 	<script type="text/javascript" src="../org/orgTree.js"></script>
+	<script type="text/javascript" src="user.js"></script>
 	<script type="text/javascript">
 		var area = <thorn:dd  typeId="AREA" />;
 		var areaRender = function(str) {
