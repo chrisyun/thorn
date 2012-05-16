@@ -3,7 +3,7 @@ var userSaveOrModifyUrl = sys.basePath + "user/saveOrModify.jmt";
 var userDeleteUrl = sys.basePath + "user/delete.jmt";
 var userQuerUrl = sys.basePath + "user/getOrg.jmt";
 var pageSize = 20;
-var currentActiveNode;
+var currentActiveNode = tree_root;
 
 Ext.onReady(function() {
 	Ext.QuickTips.init();
@@ -214,7 +214,7 @@ Ext.onReady(function() {
 			return;
 		}
 
-		var ajaxClass = new CommonAjax(orgSaveOrModifyUrl);
+		var ajaxClass = new CommonAjax(userSaveOrModifyUrl);
 
 		var callBack_obj = new Object();
 		callBack_obj.grid = grid;
@@ -226,76 +226,13 @@ Ext.onReady(function() {
 					var thisForm = obj.form.getFormPanel();
 					var opType = thisForm.findById("opType").getValue();
 
-					if (currentActiveNode != null
-							&& currentActiveNode.parentNode != null) {
-						var refreshNode = currentActiveNode.parentNode;
-						orgTree.getLoader().load(refreshNode);
-						refreshNode.expand();
-					} else {
-						orgTree.getLoader().load(tree_root);
-						tree_root.expand();
-					}
-
 					if (opType == Configuration.opType.save) {
 						obj.form.getForm().reset();
 						thisForm.findById("opType").setValue(opType);
-						Ext.getCmp("parentOrg_show")
+						Ext.getCmp("orgCode_show")
 								.setValue(currentActiveNode);
 					} else {
 						obj.win.hide();
-					}
-				});
-	}
-
-	function modifyMenuHandler() {
-		user_win_Cls.show("修改组织");
-		var form = user_form_Cls.getFormPanel();
-
-		user_form_Cls.getForm().reset();
-
-		var parentNode = currentActiveNode.parentNode;
-
-		var orgId = currentActiveNode.id;
-
-		var ajax = new CommonAjax(orgQuerUrl);
-
-		ajax.requestData({
-					orgId : orgId
-				}, form, function(obj, data) {
-					var values = {
-						orgId : data.orgId,
-						orgName : data.orgName,
-						orgCode : data.orgCode,
-						showName : data.showName,
-						orgType : data.orgType,
-						orgMail : data.orgMail,
-						isShow : data.isShow,
-						isDisabled : data.isDisabled,
-						area : data.area,
-						sortNum : data.sortNum,
-						opType : Configuration.opType.modify
-					};
-					form.getForm().setValues(values);
-					Ext.getCmp("parentOrg_show").setValue(parentNode);
-				});
-	}
-
-	function deleteMenuHandler() {
-		Ext.Msg.confirm("确认提示", "确定删除选定的记录?", function(btn) {
-					if (btn == "yes") {
-						var ids = currentActiveNode.id + ",";
-
-						var params = {
-							ids : ids
-						};
-
-						var ajaxClass = new CommonAjax(orgDeleteUrl);
-						ajaxClass.request(params, true, null, function(obj) {
-									grid.getStore().reload();
-									var refreshNode = currentActiveNode.parentNode;
-									orgTree.getLoader().load(refreshNode);
-									refreshNode.expand();
-								});
 					}
 				});
 	}
@@ -311,18 +248,16 @@ Ext.onReady(function() {
 					if (btn == "yes") {
 						var ids = "";
 						for (var i = 0; i < selectedRecordArray.length; i++) {
-							ids += selectedRecordArray[i].get("orgId") + ",";
+							ids += selectedRecordArray[i].get("userId") + ",";
 						}
 
 						var params = {
 							ids : ids
 						};
 
-						var ajaxClass = new CommonAjax(orgDeleteUrl);
+						var ajaxClass = new CommonAjax(userDeleteUrl);
 						ajaxClass.request(params, true, null, function(obj) {
 									grid.getStore().reload();
-									orgTree.getLoader().load(currentActiveNode);
-									currentActiveNode.expand();
 								});
 					}
 				});
