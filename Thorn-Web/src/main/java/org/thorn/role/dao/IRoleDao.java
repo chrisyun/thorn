@@ -1,7 +1,9 @@
 package org.thorn.role.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
 import org.thorn.role.entity.Role;
 
@@ -26,4 +28,12 @@ public interface IRoleDao {
 
 	public List<Role> queryRolesByResource(List<String> source)
 			throws DBAccessException;
+	
+	public int save(Role role) throws DBAccessException;
+
+	public int modify(Role role) throws DBAccessException;
+
+	public int delete(List<String> ids) throws DBAccessException;
+	
+	public Page<Role> queryPage(Map<String, Object> filter) throws DBAccessException;
 }

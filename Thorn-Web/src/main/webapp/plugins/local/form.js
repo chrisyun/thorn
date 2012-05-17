@@ -97,6 +97,18 @@ function getTxt(id, text, width) {
 	return txt;
 }
 
+function getTxtarea(id, text, width, height) {
+	var txt = new Object();
+
+	txt.id = id;
+	txt.width = width;
+	txt.fieldLabel = text;
+	txt.height = height;
+	txt.xtype = "textarea";
+
+	return txt;
+}
+
 function getNumberTxt(id, text, width) {
 	var txt = getTxt(id, text, width);
 
