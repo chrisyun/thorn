@@ -35,7 +35,7 @@ Ext.onReady(function() {
 			getRecord(null, "userAccount", "string"),
 			getRecord(null, "sn", "string"),
 			getRecord("用户编号", "userId", "string", 100, true),
-			getRecord("用户名称", "userName", "string", 150, true),
+			getRecord("用户名称", "userName", "string", 100, true),
 			getRecord("性别", "gender", "string", 70, true, genderRender),
 			getRecord("邮箱", "cumail", "string", 120),
 			getRecord("电话", "phone", "string", 70),
@@ -70,7 +70,7 @@ Ext.onReady(function() {
 				handler : disabledHandler
 			}, "-", {
 				text : "修改密码",
-				iconCls : "silk-edit",
+				iconCls : "tree-pwd",
 				minWidth : Configuration.minBtnWidth,
 				handler : pwdHandler
 			}];

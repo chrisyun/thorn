@@ -165,13 +165,8 @@ Ext.onReady(function() {
 				id : "dtFormType",
 				xtype : "hidden"
 			}, 0, true));
-	dt_form_Cls.addItem(getPanelItem({
-				id : "typeDesc",
-				fieldLabel : "描述",
-				xtype : "textarea",
-				width : 180,
-				height : 60
-			}, 1.0, true));
+	dt_form_Cls.addItem(getPanelItem(getTxt("typeDesc", "描述", 180, 60), 1.0,
+			true));
 
 	var dt_win_Cls = new OpenWindow({
 				width : 370,
@@ -314,7 +309,8 @@ Ext.onReady(function() {
 
 		var ajaxClass = new CommonAjax(ddSubmitUrl);
 
-		var opType = dd_form_Cls.getFormPanel().findById("ddFormType").getValue();
+		var opType = dd_form_Cls.getFormPanel().findById("ddFormType")
+				.getValue();
 
 		var params = {
 			opType : opType
@@ -324,13 +320,12 @@ Ext.onReady(function() {
 		callBack_obj.grid = grid_dd;
 		callBack_obj.win = dd_win_Cls;
 		callBack_obj.form = dd_form_Cls;
-		
-		
+
 		ajaxClass.submitForm(ddForm, params, true, callBack_obj, function(obj) {
 					obj.grid.getStore().reload();
 					var thisForm = obj.form.getFormPanel();
 					var opType = thisForm.findById("ddFormType").getValue();
-					
+
 					if (opType == Configuration.opType.save) {
 						thisForm.findById("dname").setValue("");
 						thisForm.findById("dvalue").setValue("");
