@@ -13,7 +13,7 @@ public class Org implements Serializable {
 	/** */
 	private static final long serialVersionUID = -1039376828336559675L;
 	
-	private int orgId;
+	private Integer orgId;
 	
 	private String orgCode;
 	
@@ -33,13 +33,13 @@ public class Org implements Serializable {
 	
 	private String area;
 	
-	private int sortNum;
+	private Integer sortNum;
 
-	public int getOrgId() {
+	public Integer getOrgId() {
 		return orgId;
 	}
 
-	public void setOrgId(int orgId) {
+	public void setOrgId(Integer orgId) {
 		this.orgId = orgId;
 	}
 
@@ -115,11 +115,11 @@ public class Org implements Serializable {
 		this.area = area;
 	}
 
-	public int getSortNum() {
+	public Integer getSortNum() {
 		return sortNum;
 	}
 
-	public void setSortNum(int sortNum) {
+	public void setSortNum(Integer sortNum) {
 		this.sortNum = sortNum;
 	}
 	

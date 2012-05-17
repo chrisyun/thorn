@@ -12,12 +12,9 @@ import org.thorn.core.context.SpringContext;
 public class SecurityEncoderUtils {
 	private static PasswordEncoder passwordEncoder = null;
 	
-	private static void initPwdEncoder() {
+	private synchronized static void initPwdEncoder() {
 		if(passwordEncoder == null) {
-			Object k = new Object();
-			synchronized (k) {
-				passwordEncoder = SpringContext.getBean(SecurityConfiguration.SPRING_ENCODER_BEAN);
-			}
+			passwordEncoder = SpringContext.getBean(SecurityConfiguration.SPRING_ENCODER_BEAN);
 		}
 	}
 	

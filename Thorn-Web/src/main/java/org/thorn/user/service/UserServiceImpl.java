@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserCache;
 import org.thorn.core.util.LocalStringUtils;
 import org.thorn.dao.core.Configuration;
 import org.thorn.dao.core.Page;
@@ -25,7 +26,11 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	@Qualifier("userDao")
 	private IUserDao userDao;
-
+	
+	@Autowired
+	@Qualifier("userSecurityCache")
+	private UserCache userCache;
+	
 	public User queryUserByLogin(String idOrAccount) throws DBAccessException {
 		Map<String, Object> filter = new HashMap<String, Object>();
 		filter.put("idOrAccount", idOrAccount);
@@ -51,11 +56,16 @@ public class UserServiceImpl implements IUserService {
 		}
 		
 		userDao.modify(user);
+		userCache.removeUserFromCache(user.getUserId());
 	}
 
 	public void delete(String ids) throws DBAccessException {
 		List<String> list = LocalStringUtils.splitStr2Array(ids);
 		userDao.delete(list);
+		
+		for (String uid : list) {
+			userCache.removeUserFromCache(uid.toUpperCase());
+		}
 	}
 
 	public Page<User> queryPage(String orgCode, String userName, String cumail,
@@ -91,15 +101,20 @@ public class UserServiceImpl implements IUserService {
 		filter.put("isDisabled", isDisabled);
 
 		userDao.disabled(filter);
+		
+		for (String uid : list) {
+			userCache.removeUserFromCache(uid.toUpperCase());
+		}
 	}
 
 	public void changePwd(String userId, String newPwd)
 			throws DBAccessException {
 		User user = new User();
-		user.setUserId(userId);
-		user.setUserPwd(SecurityEncoderUtils.encodeUserPassword(newPwd, userId));
+		user.setUserId(userId.toUpperCase());
+		user.setUserPwd(SecurityEncoderUtils.encodeUserPassword(newPwd, user.getUserId()));
 
 		userDao.modify(user);
+		userCache.removeUserFromCache(user.getUserId());
 	}
 
 }
