@@ -46,8 +46,6 @@ var Render = {
 	},
 	viewFieldDetail : function (contentEl, title) {
 		if (this.viewFieldDetailWin == null) {
-			var windowWidth = Configuration.bodyWidth > 760 ? 760 : document.body.clientWidth - 10;
-			var windowHeight = Configuration.bodyHight > 560 ? 560 : document.body.clientHeight - 10;
 			this.viewFieldDetailWin = new Ext.Window({ //定义对话框
 				title		: title || '详细信息',
 				closeAction : 'hide',
@@ -55,8 +53,8 @@ var Render = {
 				shadow 		: true,
 				closable 	: true,
 				layout 		: 'fit',
-				width 		: windowWidth,
-				height 		: windowHeight,
+				width 		: 380,
+				height 		: 200,
 				items 		: [{
 					xtype: 'textarea',
 					id: 'detailField'
