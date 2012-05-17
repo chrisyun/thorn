@@ -152,7 +152,6 @@ Ext.onReady(function() {
 			}, 0, true));
 	org_form_Cls.addItem(getPanelItem({
 				id : "orgId",
-				value : 0,
 				xtype : "hidden"
 			}, 0, true));
 

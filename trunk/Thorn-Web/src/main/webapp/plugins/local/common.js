@@ -13,6 +13,10 @@ var Configuration = {
 		save : "save",
 		modify : "modify"
 	},
+	yOrN : {
+		yes : "YES",
+		no : "NO"
+	},
 	bodyWidth : window.screen.availWidths,
 	bodyHight : window.screen.availHeight,
 	btnWidth : 80,

@@ -1,7 +1,7 @@
 var userPageUrl = sys.basePath + "user/getUserPage.jmt";
 var userSaveOrModifyUrl = sys.basePath + "user/saveOrModify.jmt";
 var userDeleteUrl = sys.basePath + "user/delete.jmt";
-var userQuerUrl = sys.basePath + "user/getOrg.jmt";
+var userDisabledUrl = sys.basePath + "user/disabled.jmt";
 var pageSize = 20;
 var currentActiveNode = tree_root;
 
@@ -62,12 +62,17 @@ Ext.onReady(function() {
 				text : "启用",
 				iconCls : "silk-tick",
 				minWidth : Configuration.minBtnWidth,
-				handler : deleteHandler
+				handler : unDisabledHandler
 			}, "-", {
 				text : "禁用",
 				iconCls : "silk-cross",
 				minWidth : Configuration.minBtnWidth,
-				handler : deleteHandler
+				handler : disabledHandler
+			}, "-", {
+				text : "修改密码",
+				iconCls : "silk-edit",
+				minWidth : Configuration.minBtnWidth,
+				handler : pwdHandler
 			}];
 	grid_Cls.setTopBar(top_Bar);
 
@@ -292,6 +297,69 @@ Ext.onReady(function() {
 				});
 	}
 
+	function unDisabledHandler() {
+		if (grid.getSelectionModel().getCount() == 0) {
+			Ext.Msg.alert("提示信息", "请至少选择一条记录!");
+			return;
+		}
+		var selectedRecordArray = grid.getSelectionModel().getSelections();
+
+		var ids = "";
+		for (var i = 0; i < selectedRecordArray.length; i++) {
+			ids += selectedRecordArray[i].get("userId") + ",";
+		}
+
+		var params = {
+			ids : ids,
+			isDisabled : Configuration.yOrN.no
+		};
+
+		var ajaxClass = new CommonAjax(userDisabledUrl);
+		ajaxClass.request(params, true, null, function(obj) {
+					grid.getStore().reload();
+				});
+
+	}
+
+	function disabledHandler() {
+		if (grid.getSelectionModel().getCount() == 0) {
+			Ext.Msg.alert("提示信息", "请至少选择一条记录!");
+			return;
+		}
+		var selectedRecordArray = grid.getSelectionModel().getSelections();
+
+		Ext.Msg.confirm("确认提示", "确定禁用选定的用户?", function(btn) {
+					if (btn == "yes") {
+						var ids = "";
+						for (var i = 0; i < selectedRecordArray.length; i++) {
+							ids += selectedRecordArray[i].get("userId") + ",";
+						}
+
+						var params = {
+							ids : ids,
+							isDisabled : Configuration.yOrN.yes
+						};
+
+						var ajaxClass = new CommonAjax(userDisabledUrl);
+						ajaxClass.request(params, true, null, function(obj) {
+									grid.getStore().reload();
+								});
+					}
+				});
+
+	}
+	
+	var Pwd_Obj = new UserPwd();
+	function pwdHandler() {
+		if (grid.getSelectionModel().getCount() != 1) {
+			Ext.Msg.alert("提示信息", "请选择一名用户!");
+			return;
+		}
+		var selectedRecord = grid.getSelectionModel().getSelections()[0];
+		var user_id = selectedRecord.get("userId");
+		Pwd_Obj.show(user_id);
+	}
+	
 	function onSubmitQueryHandler() {
 		var thisForm = query_form_Cls.getForm();
 		var store = grid.getStore();

@@ -12,6 +12,7 @@ function OpenWindow(winAttr, form, saveHandler) {
 				buttons : [{
 							text : '保存',
 							iconCls : 'silk-accept',
+							scope : this,
 							handler : saveHandler
 						}, {
 							text : '关闭',
