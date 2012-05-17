@@ -31,5 +31,13 @@ public class UtilTest extends TestCase {
 		System.out.println(m.matches());
 	}
 	
+	public void testRegx1() {
+		Pattern pattern = Pattern.compile("^(insert|delete|update).*(insert|delete|update)$");
+		
+		Matcher m = pattern.matcher("insertq wqwsasa update");
+		
+		System.out.println(m.matches());
+	}
+	
 }
 
