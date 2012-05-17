@@ -9,10 +9,7 @@
 	<jsp:include page="../../reference/core.jsp"></jsp:include>
 	<script type="text/javascript" src="role.js"></script>
 	<script type="text/javascript">
-		var iconCls = <thorn:dd  typeId="ICONCLS" />;
-		var iconClsRender = function(icon) {
-			return Render.dictRender(iconCls, icon);
-		};
+		
 	</script>
 	<body>
 

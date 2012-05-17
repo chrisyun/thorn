@@ -25,11 +25,15 @@ Ext.onReady(function() {
 	/** ****************query panel end*************** */
 
 	/** ****************role Grid panel start************ */
+	var remarkRender = function (remark, metadata, record, rowIndex, colIndex) {
+			return Render.detailRender(remark, grid_Cls.cm, colIndex);
+		};		
+			
 	var recordArray = [
 			getRecord("角色编码", "roleCode", "string", 70, true),
 			getRecord("角色名称", "roleName", "string", 100, true),
 			getRecord("是否禁用", "isDisabled", "string", 70, true, yesOrNoRender),
-			getRecord("描述", "roleDesc", "string", 300, false)];
+			getRecord("描述", "roleDesc", "string", 300, false, remarkRender)];
 	var grid_Cls = new Grid(rolePageUrl, recordArray, pageSize);
 
 	var grid_Bar = getCUDBar(saveHandler, modifyHandler, deleteHandler);
