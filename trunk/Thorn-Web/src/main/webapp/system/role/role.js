@@ -16,10 +16,10 @@ Ext.onReady(function() {
 	};
 	var query_form_Cls = new FormPanel(query_attr);
 
-	query_form_Cls.addItem(getPanelItem(getTxt("query_code", "角色编码", 120),
-			0.23, true));
-	query_form_Cls.addItem(getPanelItem(getTxt("query_name", "角色名称", 120),
-			0.23, true));
+	query_form_Cls.addItem(getPanelItem(getTxt("query_code", "角色编码", 120), 0.3,
+			true));
+	query_form_Cls.addItem(getPanelItem(getTxt("query_name", "角色名称", 120), 0.3,
+			true));
 	query_form_Cls.addItem(getPanelItem(getQueryBtn(onSubmitQueryHandler), 0.3,
 			true));
 	/** ****************query panel end*************** */
@@ -197,21 +197,16 @@ Ext.onReady(function() {
 
 	/** **********************Auth panel*********************** */
 
-	var authTab = new Ext.TabPanel({
-				region : 'east',
-				activeTab : 0,
-				margins : '2 0 2 0',
-				resizeTabs : true,
-				border : false,
-				minTabWidth : 80,
-				items : [sysMenuTree, navMenuTree]
-			});
-
 	var loader = new Ext.tree.TreeLoader({
-				url : sys.basePath + "/resource/getSourceTree.jmt",
+				// url : "check-nodes.json",
+				url : sys.basePath + "resource/getSourceTree.jmt",
 				uiProviders : {
 					"checkBox" : Ext.ux.TreeCheckNodeUI
 				}
+			});
+
+	loader.on("beforeload", function(loader, node) {
+				loader.baseParams.pid = node.id;
 			});
 
 	var sysMenuTree = new Ext.tree.TreePanel({
@@ -219,11 +214,17 @@ Ext.onReady(function() {
 				useArrows : true,
 				rootVisible : false,
 				loader : loader,
+				title : "系统菜单",
+				iconCls : "silk-settings",
+				tbar : ["-",{
+							id : "save-sys",
+							text : "保存",
+							iconCls : "silk-save",
+							minWidth : Configuration.minBtnWidth
+						},"-"],
 				root : new Ext.tree.AsyncTreeNode({
-							text : "系统管理",
 							id : 'SYS',
 							expanded : true,
-							uiProvider : Ext.ux.TreeCheckNodeUI,
 							leaf : false
 						})
 			});
@@ -233,19 +234,49 @@ Ext.onReady(function() {
 				useArrows : true,
 				rootVisible : false,
 				loader : loader,
+				title : "应用菜单",
+				iconCls : "silk-nav",
+				tbar : ["-",{
+							id : "save-nav",
+							text : "保存",
+							iconCls : "silk-save",
+							minWidth : Configuration.minBtnWidth
+						},"-"],
 				root : new Ext.tree.AsyncTreeNode({
-							text : "导航菜单",
 							id : 'NAV',
 							expanded : true,
-							uiProvider : Ext.ux.TreeCheckNodeUI,
 							leaf : false
 						})
+			});
+
+	var authTab = new Ext.TabPanel({
+				border : false,
+				activeTab : 0,
+				resizeTabs : true,
+				items : [sysMenuTree, navMenuTree]
 			});
 
 	var viewport = new Ext.Viewport({
 				border : false,
 				layout : "border",
-				items : [query_form_Cls.getFormPanel(), grid_Cls.getGridPanel(), authTab]
+				items : [{
+					border : false,
+					region : "center",
+					layout : "border",
+					split : true,
+					items : [query_form_Cls.getFormPanel(),
+							grid_Cls.getGridPanel()]
+				}, {
+					region : 'east',
+					title : "角色授权面板",
+					collapsible : true,
+					split : true,
+					layout : 'fit',
+					width : 300,
+					margins : "2 0 0 0",
+					border : true,
+					items : authTab
+				}]
 			});
 
 	grid.getStore().reload({

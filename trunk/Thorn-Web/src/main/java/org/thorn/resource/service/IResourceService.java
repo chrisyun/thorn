@@ -17,8 +17,10 @@ public interface IResourceService {
 	// public List<Resource> queryResourceByRole(List<String> roleId) throws
 	// DBAccessException;
 
-	public List<Resource> queryAllResource() throws DBAccessException;
-
+	public List<Resource> queryAllLeaf() throws DBAccessException;
+	
+	public List<Resource> queryAllSource() throws DBAccessException;
+	
 	public List<Resource> queryLeftTree(String pid) throws DBAccessException;
 
 	public void save(Resource source) throws DBAccessException;

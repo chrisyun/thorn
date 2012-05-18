@@ -1,6 +1,7 @@
 package org.thorn.web;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /** 
@@ -16,7 +17,7 @@ public class FullTree extends Tree implements Serializable {
 	
 	private String uiProvider;
 	
-	private List<FullTree> children; 
+	private List<FullTree> children = new ArrayList<FullTree>(); 
 	
 	private boolean expanded;
 

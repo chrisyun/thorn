@@ -61,7 +61,7 @@ public class InvocationSecurityMetadataSource implements
 		this.resourceService = resourceService;
 		this.roleService = roleService;
 
-		List<Resource> sources = this.resourceService.queryAllResource();
+		List<Resource> sources = this.resourceService.queryAllLeaf();
 
 		for (Resource source : sources) {
 			resourceMap.put(source.getSourceCode(), source.getSourceUrl());
