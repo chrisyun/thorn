@@ -25,12 +25,11 @@ Ext.onReady(function() {
 	/** ****************query panel end*************** */
 
 	/** ****************role Grid panel start************ */
-	var remarkRender = function (remark, metadata, record, rowIndex, colIndex) {
-			return Render.detailRender(remark, grid_Cls.cm, colIndex);
-		};		
-			
-	var recordArray = [
-			getRecord("角色编码", "roleCode", "string", 70, true),
+	var remarkRender = function(remark, metadata, record, rowIndex, colIndex) {
+		return Render.detailRender(remark, grid_Cls.cm, colIndex);
+	};
+
+	var recordArray = [getRecord("角色编码", "roleCode", "string", 70, true),
 			getRecord("角色名称", "roleName", "string", 100, true),
 			getRecord("是否禁用", "isDisabled", "string", 70, true, yesOrNoRender),
 			getRecord("描述", "roleDesc", "string", 300, false, remarkRender)];
@@ -67,7 +66,8 @@ Ext.onReady(function() {
 	role_form_Cls.addItem(getPanelItem(getTxt("roleName", "角色名称", 180), 1.0,
 			false));
 
-	role_form_Cls.addItem(getPanelItem(getTxtarea("roleDesc", "描述", 180, 60), 1.0, true));
+	role_form_Cls.addItem(getPanelItem(getTxtarea("roleDesc", "描述", 180, 60),
+			1.0, true));
 
 	role_form_Cls.addItem(getPanelItem(getSelect("isDisabled", "是否禁用", 180,
 					yesOrNo, false), 1.0, false));
@@ -195,11 +195,57 @@ Ext.onReady(function() {
 				});
 	}
 
+	/** **********************Auth panel*********************** */
+
+	var authTab = new Ext.TabPanel({
+				region : 'east',
+				activeTab : 0,
+				margins : '2 0 2 0',
+				resizeTabs : true,
+				border : false,
+				minTabWidth : 80,
+				items : [sysMenuTree, navMenuTree]
+			});
+
+	var loader = new Ext.tree.TreeLoader({
+				url : sys.basePath + "/resource/getSourceTree.jmt",
+				uiProviders : {
+					"checkBox" : Ext.ux.TreeCheckNodeUI
+				}
+			});
+
+	var sysMenuTree = new Ext.tree.TreePanel({
+				border : false,
+				useArrows : true,
+				rootVisible : false,
+				loader : loader,
+				root : new Ext.tree.AsyncTreeNode({
+							text : "系统管理",
+							id : 'SYS',
+							expanded : true,
+							uiProvider : Ext.ux.TreeCheckNodeUI,
+							leaf : false
+						})
+			});
+
+	var navMenuTree = new Ext.tree.TreePanel({
+				border : false,
+				useArrows : true,
+				rootVisible : false,
+				loader : loader,
+				root : new Ext.tree.AsyncTreeNode({
+							text : "导航菜单",
+							id : 'NAV',
+							expanded : true,
+							uiProvider : Ext.ux.TreeCheckNodeUI,
+							leaf : false
+						})
+			});
+
 	var viewport = new Ext.Viewport({
 				border : false,
 				layout : "border",
-				items : [query_form_Cls.getFormPanel(),
-							grid_Cls.getGridPanel()]
+				items : [query_form_Cls.getFormPanel(), grid_Cls.getGridPanel(), authTab]
 			});
 
 	grid.getStore().reload({
