@@ -355,7 +355,7 @@ Ext.onReady(function() {
 			Ext.Msg.alert("提示信息", "请选择一名用户!");
 			return;
 		}
-		var selectedRecord = grid.getSelectionModel().getSelections()[0];
+		var selectedRecord = grid.getSelectionModel().getSelected();
 		var user_id = selectedRecord.get("userId");
 		Pwd_Obj.show(user_id);
 	}
