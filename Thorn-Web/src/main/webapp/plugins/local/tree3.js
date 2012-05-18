@@ -11,7 +11,7 @@ Ext.ux.TreeCheckNodeUI = function() {
 	this.checkModel = 'multiple';
 	this.checkstree = new Array();
 	this.onlyLeafCheckable = false;
-	this.imgSrc = "../../resources/images/local/";
+	this.imgSrc = "../../resources/images/local/icons/";
 	Ext.ux.TreeCheckNodeUI.superclass.constructor.apply(this, arguments);
 };
 Ext.extend(Ext.ux.TreeCheckNodeUI, Ext.tree.TreeNodeUI, {

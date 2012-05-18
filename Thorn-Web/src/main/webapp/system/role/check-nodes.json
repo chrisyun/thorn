@@ -1,0 +1,69 @@
+[{
+    "text": 'To Do', 
+    "cls": 'folder',
+    "uiProvider": "checkBox",
+    "expanded" : true,
+    "children": [{
+        "text": 'Go jogging',
+        "leaf": true,
+        "uiProvider": "checkBox"
+    },{
+        "text": 'Take a nap',
+        "leaf": true,
+        "uiProvider": "checkBox"
+    },{
+        "text": 'Climb Everest',
+        "leaf": true,
+        "uiProvider": "checkBox"
+    }]
+},{
+    "text": 'Grocery List',
+    "cls": 'folder',
+    "uiProvider": "checkBox",
+    "expanded" : true,
+    "children": [{
+        "text": 'Bananas',
+        "leaf": true,
+        "uiProvider": "checkBox"
+    },{
+        "text": 'Milk',
+        "leaf": true,
+        "uiProvider": "checkBox"
+    },{
+        "text": 'Cereal',
+        "leaf": true,
+        "uiProvider": "checkBox"
+    },{
+        "text": 'Energy foods',
+        "cls": 'folder',
+        "uiProvider": "checkBox",
+        "expanded" : true,
+        "children": [{
+            "text": 'Coffee',
+            "leaf": true,
+            "uiProvider": "checkBox"
+        },{
+            "text": 'Red Bull',
+            "leaf": true,
+            "uiProvider": "checkBox"
+        }]
+    }]
+},{
+    "text": 'Remodel Project', 
+    "cls": 'folder',
+    "uiProvider": "checkBox",
+    "expanded" : true,
+    "children": [{
+        "text": 'Finish the budget',
+        "leaf": true,
+        "uiProvider": "checkBox"
+    },{
+        "text": 'Call contractors',
+        "leaf": true,
+        "uiProvider": "checkBox"
+    },{
+        "text": 'Choose design',
+        "leaf": true,
+        "uiProvider": "checkBox"
+    }]
+}]

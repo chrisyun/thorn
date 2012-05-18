@@ -16,6 +16,7 @@ import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
 import org.thorn.resource.entity.Resource;
 import org.thorn.resource.service.IResourceService;
+import org.thorn.web.FullTree;
 import org.thorn.web.JsonResponse;
 import org.thorn.web.Status;
 import org.thorn.web.BaseController;
@@ -45,9 +46,9 @@ public class ResourceController extends BaseController {
 			List<Resource> source = service.queryLeftTree(pid);
 			for (Resource res : source) {
 				Tree node = new Tree();
-				node.setId(String.valueOf(res.getSourceCode()));
-				node.setText(String.valueOf(res.getSourceName()));
-				node.setPid(String.valueOf(res.getParentSource()));
+				node.setId(res.getSourceCode());
+				node.setText(res.getSourceName());
+				node.setPid(res.getParentSource());
 
 				node.setTargetUrl(res.getSourceUrl());
 				node.setIconCls(res.getIconsCls());
@@ -69,34 +70,69 @@ public class ResourceController extends BaseController {
 	
 	@RequestMapping("/resource/getSourceTree")
 	@ResponseBody
-	public List<Tree> getSourceTree(String pid) {
-		List<Tree> tree = new ArrayList<Tree>();
+	public List<FullTree> getSourceTree(String pid) {
+		List<FullTree> ft = new ArrayList<FullTree>();
+		
+		FullTree tree = new FullTree();
 
 		try {
-			List<Resource> source = service.queryLeftTree(pid);
-			for (Resource res : source) {
-				Tree node = new Tree();
-				node.setId(String.valueOf(res.getSourceCode()));
-				node.setText(String.valueOf(res.getSourceName()));
-				node.setPid(String.valueOf(res.getParentSource()));
-
-				node.setTargetUrl(res.getSourceUrl());
-				node.setIconCls(res.getIconsCls());
-
-				if (LocalStringUtils.equals(res.getIsleaf(),
-						Configuration.DB_YES)) {
-					node.setLeaf(true);
-				} else {
-					node.setLeaf(false);
+			List<Resource> allSource = service.queryAllSource();
+			
+			//第一次遍历，找到当前节点的根
+			for (Resource res : allSource) {
+				if(LocalStringUtils.equals(res.getSourceCode(), pid)) {
+					tree.setId(res.getSourceCode());
+					tree.setText(res.getSourceName());
+					tree.setPid(res.getParentSource());
+					tree.setIconCls(res.getIconsCls());
+					tree.setLeaf(false);
+					
+					tree.setUiProvider("checkBox");
+					tree.setExpanded(true);
+					break;
 				}
-				tree.add(node);
 			}
+			
+			//递归向下加子节点
+			sortTree(allSource, tree);
+			
 		} catch (Exception e) {
-			log.error("getLeftTree[Resource] - " + e.getMessage(), e);
+			log.error("getSourceTree[Resource] - " + e.getMessage(), e);
 		}
-
-		return tree;
+		
+		ft.add(tree);
+		return ft;
 	}
+	
+	private void sortTree(List<Resource> source, FullTree tree) {
+		
+		for(Resource res : source) {
+			if(LocalStringUtils.equals(res.getParentSource(), tree.getId())) {
+				
+				FullTree node = new FullTree();
+				
+				node.setId(res.getSourceCode());
+				node.setText(res.getSourceName());
+				node.setPid(res.getParentSource());
+				node.setIconCls(res.getIconsCls());
+				
+				node.setUiProvider("checkBox");
+				node.setExpanded(true);
+				
+				tree.getChildren().add(node);
+				
+				sortTree(source, node);
+				
+				if(node.getChildren().size() == 0) {
+					node.setLeaf(true);
+				}
+				
+			}
+		}
+		
+	}
+	
+	
 	
 	@RequestMapping("/resource/saveOrModify")
 	@ResponseBody
