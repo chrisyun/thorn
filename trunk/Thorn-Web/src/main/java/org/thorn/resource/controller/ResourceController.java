@@ -67,6 +67,37 @@ public class ResourceController extends BaseController {
 		return tree;
 	}
 	
+	@RequestMapping("/resource/getSourceTree")
+	@ResponseBody
+	public List<Tree> getSourceTree(String pid) {
+		List<Tree> tree = new ArrayList<Tree>();
+
+		try {
+			List<Resource> source = service.queryLeftTree(pid);
+			for (Resource res : source) {
+				Tree node = new Tree();
+				node.setId(String.valueOf(res.getSourceCode()));
+				node.setText(String.valueOf(res.getSourceName()));
+				node.setPid(String.valueOf(res.getParentSource()));
+
+				node.setTargetUrl(res.getSourceUrl());
+				node.setIconCls(res.getIconsCls());
+
+				if (LocalStringUtils.equals(res.getIsleaf(),
+						Configuration.DB_YES)) {
+					node.setLeaf(true);
+				} else {
+					node.setLeaf(false);
+				}
+				tree.add(node);
+			}
+		} catch (Exception e) {
+			log.error("getLeftTree[Resource] - " + e.getMessage(), e);
+		}
+
+		return tree;
+	}
+	
 	@RequestMapping("/resource/saveOrModify")
 	@ResponseBody
 	public Status saveOrModifyOrg(Resource source, String opType) {
