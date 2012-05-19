@@ -36,5 +36,7 @@ public interface IRoleService {
 
 	public Page<Role> queryPage(String roleCode, String roleName, long start,
 			long limit, String sort, String dir) throws DBAccessException;
-
+	
+	public void saveAuth(String roleCode, String sourceIds) throws DBAccessException;
+	
 }

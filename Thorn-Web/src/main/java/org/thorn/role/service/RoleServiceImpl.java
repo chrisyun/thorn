@@ -61,5 +61,20 @@ public class RoleServiceImpl implements IRoleService {
 		return roleDao.queryPage(filter);
 	}
 
+	public void saveAuth(String roleCode, String sourceIds)
+			throws DBAccessException {
+		List<String> list = LocalStringUtils.splitStr2Array(sourceIds);
+		
+		roleDao.deleteRoleSource(roleCode);
+		
+		Map<String, String> rs = new HashMap<String, String>();
+		for(String sourceCode : list) {
+			rs.put("roleCode", roleCode);
+			rs.put("sourceCode", sourceCode);
+			
+			roleDao.saveRoleSource(rs);
+		}
+	}
+
 }
 

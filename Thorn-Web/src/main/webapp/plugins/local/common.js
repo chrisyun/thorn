@@ -156,7 +156,7 @@ CommonAjax.prototype.requestData = function(params, obj, callback) {
 				success : function(response, options) {
 					var result = Ext.util.JSON.decode(response.responseText);
 					Message.hideProcessMsgBox();
-
+					
 					if (result.success) {
 						callback(obj,result.obj);
 					} else {

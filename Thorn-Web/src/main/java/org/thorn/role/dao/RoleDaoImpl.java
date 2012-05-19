@@ -91,4 +91,21 @@ public class RoleDaoImpl implements IRoleDao {
 		}
 	}
 
+	public int deleteRoleSource(String roleCode) throws DBAccessException {
+		try {
+			return sqlSessionTemplate.delete(nameSpace + "deleteSourceByRole", roleCode);
+		} catch (Exception e) {
+			throw new DBAccessException("RoleDaoImpl", "deleteRoleSource", e);
+		}
+	}
+
+	public int saveRoleSource(Map<String, String> rs)
+			throws DBAccessException {
+		try {
+			return sqlSessionTemplate.insert(nameSpace + "insertRoleSource", rs);
+		} catch (Exception e) {
+			throw new DBAccessException("RoleDaoImpl", "saveRoleSource", e);
+		}
+	}
+
 }

@@ -36,4 +36,8 @@ public interface IRoleDao {
 	public int delete(List<String> ids) throws DBAccessException;
 	
 	public Page<Role> queryPage(Map<String, Object> filter) throws DBAccessException;
+	
+	public int deleteRoleSource(String roleCode) throws DBAccessException;
+	
+	public int saveRoleSource(Map<String, String> rs) throws DBAccessException;
 }

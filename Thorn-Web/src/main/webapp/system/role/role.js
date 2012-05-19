@@ -1,8 +1,17 @@
 var rolePageUrl = sys.basePath + "role/getRolePage.jmt";
 var roleSaveOrModifyUrl = sys.basePath + "role/saveOrModify.jmt";
 var roleDeleteUrl = sys.basePath + "role/delete.jmt";
+var roleSaveAuthUrl = sys.basePath + "role/saveAuth.jmt";
+
+var getSourceUrl = sys.basePath + "resource/getSourceCodeByRole.jmt";
+var getSourceTreeUrl = sys.basePath + "resource/getSourceTree.jmt";
 
 var pageSize = 20;
+
+var grid_Cls;
+var sysMenuTree;
+var navMenuTree;
+var roleCode;
 
 Ext.onReady(function() {
 	Ext.QuickTips.init();
@@ -29,11 +38,22 @@ Ext.onReady(function() {
 		return Render.detailRender(remark, grid_Cls.cm, colIndex);
 	};
 
-	var recordArray = [getRecord("角色编码", "roleCode", "string", 70, true),
+	var authRender = function(value) {
+		return '<div align="center"><a class="link" href="javascript: onAuth();">授权</a></div>';
+	};
+
+	var userRender = function(value) {
+		return '<div align="center"><a class="link" href="javascript: onAuth();">成员列表</a></div>';
+	};
+
+	var recordArray = [
+			getRecord("角色编码", "roleCode", "string", 100, true),
 			getRecord("角色名称", "roleName", "string", 100, true),
-			getRecord("是否禁用", "isDisabled", "string", 70, true, yesOrNoRender),
-			getRecord("描述", "roleDesc", "string", 300, false, remarkRender)];
-	var grid_Cls = new Grid(rolePageUrl, recordArray, pageSize);
+			getRecord("是否禁用", "isDisabled", "string", 50, true, yesOrNoRender),
+			getRecord("描述", "roleDesc", "string", 200, false, remarkRender),
+			getRecord("授权", "authColumn", "string", 50, false, authRender),
+			getRecord("角色成员", "roleUserColumn", "string", 70, false, userRender)];
+	grid_Cls = new Grid(rolePageUrl, recordArray, pageSize);
 
 	var grid_Bar = getCUDBar(saveHandler, modifyHandler, deleteHandler);
 	grid_Cls.setBottomBar(grid_Bar);
@@ -199,7 +219,7 @@ Ext.onReady(function() {
 
 	var loader = new Ext.tree.TreeLoader({
 				// url : "check-nodes.json",
-				url : sys.basePath + "resource/getSourceTree.jmt",
+				url : getSourceTreeUrl,
 				uiProviders : {
 					"checkBox" : Ext.ux.TreeCheckNodeUI
 				}
@@ -209,19 +229,13 @@ Ext.onReady(function() {
 				loader.baseParams.pid = node.id;
 			});
 
-	var sysMenuTree = new Ext.tree.TreePanel({
+	sysMenuTree = new Ext.tree.TreePanel({
 				border : false,
 				useArrows : true,
 				rootVisible : false,
 				loader : loader,
 				title : "系统菜单",
 				iconCls : "silk-settings",
-				tbar : ["-",{
-							id : "save-sys",
-							text : "保存",
-							iconCls : "silk-save",
-							minWidth : Configuration.minBtnWidth
-						},"-"],
 				root : new Ext.tree.AsyncTreeNode({
 							id : 'SYS',
 							expanded : true,
@@ -229,30 +243,68 @@ Ext.onReady(function() {
 						})
 			});
 
-	var navMenuTree = new Ext.tree.TreePanel({
+	navMenuTree = new Ext.tree.TreePanel({
 				border : false,
 				useArrows : true,
 				rootVisible : false,
 				loader : loader,
 				title : "应用菜单",
 				iconCls : "silk-nav",
-				tbar : ["-",{
-							id : "save-nav",
-							text : "保存",
-							iconCls : "silk-save",
-							minWidth : Configuration.minBtnWidth
-						},"-"],
 				root : new Ext.tree.AsyncTreeNode({
 							id : 'NAV',
 							expanded : true,
 							leaf : false
 						})
 			});
+	
+	function saveAuthHandler() {
+
+		if (Ext.isEmpty(roleCode)) {
+			Ext.Msg.alert("提示信息", "请先选择需要授权的角色!");
+			return;
+		}
+		
+		var resIds = "";
+		
+		var rootNode = sysMenuTree.getNodeById("SYS");
+		var checkNodes = rootNode.getUI().getCheckedNodes(rootNode);
+		for (var i = 0; i < checkNodes.length; i++) {
+
+			if (!Ext.isEmpty(checkNodes[i].attributes.targetUrl)) {
+				resIds += checkNodes[i].id + ",";
+			}
+		}
+		
+		var rootNode = navMenuTree.getNodeById("NAV");
+		var checkNodes = rootNode.getUI().getCheckedNodes(rootNode);
+		for (var i = 0; i < checkNodes.length; i++) {
+
+			if (!Ext.isEmpty(checkNodes[i].attributes.targetUrl)) {
+				resIds += checkNodes[i].id + ",";
+			}
+		}
+
+		var ajax = new CommonAjax(roleSaveAuthUrl);
+		ajax.request({
+					roleCode : roleCode,
+					ids : resIds
+				},true,null,function(){});
+
+	}
 
 	var authTab = new Ext.TabPanel({
 				border : false,
 				activeTab : 0,
 				resizeTabs : true,
+				tabWidth : 100,
+				deferredRender : false,
+				tbar : ["-", {
+							id : "save-nav",
+							text : "保存",
+							iconCls : "silk-save",
+							minWidth : Configuration.minBtnWidth,
+							handler : saveAuthHandler
+						}, "-"],
 				items : [sysMenuTree, navMenuTree]
 			});
 
@@ -287,3 +339,41 @@ Ext.onReady(function() {
 			});
 
 });
+
+function onAuth() {
+	var pageGrid = grid_Cls.getGridPanel();
+
+	var roleRecord = pageGrid.getSelectionModel().getSelected();
+	roleCode = roleRecord.get("roleCode");
+
+	var ajax = new CommonAjax(getSourceUrl);
+	ajax.requestData({
+				roleCode : roleCode
+			}, pageGrid, function(obj, menuArray) {
+				onAuth2Tree(menuArray, sysMenuTree, "SYS");
+				onAuth2Tree(menuArray, navMenuTree, "NAV");
+			});
+
+}
+
+function onAuth2Tree(menuArray, tree, rootId) {
+	var rootNode = tree.getNodeById(rootId);
+	var checkNodes = rootNode.getUI().getCheckedNodes(rootNode);
+
+	// 先设置所有叶子节点为未选择状态
+	for (var i = 0; i < checkNodes.length; i++) {
+		checkNodes[i].getUI().setChecked(checkNodes[i], false);
+	}
+
+	if (!Ext.isEmpty(menuArray)) {
+		// 勾选以获得权限的叶子节点
+		for (var i = 0; i < menuArray.length; i++) {
+			var menuNode = tree.getNodeById(menuArray[i]);
+			if (!Ext.isEmpty(menuNode)) {
+				if (menuNode.isLeaf()) {
+					menuNode.getUI().setChecked(menuNode, true);
+				}
+			}
+		}
+	}
+}
