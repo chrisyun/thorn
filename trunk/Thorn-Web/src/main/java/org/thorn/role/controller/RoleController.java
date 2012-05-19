@@ -63,6 +63,23 @@ public class RoleController extends BaseController {
 		return page;
 	}
 	
+	@RequestMapping("/role/saveAuth")
+	@ResponseBody
+	public Status saveAuth(String roleCode, String ids) {
+		Status status = new Status();
+
+		try {
+			service.saveAuth(roleCode, ids);
+			status.setMessage("角色授权成功！");
+		} catch (DBAccessException e) {
+			status.setSuccess(false);
+			status.setMessage("数据保存失败：" + e.getMessage());
+			log.error("saveOrModifyOrg[Role] - " + e.getMessage(), e);
+		}
+
+		return status;
+	}
+	
 	@RequestMapping("/role/saveOrModify")
 	@ResponseBody
 	public Status saveOrModifyOrg(Role role, String opType) {

@@ -82,4 +82,14 @@ public class ResourceDaoImpl implements IResourceDao {
 		}
 	}
 
+	public List<String> queryResourceByRole(String roleId)
+			throws DBAccessException {
+		try {
+			return (List<String>) sqlSessionTemplate.selectList(nameSpace
+					+ "queryByRole", roleId);
+		} catch (Exception e) {
+			throw new DBAccessException("ResourceDaoImpl", "queryResourceByRole", e);
+		}
+	}
+
 }

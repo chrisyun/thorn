@@ -44,6 +44,9 @@ public class ResourceServiceImpl implements IResourceService {
 	public List<Resource> queryAllSource() throws DBAccessException {
 		Map<String, Object> filter = new HashMap<String, Object>();
 		
+		filter.put(Configuration.SROT_NAME, "SORTNUM");
+		filter.put(Configuration.ORDER_NAME, Configuration.ORDER_ASC);
+		
 		return resourceDao.queryByList(filter);
 	}
 
@@ -105,6 +108,11 @@ public class ResourceServiceImpl implements IResourceService {
 		}
 		
 		return list.get(0);
+	}
+
+	public List<String> queryResourceByRole(String roleId)
+			throws DBAccessException {
+		return resourceDao.queryResourceByRole(roleId);
 	}
 
 }

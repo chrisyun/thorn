@@ -61,6 +61,15 @@
 			#{item,jdbcType=VARCHAR}
 		</foreach>
 	</delete>
+	
+	<delete id="deleteSourceByRole" parameterType="string">
+		delete from T_SYS_ROLE_RES where ROLECODE = #{code,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="insertRoleSource" parameterType="hashmap">
+		insert into T_SYS_ROLE_RES(ROLECODE,SOURCECODE) 
+		values(#{roleCode,jdbcType=VARCHAR},#{sourceCode,jdbcType=VARCHAR})
+	</insert>
 
 
 	<select id="queryByUser" resultMap="BaseResultMap"

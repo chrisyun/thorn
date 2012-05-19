@@ -13,14 +13,23 @@ import org.thorn.resource.entity.Resource;
  * @date 2012-5-4 下午03:35:41
  */
 public interface IResourceService {
-
-	// public List<Resource> queryResourceByRole(List<String> roleId) throws
-	// DBAccessException;
+	
+	/**
+	 * 
+	 * @Description：根据角色ID查找授权的资源
+	 * @author：chenyun 	        
+	 * @date：2012-5-19 下午02:11:02
+	 * @param roleId
+	 * @return
+	 * @throws DBAccessException
+	 */
+	public List<String> queryResourceByRole(String roleId)
+			throws DBAccessException;
 
 	public List<Resource> queryAllLeaf() throws DBAccessException;
-	
+
 	public List<Resource> queryAllSource() throws DBAccessException;
-	
+
 	public List<Resource> queryLeftTree(String pid) throws DBAccessException;
 
 	public void save(Resource source) throws DBAccessException;

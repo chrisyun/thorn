@@ -115,9 +115,7 @@
 	</select>
 	
 	
-	<!-- 
-	<select id="queryByRole" parameterType="string" resultMap="BaseResultMap">
-		select r.SOURCECODE from T_SYS_ROLE_RES r where r.ROLECODE = 
+	<select id="queryByRole" parameterType="string" resultType="string">
+		select r.SOURCECODE from T_SYS_ROLE_RES r where r.ROLECODE = #{roleCode,jdbcType=VARCHAR}
 	</select>
-	 -->
 </mapper>

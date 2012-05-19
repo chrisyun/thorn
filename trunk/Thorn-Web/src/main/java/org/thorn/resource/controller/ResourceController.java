@@ -115,6 +115,7 @@ public class ResourceController extends BaseController {
 				node.setText(res.getSourceName());
 				node.setPid(res.getParentSource());
 				node.setIconCls(res.getIconsCls());
+				node.setTargetUrl(res.getSourceUrl());
 				
 				node.setUiProvider("checkBox");
 				node.setExpanded(true);
@@ -132,7 +133,23 @@ public class ResourceController extends BaseController {
 		
 	}
 	
-	
+	@RequestMapping("/resource/getSourceCodeByRole")
+	@ResponseBody
+	public JsonResponse<List> getSourceCodeByRole(String roleCode) {
+		JsonResponse<List> json = new JsonResponse<List>();
+		
+		try {
+			List<String> list = service.queryResourceByRole(roleCode);
+			json.setObj(list);
+			
+		} catch (DBAccessException e) {
+			json.setSuccess(false);
+			json.setMessage("获取数据失败：" + e.getMessage());
+			log.error("getSourceCodeByRole[String] - " + e.getMessage(), e);
+		}
+		
+		return json;
+	}
 	
 	@RequestMapping("/resource/saveOrModify")
 	@ResponseBody
