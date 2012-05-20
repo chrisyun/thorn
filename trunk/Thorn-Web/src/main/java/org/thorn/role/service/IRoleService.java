@@ -28,6 +28,8 @@ public interface IRoleService {
 	public List<Role> queryRolesByResource(List<String> source)
 			throws DBAccessException;
 
+	public List<Role> queryAllRoles() throws DBAccessException;
+	
 	public void save(Role role) throws DBAccessException;
 
 	public void modify(Role role) throws DBAccessException;

@@ -4,11 +4,11 @@
 <html>
 	<head>
 		<jsp:include page="../../reference/meta.jsp"></jsp:include>
-		<title>Role - Manage</title>
+		<title>UserAuth - Manage</title>
 	</head>
 	<jsp:include page="../../reference/core.jsp"></jsp:include>
-	<script type="text/javascript" src="../../plugins/local/tree3.js"></script>
-	<script type="text/javascript" src="role.js"></script>
+	<script type="text/javascript" src="../org/orgTree.js"></script>
+	<script type="text/javascript" src="userAuth.js"></script>
 	<script type="text/javascript">
 		var defaultRole = <thorn:dd  typeId="DEFAULTROLE" />;
 		var defaultRoleRender = function(role) {

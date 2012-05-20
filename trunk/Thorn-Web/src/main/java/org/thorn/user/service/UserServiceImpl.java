@@ -117,4 +117,73 @@ public class UserServiceImpl implements IUserService {
 		userCache.removeUserFromCache(user.getUserId());
 	}
 
+	public Page<User> queryPageByRole(String userName, String orgCode,
+			String roleCode, String userAccount, long start, long limit,
+			String sort, String dir) throws DBAccessException {
+		Map<String, Object> filter = new HashMap<String, Object>();
+
+		filter.put("idOrAccount", userAccount);
+		filter.put("roleCode", roleCode);
+		filter.put("orgCode", orgCode);
+		filter.put("userName", userName);
+
+		filter.put(Configuration.PAGE_LIMIT, limit);
+		filter.put(Configuration.PAGE_START, start);
+
+		if (LocalStringUtils.isEmpty(sort)) {
+			filter.put(Configuration.SROT_NAME, "SORTNUM");
+			filter.put(Configuration.ORDER_NAME, Configuration.ORDER_ASC);
+		} else {
+			filter.put(Configuration.SROT_NAME, sort);
+			filter.put(Configuration.ORDER_NAME, dir);
+		}
+
+		return userDao.queryPageByRole(filter);
+	}
+
+	public void saveUserRole(String roleCode, String userIds)
+			throws DBAccessException {
+		Map<String, String> filter = new HashMap<String, String>();
+		filter.put("roleCode", roleCode);
+		
+		List<String> list = LocalStringUtils.splitStr2Array(userIds);
+		
+		for (String id : list) {
+			filter.put("userId", id);
+			userDao.saveUserRole(filter);
+		}
+	}
+
+	public void deleteUserRole(String roleCode, String userIds)
+			throws DBAccessException {
+		List<String> list = LocalStringUtils.splitStr2Array(userIds);
+		Map<String, Object> filter = new HashMap<String, Object>();
+		filter.put("roleCode", roleCode);
+		filter.put("list", list);
+		
+		userDao.deleteUserRole(filter);
+	}
+
+	public Page<User> queryPageNotInRole(String orgCode, String roleCode,
+			long start, long limit, String sort, String dir)
+			throws DBAccessException {
+		Map<String, Object> filter = new HashMap<String, Object>();
+
+		filter.put("roleCode", roleCode);
+		filter.put("orgCode", orgCode);
+
+		filter.put(Configuration.PAGE_LIMIT, limit);
+		filter.put(Configuration.PAGE_START, start);
+
+		if (LocalStringUtils.isEmpty(sort)) {
+			filter.put(Configuration.SROT_NAME, "SORTNUM");
+			filter.put(Configuration.ORDER_NAME, Configuration.ORDER_ASC);
+		} else {
+			filter.put(Configuration.SROT_NAME, sort);
+			filter.put(Configuration.ORDER_NAME, dir);
+		}
+
+		return userDao.queryPageNotInRole(filter);
+	}
+
 }

@@ -1,5 +1,8 @@
 package org.thorn.role.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +65,21 @@ public class RoleController extends BaseController {
 
 		return page;
 	}
+	
+	@RequestMapping("/role/getAllRole")
+	@ResponseBody
+	public List<Role> getAllRole() {
+		List<Role> list = new ArrayList<Role>();
+		
+		try {
+			list = service.queryAllRoles();
+		} catch (DBAccessException e) {
+			log.error("getRolePage[Role] - " + e.getMessage(), e);
+		}
+
+		return list;
+	}
+	
 	
 	@RequestMapping("/role/saveAuth")
 	@ResponseBody

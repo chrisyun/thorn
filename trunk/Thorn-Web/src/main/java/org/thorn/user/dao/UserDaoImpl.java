@@ -89,4 +89,61 @@ public class UserDaoImpl implements IUserDao {
 		}
 	}
 
+	public Page<User> queryPageByRole(Map<String, Object> filter)
+			throws DBAccessException {
+		Page<User> page = new Page<User>();
+
+		try {
+			long count = (Long) sqlSessionTemplate.selectOne(nameSpace
+					+ "selectPageByRoleCount", filter);
+			page.setTotal(count);
+
+			if (count > 0) {
+				page.setReslutSet((List<User>) sqlSessionTemplate.selectList(
+						nameSpace + "selectPageByRole", filter));
+			}
+
+			return page;
+		} catch (Exception e) {
+			throw new DBAccessException("UserDaoImpl", "queryPageByRole", e);
+		}
+	}
+
+	public int saveUserRole(Map<String, String> ur) throws DBAccessException {
+		try {
+			return sqlSessionTemplate.insert(nameSpace + "insertUserRole", ur);
+		} catch (Exception e) {
+			throw new DBAccessException("UserDaoImpl", "saveUserRole", e);
+		}
+	}
+
+	public int deleteUserRole(Map<String, Object> filter)
+			throws DBAccessException {
+		try {
+			return sqlSessionTemplate.delete(nameSpace + "deleteUserRole", filter);
+		} catch (Exception e) {
+			throw new DBAccessException("UserDaoImpl", "deleteUserRole", e);
+		}
+	}
+
+	public Page<User> queryPageNotInRole(Map<String, Object> filter)
+			throws DBAccessException {
+		Page<User> page = new Page<User>();
+
+		try {
+			long count = (Long) sqlSessionTemplate.selectOne(nameSpace
+					+ "selectPageNotInRoleCount", filter);
+			page.setTotal(count);
+
+			if (count > 0) {
+				page.setReslutSet((List<User>) sqlSessionTemplate.selectList(
+						nameSpace + "selectPageNotInRole", filter));
+			}
+
+			return page;
+		} catch (Exception e) {
+			throw new DBAccessException("UserDaoImpl", "queryPageNotInRole", e);
+		}
+	}
+
 }
