@@ -74,7 +74,7 @@ public class UserController extends BaseController {
 
 		return status;
 	}
-	
+
 	@RequestMapping("/user/disabled")
 	@ResponseBody
 	public Status disabledUser(String ids, String isDisabled) {
@@ -82,13 +82,13 @@ public class UserController extends BaseController {
 
 		try {
 			service.disabledUser(ids, isDisabled);
-			
-			if(LocalStringUtils.equals(isDisabled, Configuration.DB_YES)) {
+
+			if (LocalStringUtils.equals(isDisabled, Configuration.DB_YES)) {
 				status.setMessage("用户禁用成功！");
 			} else {
 				status.setMessage("用户启用成功！");
 			}
-			
+
 		} catch (DBAccessException e) {
 			status.setSuccess(false);
 			status.setMessage("数据处理失败：" + e.getMessage());
@@ -97,17 +97,18 @@ public class UserController extends BaseController {
 
 		return status;
 	}
-	
+
 	@RequestMapping("/user/changeMyPwd")
 	@ResponseBody
 	public Status changeMyPwd(String newPwd) {
 		Status status = new Status();
-		
+
 		try {
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			Authentication auth = SecurityContextHolder.getContext()
+					.getAuthentication();
 			UserSecurity us = (UserSecurity) auth.getPrincipal();
 			User user = us.getUser();
-			
+
 			service.changePwd(user.getUserId(), newPwd);
 			status.setMessage("密码修改成功！");
 		} catch (DBAccessException e) {
@@ -115,7 +116,7 @@ public class UserController extends BaseController {
 			status.setMessage("密码修改失败：" + e.getMessage());
 			log.error("changeMyPwd[User] - " + e.getMessage(), e);
 		}
-		
+
 		return status;
 	}
 
@@ -123,7 +124,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Status changePwd(String newPwd, String userId) {
 		Status status = new Status();
-		
+
 		try {
 			service.changePwd(userId, newPwd);
 			status.setMessage("密码修改成功！");
@@ -132,10 +133,10 @@ public class UserController extends BaseController {
 			status.setMessage("密码修改失败：" + e.getMessage());
 			log.error("changePwd[User] - " + e.getMessage(), e);
 		}
-		
+
 		return status;
 	}
-	
+
 	@RequestMapping("/user/getUserPage")
 	@ResponseBody
 	public Page<User> getUserPage(long start, long limit, String sort,
@@ -151,6 +152,73 @@ public class UserController extends BaseController {
 		}
 
 		return page;
+	}
+
+	@RequestMapping("/user/getUserPageByRole")
+	@ResponseBody
+	public Page<User> getUserPageByRole(long start, long limit, String sort,
+			String dir, String orgCode, String userName, String roleCode,
+			String userAccount) {
+		Page<User> page = new Page<User>();
+
+		try {
+			page = service.queryPageByRole(userName, orgCode, roleCode,
+					userAccount, start, limit, sort, dir);
+		} catch (DBAccessException e) {
+			log.error("getUserPageByRole[User] - " + e.getMessage(), e);
+		}
+
+		return page;
+	}
+
+	@RequestMapping("/user/getUserPageNotInRole")
+	@ResponseBody
+	public Page<User> getUserPageNotInRole(long start, long limit, String sort,
+			String dir, String orgCode, String roleCode) {
+		Page<User> page = new Page<User>();
+
+		try {
+			page = service.queryPageNotInRole(orgCode, roleCode, start, limit,
+					sort, dir);
+		} catch (DBAccessException e) {
+			log.error("getUserPageNotInRole[User] - " + e.getMessage(), e);
+		}
+
+		return page;
+	}
+
+	@RequestMapping("/user/saveUserRole")
+	@ResponseBody
+	public Status saveUserRole(String roleCode, String userIds) {
+		Status status = new Status();
+
+		try {
+			service.saveUserRole(roleCode, userIds);
+			status.setMessage("角色增加用户成功！");
+		} catch (DBAccessException e) {
+			status.setSuccess(false);
+			status.setMessage("角色增加用户失败：" + e.getMessage());
+			log.error("saveUserRole[String] - " + e.getMessage(), e);
+		}
+
+		return status;
+	}
+
+	@RequestMapping("/user/deleteUserRole")
+	@ResponseBody
+	public Status deleteUserRole(String roleCode, String userIds) {
+		Status status = new Status();
+
+		try {
+			service.deleteUserRole(roleCode, userIds);
+			status.setMessage("角色删除用户成功！");
+		} catch (DBAccessException e) {
+			status.setSuccess(false);
+			status.setMessage("角色删除用户失败：" + e.getMessage());
+			log.error("deleteUserRole[String] - " + e.getMessage(), e);
+		}
+
+		return status;
 	}
 
 }

@@ -6,12 +6,17 @@ var roleSaveAuthUrl = sys.basePath + "role/saveAuth.jmt";
 var getSourceUrl = sys.basePath + "resource/getSourceCodeByRole.jmt";
 var getSourceTreeUrl = sys.basePath + "resource/getSourceTree.jmt";
 
+var getUserUrl = sys.basePath + "user/getUserPageByRole.jmt";
+
 var pageSize = 20;
 
 var grid_Cls;
 var sysMenuTree;
 var navMenuTree;
 var roleCode;
+
+var member_grid_Cls;
+var member_Window;
 
 Ext.onReady(function() {
 	Ext.QuickTips.init();
@@ -43,7 +48,7 @@ Ext.onReady(function() {
 	};
 
 	var userRender = function(value) {
-		return '<div align="center"><a class="link" href="javascript: onAuth();">成员列表</a></div>';
+		return '<div align="center"><a class="link" href="javascript: onRoleMember();">成员列表</a></div>';
 	};
 
 	var recordArray = [
@@ -256,16 +261,16 @@ Ext.onReady(function() {
 							leaf : false
 						})
 			});
-	
+
 	function saveAuthHandler() {
 
 		if (Ext.isEmpty(roleCode)) {
 			Ext.Msg.alert("提示信息", "请先选择需要授权的角色!");
 			return;
 		}
-		
+
 		var resIds = "";
-		
+
 		var rootNode = sysMenuTree.getNodeById("SYS");
 		var checkNodes = rootNode.getUI().getCheckedNodes(rootNode);
 		for (var i = 0; i < checkNodes.length; i++) {
@@ -274,7 +279,7 @@ Ext.onReady(function() {
 				resIds += checkNodes[i].id + ",";
 			}
 		}
-		
+
 		var rootNode = navMenuTree.getNodeById("NAV");
 		var checkNodes = rootNode.getUI().getCheckedNodes(rootNode);
 		for (var i = 0; i < checkNodes.length; i++) {
@@ -288,7 +293,8 @@ Ext.onReady(function() {
 		ajax.request({
 					roleCode : roleCode,
 					ids : resIds
-				},true,null,function(){});
+				}, true, null, function() {
+				});
 
 	}
 
@@ -338,6 +344,92 @@ Ext.onReady(function() {
 				}
 			});
 
+	/** ***********************User Member********************** */
+
+	var member_query = new Ext.ux.form.SearchField({
+				id : "member_queryField",
+				width : 160,
+				emptyText : "请输入查询关键字"
+			});
+	member_query.onTrigger2Click = function() {
+		var queryType = Ext.getCmp("member_queryType").getText();
+
+		var memStore = member_grid_Cls.getStore();
+		
+		var params = {};
+		
+		switch (queryType) {
+			case "姓名" :
+				var name = Ext.getCmp("member_queryField").getValue();
+				memStore.baseParams.userName = name;
+				memStore.baseParams.userAccount = "";
+				break;
+			case "编号/账号" :
+				var account = Ext.getCmp("member_queryField").getValue();
+				memStore.baseParams.userAccount = account;
+				memStore.baseParams.userName = "";
+				break;
+		}
+		memStore.load({
+				params : {
+					roleCode : roleCode,
+					start : 0,
+					limit : member_grid_Cls.pageSize
+				}
+			});
+	}
+
+	var member_recordArray = [
+			getRecord("用户编号", "userId", "string", 100, true),
+			getRecord("用户名称", "userName", "string", 100, true),
+			getRecord("邮箱", "cumail", "string", 120),
+			getRecord("默认角色", "defaultRole", "string", 70, true,
+					defaultRoleRender),
+			getRecord("是否显示", "isShow", "string", 70, true, yesOrNoRender),
+			getRecord("是否禁用", "isDisabled", "string", 70, true, yesOrNoRender)];
+	member_grid_Cls = new Grid(getUserUrl, member_recordArray, pageSize);
+	member_grid_Cls.setBottomBar();
+
+	member_grid_Cls.setGridPanel({
+				title : null,
+				collapsible : false,
+				iconCls : null,
+				border : false,
+				split : false
+			});
+
+	member_Window = new Ext.Window({
+		title : "角色成员列表",
+		closeAction : 'hide',
+		modal : true,
+		shadow : true,
+		closable : true,
+		layout : 'fit',
+		tbar : [{
+			xtype : 'tbbutton',
+			id : 'member_queryType',
+			text : '编号/账号',
+			minWidth : 100,
+			menu : new Ext.menu.Menu({
+				width : 100,
+				items : [{
+							text : "编号/账号",
+							handler : function() {
+								Ext.getCmp("member_queryType").setText("编号/账号");
+							}
+						}, {
+							text : "姓名",
+							handler : function() {
+								Ext.getCmp("member_queryType").setText("姓名");
+							}
+						}]
+			})
+		}, member_query],
+		width : 680,
+		height : 420,
+		items : [member_grid_Cls.getGridPanel()]
+	});
+
 });
 
 function onAuth() {
@@ -376,4 +468,21 @@ function onAuth2Tree(menuArray, tree, rootId) {
 			}
 		}
 	}
+}
+
+function onRoleMember() {
+	var pageGrid = grid_Cls.getGridPanel();
+
+	var roleRecord = pageGrid.getSelectionModel().getSelected();
+	roleCode = roleRecord.get("roleCode");
+
+	member_Window.show();
+
+	member_grid_Cls.getStore().load({
+				params : {
+					roleCode : roleCode,
+					start : 0,
+					limit : member_grid_Cls.pageSize
+				}
+			});
 }

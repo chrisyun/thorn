@@ -76,5 +76,12 @@ public class RoleServiceImpl implements IRoleService {
 		}
 	}
 
+	public List<Role> queryAllRoles() throws DBAccessException {
+		Map<String, Object> filter = new HashMap<String, Object>();
+		filter.put("isDisabled", Configuration.DB_NO);
+		
+		return roleDao.query(filter);
+	}
+
 }
 
