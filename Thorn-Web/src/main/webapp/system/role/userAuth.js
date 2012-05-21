@@ -1,9 +1,14 @@
 var getUserUrl = sys.basePath + "user/getUserPageByRole.jmt";
 var getUserNotInRoleUrl = sys.basePath + "user/getUserPageNotInRole.jmt";
+var removerUserRoleUrl = sys.basePath + "user/deleteUserRole.jmt";
+var saveUserRoleUrl = sys.basePath + "user/saveUserRole.jmt";
+
+
 var getAllRoleUrl = sys.basePath + "role/getAllRole.jmt";
 
 var pageSize = 20;
 var currentActiveNode = tree_root;
+var roleCode;
 
 Ext.onReady(function() {
 	Ext.QuickTips.init();
@@ -51,48 +56,53 @@ Ext.onReady(function() {
 	/** *******************query Panel end*********************** */
 
 	/** *******************User Role Grid start********************* */
-	var member_recordArray = [
+	var recordArray = [
 			getRecord("用户编号", "userId", "string", 100, true),
-			getRecord("用户名称", "userName", "string", 100, true),
+			getRecord("姓名", "userName", "string", 100, true),
 			getRecord("邮箱", "cumail", "string", 120),
 			getRecord("默认角色", "defaultRole", "string", 70, true,
 					defaultRoleRender),
 			getRecord("是否显示", "isShow", "string", 70, true, yesOrNoRender),
 			getRecord("是否禁用", "isDisabled", "string", 70, true, yesOrNoRender)];
-	var member_grid_Cls = new Grid(getUserUrl, member_recordArray, pageSize);
-	member_grid_Cls.setBottomBar(null);
+	var member_grid_Cls = new Grid(getUserUrl, recordArray, pageSize);
+	member_grid_Cls.setBottomBar({
+					text : "角色删除用户",
+					iconCls : "silk-delete",
+					minWidth : Configuration.minBtnWidth,
+					handler : removeUsersHandler
+				});
 
 	member_grid_Cls.setGridPanel({
 				title : "角色成员列表",
 				region : "center"
 			});
-	
-	var notIn_recordArray = [
-			getRecord("用户编号", "userId", "string", 100, true),
-			getRecord("用户名称", "userName", "string", 100, true),
-			getRecord("邮箱", "cumail", "string", 120),
-			getRecord("默认角色", "defaultRole", "string", 70, true,
-					defaultRoleRender),
-			getRecord("是否显示", "isShow", "string", 70, true, yesOrNoRender),
-			getRecord("是否禁用", "isDisabled", "string", 70, true, yesOrNoRender)];		
-	var notIn_grid_Cls = new Grid(getUserNotInRoleUrl, notIn_recordArray, pageSize);
-	notIn_grid_Cls.setBottomBar(null);
+
+	var notIn_grid_Cls = new Grid(getUserNotInRoleUrl, recordArray, pageSize);
+	notIn_grid_Cls.setBottomBar({
+					text : "角色增加用户",
+					iconCls : "silk-add",
+					minWidth : Configuration.minBtnWidth,
+					handler : saveUsersHandler
+				});
 
 	notIn_grid_Cls.setGridPanel({
 				title : "非角色成员列表",
+				height : 200,
 				region : "south"
-			});		
-			
+			});
+
 	/** *******************User Role Grid end********************* */
 	var member_grid = member_grid_Cls.getGridPanel();
 	var member_store = member_grid_Cls.getStore();
-	
+
 	var notIn_grid = notIn_grid_Cls.getGridPanel();
 	var notIn_store = notIn_grid_Cls.getStore();
-	
+
 	orgTree.on("click", function(node) {
 				currentActiveNode = node;
-
+				
+				var thisForm = query_form_Cls.getForm();
+				
 				if (!thisForm.isValid()) {
 					Ext.Msg.alert("提示信息", "请先选择角色!");
 					return;
@@ -110,7 +120,7 @@ Ext.onReady(function() {
 								limit : pageSize
 							}
 						});
-						
+
 				notIn_store.baseParams = {
 					"roleCode" : roleCode,
 					"orgCode" : node.attributes.pid
@@ -120,14 +130,12 @@ Ext.onReady(function() {
 								start : 0,
 								limit : pageSize
 							}
-						});		
-						
+						});
+				notIn_store.removeAll();
 			});
 
 	orgTree.getRootNode().expand(false, false);
 
-	
-	
 	function onSubmitQueryHandler() {
 		var thisForm = query_form_Cls.getForm();
 
@@ -142,7 +150,7 @@ Ext.onReady(function() {
 
 		var name = Ext.getCmp("query_name").getValue();
 		var code = Ext.getCmp("query_code").getValue();
-		var roleCode = Ext.getCmp("roleCode_show").getValue();
+		roleCode = Ext.getCmp("roleCode_show").getValue();
 
 		member_store.baseParams.userName = name;
 		member_store.baseParams.userAccount = code;
@@ -156,18 +164,82 @@ Ext.onReady(function() {
 				});
 	}
 	
-	var viewport = new Ext.Viewport({
-			border : false,
-			layout : "border",
-			items : [orgTree, {
-				border : false,
-				region : "center",
-				layout : "border",
-				split : true,
-				items : [query_form_Cls.getFormPanel(),
-						member_grid_Cls.getGridPanel()]
-			}]
-		});
+	function saveUsersHandler() {
+		if (notIn_grid.getSelectionModel().getCount() == 0) {
+			Ext.Msg.alert("提示信息", "请至少选择一条记录!");
+			return;
+		}
+		
+		if(Ext.isEmpty(roleCode)) {
+			Ext.Msg.alert("提示信息", "未选中角色!");
+			return;
+		}
+		
+		var selectedRecordArray = notIn_grid.getSelectionModel().getSelections();
+
+		var ids = "";
+		for (var i = 0; i < selectedRecordArray.length; i++) {
+			ids += selectedRecordArray[i].get("userId") + ",";
+		}
+
+		var params = {
+			userIds : ids,
+			roleCode : roleCode
+		};
+
+		var ajaxClass = new CommonAjax(saveUserRoleUrl);
+		ajaxClass.request(params, true, null, function(obj) {
+					member_grid.getStore().reload();
+					notIn_grid.getStore().reload();
+				});
+	}
 	
+	function removeUsersHandler() {
+		if (member_grid.getSelectionModel().getCount() == 0) {
+			Ext.Msg.alert("提示信息", "请至少选择一条记录!");
+			return;
+		}
+		
+		if(Ext.isEmpty(roleCode)) {
+			Ext.Msg.alert("提示信息", "未选中角色!");
+			return;
+		}
+		
+		var selectedRecordArray = member_grid.getSelectionModel().getSelections();
+
+		Ext.Msg.confirm("确认提示", "确定删除选定的记录?", function(btn) {
+					if (btn == "yes") {
+						var ids = "";
+						for (var i = 0; i < selectedRecordArray.length; i++) {
+							ids += selectedRecordArray[i].get("userId") + ",";
+						}
+
+						var params = {
+							userIds : ids,
+							roleCode : roleCode
+						};
+
+						var ajaxClass = new CommonAjax(removerUserRoleUrl);
+						ajaxClass.request(params, true, null, function(obj) {
+									member_grid.getStore().reload();
+									notIn_grid.getStore().reload();
+								});
+					}
+				});
+	}
+	
+	var viewport = new Ext.Viewport({
+				border : false,
+				layout : "border",
+				items : [orgTree, {
+					border : false,
+					region : "center",
+					layout : "border",
+					split : true,
+					items : [query_form_Cls.getFormPanel(),
+							member_grid_Cls.getGridPanel(),
+							notIn_grid_Cls.getGridPanel()]
+				}]
+			});
 
 });

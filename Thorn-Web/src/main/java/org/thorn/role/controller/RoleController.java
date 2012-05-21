@@ -17,6 +17,7 @@ import org.thorn.dao.exception.DBAccessException;
 import org.thorn.role.entity.Role;
 import org.thorn.role.service.IRoleService;
 import org.thorn.web.BaseController;
+import org.thorn.web.JsonResponse;
 import org.thorn.web.Status;
 
 /** 
@@ -78,6 +79,21 @@ public class RoleController extends BaseController {
 		}
 
 		return list;
+	}
+	
+	@RequestMapping("/role/getUserRole")
+	@ResponseBody
+	public JsonResponse<List> getUserRoles(String userId) {
+		JsonResponse<List> json = new JsonResponse<List>();
+		
+		List<Role> list = new ArrayList<Role>();
+		Role role = new Role();
+		role.setRoleCode("SYSADMIN");
+		role.setRoleName("系统管理员");
+		list.add(role);
+		
+		json.setObj(list);
+		return json;
 	}
 	
 	

@@ -2,6 +2,10 @@ var userPageUrl = sys.basePath + "user/getUserPage.jmt";
 var userSaveOrModifyUrl = sys.basePath + "user/saveOrModify.jmt";
 var userDeleteUrl = sys.basePath + "user/delete.jmt";
 var userDisabledUrl = sys.basePath + "user/disabled.jmt";
+
+var getAllRoleUrl = sys.basePath + "role/getAllRole.jmt";
+var getUserRoleUrl = sys.basePath + "role/getUserRole.jmt";
+
 var pageSize = 20;
 var currentActiveNode = tree_root;
 
@@ -73,6 +77,11 @@ Ext.onReady(function() {
 				iconCls : "tree-pwd",
 				minWidth : Configuration.minBtnWidth,
 				handler : pwdHandler
+			}, "-", {
+				text : "用户授权",
+				iconCls : "tree-pwd",
+				minWidth : Configuration.minBtnWidth,
+				handler : roleHandler
 			}];
 	grid_Cls.setTopBar(top_Bar);
 
@@ -179,8 +188,15 @@ Ext.onReady(function() {
 				height : 300
 			}, user_form_Cls.getFormPanel(), saveOrModify);
 
-	/** ****************org window start************ */
+	/** *****************org window start************ */
 
+	/** *****************role window start************ */
+	
+	function roleHandler() {
+	
+	}		
+			
+	/** *****************role window end************ */
 	function saveHandler() {
 		user_win_Cls.show("新增用户");
 
@@ -348,7 +364,7 @@ Ext.onReady(function() {
 				});
 
 	}
-	
+
 	var Pwd_Obj = new UserPwd();
 	function pwdHandler() {
 		if (grid.getSelectionModel().getCount() != 1) {
@@ -359,7 +375,7 @@ Ext.onReady(function() {
 		var user_id = selectedRecord.get("userId");
 		Pwd_Obj.show(user_id);
 	}
-	
+
 	function onSubmitQueryHandler() {
 		var thisForm = query_form_Cls.getForm();
 		var store = grid.getStore();
