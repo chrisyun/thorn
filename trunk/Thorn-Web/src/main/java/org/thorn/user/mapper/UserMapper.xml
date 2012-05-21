@@ -225,7 +225,7 @@
 		<include refid="MySQLCommonMapper.pagingEnd"/>
 	</select>
 	
-	<select id="selectPageNotInRoleCount" parameterType="hashmap" resultMap="BaseResultMap">
+	<select id="selectPageNotInRoleCount" parameterType="hashmap" resultType="long">
 		select count(*) from T_SYS_USER U
 		where not exists 
 		(select * from T_SYS_USER_ROLE R 
