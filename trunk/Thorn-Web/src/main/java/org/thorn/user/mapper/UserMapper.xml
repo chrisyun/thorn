@@ -251,4 +251,9 @@
 		and ROLECODE = #{roleCode,jdbcType=VARCHAR}
 	</delete>
 	
+	<delete id="deleteUserAllRole" parameterType="string">
+		delete from T_SYS_USER_ROLE where USERID = #{userId,jdbcType=VARCHAR}
+	</delete>
+	
+	
 </mapper>

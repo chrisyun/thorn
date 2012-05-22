@@ -179,3 +179,14 @@ function getQueryBtn(queryHandler) {
 
 	return queryBtn
 }
+
+function getCheckbox(id, text, isChecked) {
+	var checkbox = new Object();
+	
+	checkbox.xtype = "checkbox";
+	checkbox.boxLabel = text;
+	checkbox.id = id;
+	checkbox.checked  = isChecked || false;
+	
+	return checkbox;
+}

@@ -23,6 +23,8 @@ public interface IUserDao {
 	
 	public int deleteUserRole(Map<String, Object> filter) throws DBAccessException;
 	
+	public int deleteUserAllRole(String userId) throws DBAccessException;
+	
 	public int modify(User user) throws DBAccessException;
 
 	public int delete(List<String> ids) throws DBAccessException;
