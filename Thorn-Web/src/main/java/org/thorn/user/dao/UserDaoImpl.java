@@ -146,4 +146,12 @@ public class UserDaoImpl implements IUserDao {
 		}
 	}
 
+	public int deleteUserAllRole(String userId) throws DBAccessException {
+		try {
+			return sqlSessionTemplate.delete(nameSpace + "deleteUserAllRole", userId);
+		} catch (Exception e) {
+			throw new DBAccessException("UserDaoImpl", "deleteUserAllRole", e);
+		}
+	}
+
 }

@@ -391,9 +391,7 @@ Ext.onReady(function() {
 	member_grid_Cls.setBottomBar();
 
 	member_grid_Cls.setGridPanel({
-				title : null,
 				collapsible : false,
-				iconCls : null,
 				border : false,
 				split : false
 			});

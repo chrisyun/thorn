@@ -18,23 +18,24 @@ import org.thorn.role.entity.Role;
 import org.thorn.role.service.IRoleService;
 import org.thorn.web.BaseController;
 import org.thorn.web.JsonResponse;
+import org.thorn.web.Relation;
 import org.thorn.web.Status;
 
-/** 
- * @ClassName: RoleController 
- * @Description: 
+/**
+ * @ClassName: RoleController
+ * @Description:
  * @author chenyun
- * @date 2012-5-17 下午09:22:41 
+ * @date 2012-5-17 下午09:22:41
  */
 @Controller
 public class RoleController extends BaseController {
 
 	static Logger log = LoggerFactory.getLogger(RoleController.class);
-	
+
 	@Autowired
 	@Qualifier("roleService")
 	private IRoleService service;
-	
+
 	@RequestMapping("/role/delete")
 	@ResponseBody
 	public Status deleteResource(String ids) {
@@ -51,7 +52,7 @@ public class RoleController extends BaseController {
 
 		return status;
 	}
-	
+
 	@RequestMapping("/role/getRolePage")
 	@ResponseBody
 	public Page<Role> getRolePage(long start, long limit, String sort,
@@ -59,19 +60,20 @@ public class RoleController extends BaseController {
 		Page<Role> page = new Page<Role>();
 
 		try {
-			page = service.queryPage(roleCode, roleName, start, limit, sort, dir);
+			page = service.queryPage(roleCode, roleName, start, limit, sort,
+					dir);
 		} catch (DBAccessException e) {
 			log.error("getRolePage[Role] - " + e.getMessage(), e);
 		}
 
 		return page;
 	}
-	
+
 	@RequestMapping("/role/getAllRole")
 	@ResponseBody
 	public List<Role> getAllRole() {
 		List<Role> list = new ArrayList<Role>();
-		
+
 		try {
 			list = service.queryAllRoles();
 		} catch (DBAccessException e) {
@@ -80,23 +82,49 @@ public class RoleController extends BaseController {
 
 		return list;
 	}
-	
+
 	@RequestMapping("/role/getUserRole")
 	@ResponseBody
-	public JsonResponse<List> getUserRoles(String userId) {
-		JsonResponse<List> json = new JsonResponse<List>();
-		
-		List<Role> list = new ArrayList<Role>();
-		Role role = new Role();
-		role.setRoleCode("SYSADMIN");
-		role.setRoleName("系统管理员");
-		list.add(role);
-		
-		json.setObj(list);
+	public JsonResponse<List<Relation>> getUserRoles(String userId) {
+		JsonResponse<List<Relation>> json = new JsonResponse<List<Relation>>();
+
+		List<Relation> list = new ArrayList<Relation>();
+
+		try {
+			// 只有rolecode
+			List<Role> userRole = service.queryRolesByUser(userId);
+
+			List<Role> role = service.queryAllRoles();
+			for (Role r : role) {
+				Relation relation = new Relation();
+				relation.setSubject(userId);
+				relation.setObject(r);
+				relation.setRelevance(false);
+				list.add(relation);
+			}
+
+			for (Role ur : userRole) {
+
+				for (Relation r : list) {
+
+					if (LocalStringUtils.equals(ur.getRoleCode(),
+							((Role) r.getObject()).getRoleCode())) {
+						r.setRelevance(true);
+						break;
+					}
+				}
+			}
+			
+			json.setObj(list);
+		} catch (DBAccessException e) {
+			json.setSuccess(false);
+			json.setMessage("数据加载失败：" + e.getMessage());
+			log.error("getUserRoles[Relation] - " + e.getMessage(), e);
+		}
+
 		return json;
 	}
-	
-	
+
 	@RequestMapping("/role/saveAuth")
 	@ResponseBody
 	public Status saveAuth(String roleCode, String ids) {
@@ -113,7 +141,7 @@ public class RoleController extends BaseController {
 
 		return status;
 	}
-	
+
 	@RequestMapping("/role/saveOrModify")
 	@ResponseBody
 	public Status saveOrModifyOrg(Role role, String opType) {
@@ -138,4 +166,3 @@ public class RoleController extends BaseController {
 		return status;
 	}
 }
-

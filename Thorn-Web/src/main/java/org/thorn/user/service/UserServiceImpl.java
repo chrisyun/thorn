@@ -186,4 +186,19 @@ public class UserServiceImpl implements IUserService {
 		return userDao.queryPageNotInRole(filter);
 	}
 
+	public void saveRoleByUser(String userId, String roleCodes)
+			throws DBAccessException {
+		
+		userDao.deleteUserAllRole(userId);
+		Map<String, String> filter = new HashMap<String, String>();
+		filter.put("userId", userId);
+		
+		List<String> list = LocalStringUtils.splitStr2Array(roleCodes);
+		
+		for (String id : list) {
+			filter.put("roleCode", id);
+			userDao.saveUserRole(filter);
+		}
+	}
+
 }

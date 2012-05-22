@@ -203,6 +203,24 @@ public class UserController extends BaseController {
 
 		return status;
 	}
+	
+	@RequestMapping("/user/saveRoleByUser")
+	@ResponseBody
+	public Status saveRoleByUser(String roleCodes, String userId) {
+		Status status = new Status();
+
+		try {
+			service.saveRoleByUser(userId, roleCodes);
+			status.setMessage("用户绑定角色成功！");
+		} catch (DBAccessException e) {
+			status.setSuccess(false);
+			status.setMessage("用户绑定角色失败：" + e.getMessage());
+			log.error("saveRoleByUser[String] - " + e.getMessage(), e);
+		}
+
+		return status;
+	}
+	
 
 	@RequestMapping("/user/deleteUserRole")
 	@ResponseBody

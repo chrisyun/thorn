@@ -1,7 +1,5 @@
 package org.thorn.user.service;
 
-import java.util.Map;
-
 import org.thorn.dao.core.Page;
 import org.thorn.dao.exception.DBAccessException;
 import org.thorn.user.entity.User;
@@ -41,6 +39,9 @@ public interface IUserService {
 			throws DBAccessException;
 
 	public void saveUserRole(String roleCode, String userIds)
+			throws DBAccessException;
+
+	public void saveRoleByUser(String userId, String roleCodes)
 			throws DBAccessException;
 
 	public void deleteUserRole(String roleCode, String userIds)

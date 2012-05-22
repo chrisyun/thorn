@@ -2,8 +2,8 @@ var userPageUrl = sys.basePath + "user/getUserPage.jmt";
 var userSaveOrModifyUrl = sys.basePath + "user/saveOrModify.jmt";
 var userDeleteUrl = sys.basePath + "user/delete.jmt";
 var userDisabledUrl = sys.basePath + "user/disabled.jmt";
+var usersaveRoleUrl = sys.basePath + "user/saveRoleByUser.jmt";
 
-var getAllRoleUrl = sys.basePath + "role/getAllRole.jmt";
 var getUserRoleUrl = sys.basePath + "role/getUserRole.jmt";
 
 var pageSize = 20;
@@ -193,35 +193,71 @@ Ext.onReady(function() {
 	/** *****************role window start************ */
 
 	function roleHandler() {
-		role_win_Cls.show("用户授权");
+		if (grid.getSelectionModel().getCount() != 1) {
+			Ext.Msg.alert("提示信息", "请选择一条记录!");
+			return;
+		}
+		var selectedRecord = grid.getSelectionModel().getSelected();
+		var userId = selectedRecord.get("userId");
+
+		var thisForm = role_form_Cls.getFormPanel();
+		thisForm.removeAll(true);
+
+		var ajaxClass = new CommonAjax(getUserRoleUrl);
+
+		ajaxClass.requestData({
+					userId : userId
+				}, null, function(obj, relationArray) {
+
+					for (var i = 0; i < relationArray.length; i++) {
+
+						var role = relationArray[i].object;
+
+						var cb = getCheckbox(role.roleCode, role.roleName,
+								relationArray[i].relevance)
+						role_form_Cls.addItem(getPanelItem(cb, 0.3, true));
+					}
+					thisForm.doLayout();
+					role_win_Cls.show("用户授权");
+				})
 	}
 
 	var role_form_Cls = new FormPanel({
 				id : "roleForm",
 				collapsible : false,
-				labelWidth : 100,
+				labelWidth : 30,
 				border : false
 			});
-	var role_cbGroup = {
-		xtype: 'checkboxgroup',
-		width : 300,
-		columns : 3,
-        fieldLabel: 'Auto Layout',
-        items: [
-            {boxLabel: 'Item 1', name: 'cb-auto-1'},
-            {boxLabel: 'Item 2', name: 'cb-auto-2', checked: true},
-            {boxLabel: 'Item 3', name: 'cb-auto-3'},
-            {boxLabel: 'Item 4', name: 'cb-auto-4'},
-            {boxLabel: 'Item 5', name: 'cb-auto-5'}
-        ]
-	}		
-	role_form_Cls.addItem(getPanelItem(role_cbGroup), 1.0, true);		
-	
+
 	var role_win_Cls = new OpenWindow({
-				width : 600,
+				width : 450,
 				height : 300
-			}, role_form_Cls.getFormPanel(), saveOrModify);
-	
+			}, role_form_Cls.getFormPanel(), saveUserRoleHandler);
+
+	function saveUserRoleHandler() {
+		var thisForm = role_form_Cls.getFormPanel();
+
+		var roleArray = thisForm.findByType("checkbox");
+		var roleIds = "";
+		for (var i = 0; i < roleArray.length; i++) {
+			if (roleArray[i].getValue()) {
+				roleIds += roleArray[i].getId() + ",";
+			}
+		}
+
+		var selectedRecord = grid.getSelectionModel().getSelected();
+		var userId = selectedRecord.get("userId");
+
+		var ajaxClass = new CommonAjax(usersaveRoleUrl);
+
+		ajaxClass.request({
+					userId : userId,
+					roleCodes : roleIds
+				}, true, role_win_Cls, function(obj) {
+					role_win_Cls.hide();
+				});
+
+	}
 
 	/** *****************role window end************ */
 	function saveHandler() {

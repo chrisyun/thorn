@@ -90,7 +90,6 @@ Grid.prototype.setGridPanel = function(gridAttr) {
 
 	this.grid = new Ext.grid.GridPanel({
 				height : Configuration.bodyHight,
-				title : "数据列表",
 				collapsible : true,
 				iconCls : "silk-grid",
 				margins : "0 0 0 0",
