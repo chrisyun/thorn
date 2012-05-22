@@ -191,11 +191,38 @@ Ext.onReady(function() {
 	/** *****************org window start************ */
 
 	/** *****************role window start************ */
-	
+
 	function roleHandler() {
-	
+		role_win_Cls.show("用户授权");
+	}
+
+	var role_form_Cls = new FormPanel({
+				id : "roleForm",
+				collapsible : false,
+				labelWidth : 100,
+				border : false
+			});
+	var role_cbGroup = {
+		xtype: 'checkboxgroup',
+		width : 300,
+		columns : 3,
+        fieldLabel: 'Auto Layout',
+        items: [
+            {boxLabel: 'Item 1', name: 'cb-auto-1'},
+            {boxLabel: 'Item 2', name: 'cb-auto-2', checked: true},
+            {boxLabel: 'Item 3', name: 'cb-auto-3'},
+            {boxLabel: 'Item 4', name: 'cb-auto-4'},
+            {boxLabel: 'Item 5', name: 'cb-auto-5'}
+        ]
 	}		
-			
+	role_form_Cls.addItem(getPanelItem(role_cbGroup), 1.0, true);		
+	
+	var role_win_Cls = new OpenWindow({
+				width : 600,
+				height : 300
+			}, role_form_Cls.getFormPanel(), saveOrModify);
+	
+
 	/** *****************role window end************ */
 	function saveHandler() {
 		user_win_Cls.show("新增用户");
