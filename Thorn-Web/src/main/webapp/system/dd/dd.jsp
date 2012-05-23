@@ -7,4 +7,4 @@
 	document.title = "Data - Dict";
 	
 </script>
-<jsp:include page="../reference/footer.jsp"></jsp:include>
+<jsp:include page="../../reference/footer.jsp"></jsp:include>

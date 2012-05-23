@@ -1,10 +1,10 @@
-var dtPageUrl = sys.path + "dd/getDtPage.jmt";
-var dtSubmitUrl = sys.path + "dd/saveOrModifyDt.jmt";
-var dtDeleteUrl = sys.path + "dd/deleteDt.jmt";
+var dtPageUrl = sys.path + "/dd/getDtPage.jmt";
+var dtSubmitUrl = sys.path + "/dd/saveOrModifyDt.jmt";
+var dtDeleteUrl = sys.path + "/dd/deleteDt.jmt";
 
-var ddListUrl = sys.path + "dd/getDdList.jmt";
-var ddSubmitUrl = sys.path + "dd/saveOrModifyDd.jmt";
-var ddDeleteUrl = sys.path + "dd/deleteDd.jmt";
+var ddListUrl = sys.path + "/dd/getDdList.jmt";
+var ddSubmitUrl = sys.path + "/dd/saveOrModifyDd.jmt";
+var ddDeleteUrl = sys.path + "/dd/deleteDd.jmt";
 
 var pageSize = 10;
 var typeId;
@@ -42,11 +42,9 @@ Ext.onReady(function() {
 		cellclick : function(thisGrid, rowIndex, columnIndex, ev) {
 			var record = thisGrid.getStore().getAt(rowIndex);
 			typeId = record.get("ename");
-			grid_dd.getStore().load( {
-				params : {
-					"typeId" : typeId
-				}
-			});
+			
+			grid_dd.getStore().baseParams.typeId = typeId;
+			grid_dd.getStore().load();
 		}
 	};
 	grid_dt.setListeners(dt_listeners);
@@ -83,10 +81,12 @@ Ext.onReady(function() {
 		region : "south"
 	};
 	grid_dd.setGridPanel(grid_dd_attr);
+	grid_dd.getStore().baseParams.typeId = "NULL";
+	
 	/** ****************ddGrid panel end************ */
 
-	var dt_grid = grid_dt.getGridPanel();
-	var dd_grid = grid_dd.getGridPanel()
+	var dt_grid = grid_dt.getGrid();
+	var dd_grid = grid_dd.getGrid()
 
 	/**
 	 * 数据字典类型删除方法
@@ -151,6 +151,7 @@ Ext.onReady(function() {
 	var dt_form = new FormUtil( {
 		id : "dtForm",
 		labelWidth : 110,
+		collapsible : false,
 		border : false
 	});
 
@@ -166,9 +167,11 @@ Ext.onReady(function() {
 
 	function dtSaveHandler() {
 		dt_win.show("新增数据字典类型");
-
+		
+		setTextEditable(dt_form.findById("ename"));
+		
 		dt_form.getForm().reset();
-		dt_form.getPanel().findById("dtFormType").setValue(
+		dt_form.findById("dtFormType").setValue(
 				Configuration.opType.SAVE);
 	}
 
@@ -186,7 +189,7 @@ Ext.onReady(function() {
 		// 将主键置为不可编辑
 		setTextReadOnly(dtForm.findById("ename"));
 
-		var selectedRecord = grid_dt.getSelectionModel().getSelected();
+		var selectedRecord = dt_grid.getSelectionModel().getSelected();
 		var values = {
 			ename : selectedRecord.get("ename"),
 			cname : selectedRecord.get("cname"),
@@ -224,6 +227,7 @@ Ext.onReady(function() {
 
 	var dd_form = new FormUtil( {
 		id : "ddForm",
+		collapsible : false,
 		border : false
 	});
 
@@ -245,15 +249,17 @@ Ext.onReady(function() {
 		}
 
 		dd_win.show("新增数据字典项");
-
+		
+		setTextEditable(dd_form.findById("dname"));
+		
 		dd_form.getForm().reset();
-		dd_form.getFormPanel().findById("ddFormType").setValue(
-				Configuration.opType.save);
-		dd_form.getFormPanel().findById("typeId").setValue(typeId);
+		dd_form.findById("ddFormType").setValue(
+				Configuration.opType.SAVE);
+		dd_form.findById("typeId").setValue(typeId);
 	}
 
 	function ddModifyHandler() {
-		if (grid_dd.getSelectionModel().getCount() != 1) {
+		if (dd_grid.getSelectionModel().getCount() != 1) {
 			Ext.Msg.alert("提示信息", "请选择一条记录!");
 			return;
 		}
@@ -266,7 +272,7 @@ Ext.onReady(function() {
 		// 将主键置为不可编辑
 		setTextReadOnly(ddForm.findById("dname"));
 
-		var selectedRecord = grid_dd.getSelectionModel().getSelected();
+		var selectedRecord = dd_grid.getSelectionModel().getSelected();
 		var values = {
 			dname : selectedRecord.get("dname"),
 			dvalue : selectedRecord.get("dvalue"),
@@ -303,7 +309,7 @@ Ext.onReady(function() {
 			var thisForm = obj.form;
 			var opType = thisForm.findById("ddFormType").getValue();
 
-			if (opType == Configuration.opType.save) {
+			if (opType == Configuration.opType.SAVE) {
 				thisForm.findById("dname").setValue("");
 				thisForm.findById("dvalue").setValue("");
 				thisForm.findById("sortNum").setValue("");
@@ -326,11 +332,12 @@ Ext.onReady(function() {
 
 		var cname = Ext.getCmp("query_cname").getValue();
 		var ename = Ext.getCmp("query_ename").getValue();
-
+		
+		store.baseParams.ename = ename;
+		store.baseParams.cname = cname;
+		
 		store.load( {
 			params : {
-				ename : ename,
-				cname : cname,
 				start : 0,
 				limit : grid_dt.pageSize
 			}
@@ -340,7 +347,7 @@ Ext.onReady(function() {
 	var viewport = new Ext.Viewport( {
 		border : false,
 		layout : "border",
-		items : [ query_form_Cls.getPanel(), grid_dt, grid_dd ]
+		items : [ query_form.getPanel(), dt_grid, dd_grid ]
 	});
 
 	onSubmitQueryHandler();
