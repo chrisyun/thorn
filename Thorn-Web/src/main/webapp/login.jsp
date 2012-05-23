@@ -17,10 +17,10 @@ body {
 
 <script type="text/javascript">
 
-document.title = "SYS - Login";
+	document.title = "SYS - Login";
 
-var iSerror = '${param.error}';
-var error = '${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}';
+	var iSerror = '${param.error}';
+	var error = '${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}';
 	var userName = '${sessionScope['SPRING_SECURITY_LAST_USERNAME']}';
 	var loginUrl = sys.path + "/j_spring_security_check";
 	var indexUrl = sys.path + "/system/main.jsp";
