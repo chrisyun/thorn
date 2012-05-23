@@ -60,7 +60,7 @@ AjaxUtil.prototype.request = function(params, showMsg, scope, callback) {
 			}
 
 			if (result.success) {
-				Ext.topShow.msg("成功提示", result.message);
+				TopShow.msg("成功提示", result.message);
 
 				if (callback != null) {
 					callback(scope);

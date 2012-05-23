@@ -19,7 +19,7 @@ function WindowUtil(winAttr, form, saveHandler) {
 			iconCls : 'slik-close',
 			scope : this,
 			handler : function() {
-				this.openWin.hide();
+				this.win.hide();
 			}
 		} ]
 	});

@@ -36,6 +36,10 @@ function setTextReadOnly(component) {
 	component.el.dom.readOnly = true;
 }
 
+function setTextEditable(component) {
+	component.el.dom.readOnly = false;
+}
+
 function getText(id, text, width) {
 	var txt = new Object();
 

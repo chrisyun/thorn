@@ -31,7 +31,7 @@ FormUtil.prototype.addButton = function(btn) {
 FormUtil.prototype.addComp = function(comp, columnWidth, empty) {
 
 	if (!empty) {
-		comp.fieldLabel = Validate.redStar + attrObj.fieldLabel;
+		comp.fieldLabel = Validate.redStar + comp.fieldLabel;
 		comp.allowBlank = empty;
 		comp.blankText = Validate.empty;
 	}
