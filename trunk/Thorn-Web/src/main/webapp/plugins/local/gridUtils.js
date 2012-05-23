@@ -1,7 +1,7 @@
 function GridUtil(dataUrl, recordArray, pageSize) {
 
 	this.dataUrl = dataUrl
-	this.pageSize = pageSize || Configuration.pageSize;
+	this.pageSize = pageSize;
 
 	var storeArray = new Array();
 
