@@ -4,12 +4,12 @@
  * @param {Object} timeout
  * @memberOf {TypeName} 
  */
-function Ajax(url, timeout) {
+function AjaxUtil(url, timeout) {
 	this.ajaxUrl = url;
 	this.timeout = timeout || 120000;
 }
 
-Ajax.prototype.getData = function(params, scope, callback) {
+AjaxUtil.prototype.getData = function(params, scope, callback) {
 	Message.showProcessMsgBox();
 
 	Ext.Ajax.request( {
@@ -43,7 +43,7 @@ Ajax.prototype.getData = function(params, scope, callback) {
 	});
 }
 
-Ajax.prototype.request = function(params, showMsg, scope, callback) {
+AjaxUtil.prototype.request = function(params, showMsg, scope, callback) {
 	if (showMsg) {
 		Message.showProcessMsgBox();
 	}
@@ -83,7 +83,7 @@ Ajax.prototype.request = function(params, showMsg, scope, callback) {
 	});
 }
 
-Ajax.prototype.submit = function(thisForm, params, showMsg, scope, callback) {
+AjaxUtil.prototype.submit = function(thisForm, params, showMsg, scope, callback) {
 	if (showMsg) {
 		Message.showProcessMsgBox();
 	}
