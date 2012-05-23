@@ -29,6 +29,11 @@ public class SystemController {
 	public String ext() {
 		return "/reference/ext";
 	}
+	
+	@RequestMapping("/springTag/header")
+	public String header() {
+		return "/reference/header";
+	}
 
 	@RequestMapping("/theme/change")
 	@ResponseBody
