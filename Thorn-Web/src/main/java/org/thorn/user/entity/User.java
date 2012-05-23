@@ -37,7 +37,7 @@ public class User implements Serializable {
 	
 	private String isDisabled;
 	
-	private Integer sortNum;
+	private int sortNum;
 
 	private String orgName;
 	
@@ -139,11 +139,11 @@ public class User implements Serializable {
 		this.isDisabled = isDisabled;
 	}
 
-	public Integer getSortNum() {
+	public int getSortNum() {
 		return sortNum;
 	}
 
-	public void setSortNum(Integer sortNum) {
+	public void setSortNum(int sortNum) {
 		this.sortNum = sortNum;
 	}
 

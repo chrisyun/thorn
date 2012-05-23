@@ -25,7 +25,7 @@ public class Resource implements Serializable {
 
 	private String parentSource;
 
-	private Integer sortNum;
+	private int sortNum;
 
 	private String iconsCls;
 	
@@ -53,11 +53,11 @@ public class Resource implements Serializable {
 		this.parentSource = parentSource;
 	}
 
-	public Integer getSortNum() {
+	public int getSortNum() {
 		return sortNum;
 	}
 
-	public void setSortNum(Integer sortNum) {
+	public void setSortNum(int sortNum) {
 		this.sortNum = sortNum;
 	}
 

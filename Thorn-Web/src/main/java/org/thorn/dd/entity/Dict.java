@@ -17,7 +17,7 @@ public class Dict implements Serializable {
 
 	private String dvalue;
 
-	private Integer sortNum;
+	private int sortNum;
 
 	private String typeId;
 
@@ -37,11 +37,11 @@ public class Dict implements Serializable {
 		this.dvalue = dvalue;
 	}
 
-	public Integer getSortNum() {
+	public int getSortNum() {
 		return sortNum;
 	}
 
-	public void setSortNum(Integer sortNum) {
+	public void setSortNum(int sortNum) {
 		this.sortNum = sortNum;
 	}
 
