@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <jsp:include page="/springTag/header.jmt"></jsp:include>
 <%
 	String path = request.getContextPath();
@@ -7,9 +6,9 @@
 	<div id="header">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-		   		<td width="664"><img src="<%=path %>/resources/images/local/title-a1.jpg" width="664" height="67" /></td>
-		    	<td background="<%=path %>/resources/images/local/title-a2.jpg">&nbsp;</td>
-		    	<td width="372"><img src="<%=path %>/resources/images/local/title-a3.jpg" width="372" height="67" /></td>
+		   		<td width="664"><img src="<%=path %>/resources/images/local/title-1.jpg" width="664" height="67" /></td>
+		    	<td background="<%=path %>/resources/images/local/title-2.jpg">&nbsp;</td>
+		    	<td width="372"><img src="<%=path %>/resources/images/local/title-3.jpg" width="372" height="67" /></td>
 		  	</tr>
 		</table>
 	</div>
@@ -18,7 +17,7 @@
 <script type="text/javascript">
 	var tabNum = 0;
 	
-	var leftTreeUrl = sys.basePath + "/resource/getLeftTree.jmt";
+	var leftTreeUrl = sys.path + "/resource/getLeftTree.jmt";
 	var logoutUrl = sys.path + "/j_spring_security_logout";
 	
 	Ext.onReady(function() {
