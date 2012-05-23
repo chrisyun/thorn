@@ -81,7 +81,6 @@ Ext.onReady(function() {
 		region : "south"
 	};
 	grid_dd.setGridPanel(grid_dd_attr);
-	grid_dd.getStore().baseParams.typeId = "NULL";
 	
 	/** ****************ddGrid panel end************ */
 
