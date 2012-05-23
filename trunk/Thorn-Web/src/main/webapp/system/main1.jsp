@@ -1,21 +1,17 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<jsp:include page="/springTag/header.jmt"></jsp:include>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<jsp:include page="../reference/meta.jsp"></jsp:include>
+		<title>Home - Page</title>
+	</head>
 <%
 	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";	
 %>
-	<div id="header">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0">
-			<tr>
-		   		<td width="664"><img src="<%=path %>/resources/images/local/title-a1.jpg" width="664" height="67" /></td>
-		    	<td background="<%=path %>/resources/images/local/title-a2.jpg">&nbsp;</td>
-		    	<td width="372"><img src="<%=path %>/resources/images/local/title-a3.jpg" width="372" height="67" /></td>
-		  	</tr>
-		</table>
-	</div>
+	<jsp:include page="../reference/core.jsp"></jsp:include>
 
-<script type="text/javascript" src="<%=path %>/plugins/local/theme.js" ></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 	var tabNum = 0;
 	
 	Ext.onReady(function() {
@@ -172,8 +168,6 @@
 				html : "this is the title"
 			} */]
 		});
-		
-		completePage();
 	});
 
 	function logout() {
@@ -193,5 +187,17 @@
 		});
 	}
 </script>
+
+	<body>
+		<div id="header">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+			   		<td width="664"><img src="<%=path %>/resources/images/local/title-a1.jpg" width="664" height="67" /></td>
+			    	<td background="<%=path %>/resources/images/local/title-a2.jpg">&nbsp;</td>
+			    	<td width="372"><img src="<%=path %>/resources/images/local/title-a3.jpg" width="372" height="67" /></td>
+			  	</tr>
+			</table>
+		</div>
 	
-<jsp:include page="../reference/footer.jsp"></jsp:include>
+	</body>
+</html>
