@@ -1,26 +1,31 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<jsp:include page="/springTag/header.jmt"></jsp:include>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<jsp:include page="reference/meta.jsp"></jsp:include>
+		<title>SYS - Login</title>
+	</head>
+	<jsp:include page="reference/core.jsp"></jsp:include>
 
-<style>
-<!--
-body {
-	background-color: #4E79B2;
-}
 
-.error {
-	color: red;
-	padding-left: 120px;
-	padding-top: 2px;
-}
--->
-</style>
+	<style>
+	<!--
+	body {
+		background-color: #4E79B2;
+	}
+	
+	.error {
+		color: red;
+		padding-left: 120px;
+		padding-top: 2px;
+	}
+	-->
+	</style>
 
-<script type="text/javascript">
 
-document.title = "SYS - Login";
-
-var iSerror = '${param.error}';
-var error = '${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}';
+	<script type="text/javascript">
+	var iSerror = '${param.error}';
+	var error = '${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}';
 	var userName = '${sessionScope['SPRING_SECURITY_LAST_USERNAME']}';
 	var loginUrl = sys.path + "/j_spring_security_check";
 	var indexUrl = sys.path + "/system/main.jsp";
@@ -161,8 +166,6 @@ var error = '${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}';
 			}
 		}
 		
-		completePage();
-		
 	});
 
 	function refresh() {
@@ -170,4 +173,8 @@ var error = '${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}';
 	}
 
 </script>
-<jsp:include page="reference/footer.jsp"></jsp:include>
+
+	<body>
+		
+	</body>
+</html>
