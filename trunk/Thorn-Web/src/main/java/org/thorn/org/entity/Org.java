@@ -33,7 +33,7 @@ public class Org implements Serializable {
 	
 	private String area;
 	
-	private Integer sortNum;
+	private int sortNum;
 
 	public Integer getOrgId() {
 		return orgId;
@@ -115,11 +115,11 @@ public class Org implements Serializable {
 		this.area = area;
 	}
 
-	public Integer getSortNum() {
+	public int getSortNum() {
 		return sortNum;
 	}
 
-	public void setSortNum(Integer sortNum) {
+	public void setSortNum(int sortNum) {
 		this.sortNum = sortNum;
 	}
 	
