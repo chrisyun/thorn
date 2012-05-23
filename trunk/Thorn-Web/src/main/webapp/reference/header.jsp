@@ -45,7 +45,7 @@ if(auth != null) {
 		top: 0;
 		width: 100%;
 		height: 100%;
-		z-index: 20000;
+		z-index: 20001;
 		background-color: white;
 	}
 	
@@ -54,7 +54,7 @@ if(auth != null) {
 		left: 45%;
 		top: 40%;
 		padding: 2px;
-		z-index: 20001;
+		z-index: 20002;
 		height: auto;
 	}
 	
@@ -103,8 +103,7 @@ if(auth != null) {
         <script type="text/javascript" src="<%=path %>/plugins/local/validateUtils.js" ></script>
         <script type="text/javascript" src="<%=path %>/plugins/local/windowUtils.js" ></script>
         <script type="text/javascript" src="<%=path %>/plugins/local/gridUtils.js" ></script>
-        <script type="text/javascript" src="<%=path %>/plugins/local/ajaxUtils.js" ></script>
-        
+        <script type="text/javascript" src="<%=path %>/plugins/local/formUtils.js" ></script>
         
         
         <script type="text/javascript">
