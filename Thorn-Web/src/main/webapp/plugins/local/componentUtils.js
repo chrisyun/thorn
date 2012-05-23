@@ -19,6 +19,22 @@ function getQueryBtn(queryHandler) {
 	return queryBtn
 }
 
+function getHidden(id, value) {
+	var txt = new Object();
+
+	txt.id = id;
+	txt.xtype = "hidden";
+	
+	if(!Ext.isEmpty(value)) {
+		txt.value = value;
+	}
+	
+	return txt;
+}
+
+function setTextReadOnly(component) {
+	component.el.dom.readOnly = true;
+}
 
 function getText(id, text, width) {
 	var txt = new Object();
@@ -101,11 +117,11 @@ function getComboBox(id, text, width, array, isReadonly) {
 
 function getCheckbox(id, text, isChecked) {
 	var checkbox = new Object();
-	
+
 	checkbox.xtype = "checkbox";
 	checkbox.boxLabel = text;
 	checkbox.id = id;
-	checkbox.checked  = isChecked || false;
-	
+	checkbox.checked = isChecked || false;
+
 	return checkbox;
 }

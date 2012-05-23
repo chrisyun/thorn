@@ -52,3 +52,7 @@ FormUtil.prototype.getPanel = function() {
 FormUtil.prototype.getForm = function() {
 	return this.panel.getForm();
 }
+
+FormUtil.prototype.findById = function(id) {
+	return this.panel.findById(id);
+}

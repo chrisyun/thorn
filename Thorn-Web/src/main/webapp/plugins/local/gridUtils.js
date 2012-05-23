@@ -104,7 +104,7 @@ GridUtil.prototype.getGrid = function() {
 	return this.grid;
 }
 
-Grid.prototype.getStore = function() {
+GridUtil.prototype.getStore = function() {
 	return this.dataStore;
 }
 
