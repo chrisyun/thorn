@@ -18,11 +18,14 @@
 <script type="text/javascript">
 	var tabNum = 0;
 	
+	var leftTreeUrl = sys.basePath + "/resource/getLeftTree.jmt";
+	var logoutUrl = sys.path + "/j_spring_security_logout";
+	
 	Ext.onReady(function() {
 		Ext.QuickTips.init();
 
 		var loader = new Ext.tree.TreeLoader( {
-			url : sys.basePath + "/resource/getLeftTree.jmt"
+			url : leftTreeUrl
 		});
 		loader.on("beforeload", function(loader, node) {
 			loader.baseParams.pid = node.id;
@@ -186,8 +189,7 @@
 			icon : Ext.Msg.WARNING,
 			fn : function(btn) {
 				if ('yes' == btn) {
-					window.location.href = sys.path
-							+ "/j_spring_security_logout";
+					window.location.href = logoutUrl;
 				}
 			}
 		});
