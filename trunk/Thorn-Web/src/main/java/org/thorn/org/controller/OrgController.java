@@ -60,7 +60,7 @@ public class OrgController extends BaseController {
 		return tree;
 	}
 
-	@RequestMapping("/org/saveOrModify")
+	@RequestMapping("/org/saveOrModifyOrg")
 	@ResponseBody
 	public Status saveOrModifyOrg(Org org, String opType) {
 		Status status = new Status();
@@ -84,7 +84,7 @@ public class OrgController extends BaseController {
 		return status;
 	}
 
-	@RequestMapping("/org/delete")
+	@RequestMapping("/org/deleteOrg")
 	@ResponseBody
 	public Status deleteOrg(String ids) {
 		Status status = new Status();
