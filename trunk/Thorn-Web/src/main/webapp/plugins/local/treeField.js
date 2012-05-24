@@ -113,7 +113,7 @@ Ext.form.TreeField = Ext.extend(Ext.form.TriggerField,  {
      */  
     treeRootConfig : {
         id : ' ',
-        text : '全国',
+        text : 'ROOT',
         draggable:false
     },   
     /**  
