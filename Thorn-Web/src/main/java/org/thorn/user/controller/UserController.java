@@ -34,7 +34,7 @@ public class UserController extends BaseController {
 	@Qualifier("userService")
 	private IUserService service;
 
-	@RequestMapping("/user/saveOrModify")
+	@RequestMapping("/user/saveOrModifyUser")
 	@ResponseBody
 	public Status saveOrModifyUser(User user, String opType) {
 		Status status = new Status();
@@ -58,7 +58,7 @@ public class UserController extends BaseController {
 		return status;
 	}
 
-	@RequestMapping("/user/delete")
+	@RequestMapping("/user/deleteUser")
 	@ResponseBody
 	public Status deleteUser(String ids) {
 		Status status = new Status();
@@ -75,7 +75,7 @@ public class UserController extends BaseController {
 		return status;
 	}
 
-	@RequestMapping("/user/disabled")
+	@RequestMapping("/user/disabledUser")
 	@ResponseBody
 	public Status disabledUser(String ids, String isDisabled) {
 		Status status = new Status();
