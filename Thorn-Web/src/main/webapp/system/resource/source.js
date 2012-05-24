@@ -265,7 +265,8 @@ Ext.onReady(function() {
 
 		store.baseParams.sourceCode = code;
 		store.baseParams.sourceName = name;
-
+		store.baseParams.pid = "";
+		
 		store.load( {
 			params : {
 				start : 0,

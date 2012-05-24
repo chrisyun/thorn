@@ -347,7 +347,8 @@ Ext.onReady(function() {
 		store.baseParams.orgCode = code;
 		store.baseParams.orgName = name;
 		store.baseParams.orgType = type;
-
+		store.baseParams.pid = "";
+		
 		store.load( {
 			params : {
 				start : 0,

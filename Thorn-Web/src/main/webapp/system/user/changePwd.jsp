@@ -1,14 +1,12 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="thorn" uri="/thorn"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-	<head>
-		<jsp:include page="../../reference/meta.jsp"></jsp:include>
-		<title>User - Manage</title>
-	</head>
-	<jsp:include page="../../reference/core.jsp"></jsp:include>
-	<script type="text/javascript" src="userPwd.js"></script>
-	<script type="text/javascript">
+<jsp:include page="/springTag/header.jmt"></jsp:include>
+
+<script type="text/javascript" src="userPwd.js"></script>
+<script type="text/javascript">
+
+	document.title = "Change - MyPassword";
+	
 	Ext.onReady(function() {
 		var Pwd_Obj = new UserPwd("my");
 		
@@ -26,11 +24,8 @@
 			layout : "border",
 			items : [panel]
 		});
-		
+		completePage();
 	});	
-		
-	</script>
-	<body>
-
-	</body>
-</html>
+	
+</script>
+<jsp:include page="../../reference/footer.jsp"></jsp:include>
