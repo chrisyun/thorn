@@ -148,9 +148,11 @@ public class UserServiceImpl implements IUserService {
 		
 		List<String> list = LocalStringUtils.splitStr2Array(userIds);
 		
-		for (String id : list) {
-			filter.put("userId", id);
-			userDao.saveUserRole(filter);
+		if(list != null && list.size() > 0) {
+			for (String id : list) {
+				filter.put("userId", id);
+				userDao.saveUserRole(filter);
+			}
 		}
 	}
 
@@ -195,9 +197,11 @@ public class UserServiceImpl implements IUserService {
 		
 		List<String> list = LocalStringUtils.splitStr2Array(roleCodes);
 		
-		for (String id : list) {
-			filter.put("roleCode", id);
-			userDao.saveUserRole(filter);
+		if(list != null && list.size() > 0) {
+			for (String id : list) {
+				filter.put("roleCode", id);
+				userDao.saveUserRole(filter);
+			}
 		}
 	}
 

@@ -67,12 +67,14 @@ public class RoleServiceImpl implements IRoleService {
 		
 		roleDao.deleteRoleSource(roleCode);
 		
-		Map<String, String> rs = new HashMap<String, String>();
-		for(String sourceCode : list) {
-			rs.put("roleCode", roleCode);
-			rs.put("sourceCode", sourceCode);
-			
-			roleDao.saveRoleSource(rs);
+		if(list != null && list.size() > 0) {
+			Map<String, String> rs = new HashMap<String, String>();
+			for(String sourceCode : list) {
+				rs.put("roleCode", roleCode);
+				rs.put("sourceCode", sourceCode);
+				
+				roleDao.saveRoleSource(rs);
+			}
 		}
 	}
 
