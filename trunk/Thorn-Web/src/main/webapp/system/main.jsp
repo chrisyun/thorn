@@ -17,6 +17,8 @@
 <script type="text/javascript">
 	var tabNum = 0;
 	
+	document.title = "Home - Page";
+	
 	var leftTreeUrl = sys.path + "/resource/getLeftTree.jmt";
 	var logoutUrl = sys.path + "/j_spring_security_logout";
 	
