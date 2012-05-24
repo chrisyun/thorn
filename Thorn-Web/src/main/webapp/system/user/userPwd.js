@@ -19,8 +19,8 @@ var UserPwd = function(_type) {
 		border : false
 	});
 	this.form.addComp(getPwdText("newPwd", "密码", 200), 1.0, false);
-	this.form
-			.addComp(getRPwdText("newrPwd", "重复密码", 200, "newPwd"), 1.0, false);
+	this.form.addComp(getRPwdText("newrPwd", "重复密码", 200, "newPwd"),
+		1.0, false);
 	this.form.addComp(getHidden("userId"), 0, true);
 
 	var win_attr = {
@@ -48,7 +48,7 @@ var UserPwd = function(_type) {
 		var callBack_obj = new Object();
 		callBack_obj.win = this;
 		var ajaxClass = new AjaxUtil(pwdUrl);
-		ajaxClass.submitForm(form, null, true, callBack_obj, function(obj) {
+		ajaxClass.submit(form, null, true, callBack_obj, function(obj) {
 			if (type != "my") {
 				obj.win.hide();
 			}
