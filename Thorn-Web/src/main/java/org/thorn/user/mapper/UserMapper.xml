@@ -39,7 +39,7 @@
 					 or U.USERACCOUNT = #{idOrAccount,jdbcType=VARCHAR})
       		</if>
 			<if test="userName != null and userName != ''">
-				and U.UNAME like '%' || #{userName,jdbcType=VARCHAR} || '%'
+				and U.UNAME like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
       		</if>
 			<if test="sn != null and sn != ''">
 				and U.SN = #{sn,jdbcType=VARCHAR}
@@ -182,7 +182,7 @@
 		where R.USERID = U.USERID 
 		and R.ROLECODE = #{roleCode,jdbcType=VARCHAR} 
 		<if test="userName != null and userName != ''">
-			and U.UNAME like '%' || #{userName,jdbcType=VARCHAR} || '%' 
+			and U.UNAME like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
       	</if>
      	<if test="idOrAccount != null and idOrAccount != ''">
 			and (U.USERID = #{idOrAccount,jdbcType=VARCHAR} 
@@ -200,7 +200,7 @@
 		where R.USERID = U.USERID 
 		and R.ROLECODE = #{roleCode,jdbcType=VARCHAR}
 		<if test="userName != null and userName != ''">
-			and U.UNAME like '%' || #{userName,jdbcType=VARCHAR} || '%'
+			and U.UNAME like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
       	</if>
      	<if test="idOrAccount != null and idOrAccount != ''">
 			and (U.USERID = #{idOrAccount,jdbcType=VARCHAR}
