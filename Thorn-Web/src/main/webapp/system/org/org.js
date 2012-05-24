@@ -59,7 +59,7 @@ Ext.onReady(function() {
 	org_grid.setGridPanel(grid_attr);
 	/** ****************org Grid panel end************ */
 
-	var grid = org_grid.getGridPanel();
+	var grid = org_grid.getGrid();
 	var store = org_grid.getStore();
 
 	/** ****************org tree setting start************ */
@@ -150,7 +150,7 @@ Ext.onReady(function() {
 		org_form.findById("opType").setValue(
 				Configuration.opType.SAVE);
 
-		Ext.getCmp("parentOrg_show").setValue(currentActiveNode);
+		Ext.getCmp("show_parentOrg").setValue(currentActiveNode);
 		
 		// 自动将上级区域信息传递给下级组织？
 		// 将所属组织设置为不可选
@@ -205,7 +205,7 @@ Ext.onReady(function() {
 						pid : parentOrg
 					}
 				};
-				Ext.getCmp("parentOrg_show").setValue(parentOrgNode);
+				Ext.getCmp("show_parentOrg").setValue(parentOrgNode);
 			});
 		}
 	}
@@ -244,7 +244,7 @@ Ext.onReady(function() {
 			if (opType == Configuration.opType.SAVE) {
 				thisForm.getForm().reset();
 				thisForm.findById("opType").setValue(opType);
-				Ext.getCmp("parentOrg_show")
+				Ext.getCmp("show_parentOrg")
 						.setValue(currentActiveNode);
 			} else {
 				obj.win.hide();
@@ -278,7 +278,7 @@ Ext.onReady(function() {
 				opType : Configuration.opType.MODIFY
 			};
 			org_form.getForm().setValues(values);
-			Ext.getCmp("parentOrg_show").setValue(parentNode);
+			Ext.getCmp("show_parentOrg").setValue(parentNode);
 		});
 	}
 
@@ -324,8 +324,13 @@ Ext.onReady(function() {
 				var ajaxClass = new AjaxUtil(orgDeleteUrl);
 				ajaxClass.request(params, true, null, function(obj) {
 					grid.getStore().reload();
-					orgTree.getLoader().load(currentActiveNode);
-					currentActiveNode.expand();
+					
+					//避免该节点已经被删导致无法加载的问题
+					try {
+						orgTree.getLoader().load(currentActiveNode);
+						currentActiveNode.expand();
+					} catch(e) {}
+					
 				});
 			}
 		});
@@ -361,8 +366,8 @@ Ext.onReady(function() {
 					region : "center",
 					layout : "border",
 					split : true,
-					items : [ query_form.getFormPanel(),
-							org_grid.getGridPanel() ]
+					items : [ query_form.getPanel(),
+							org_grid.getGrid() ]
 				} ]
 	});
 

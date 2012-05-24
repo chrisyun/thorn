@@ -2,8 +2,9 @@
 <%@ taglib prefix="thorn" uri="/thorn"%>
 <jsp:include page="/springTag/header.jmt"></jsp:include>
 
-<script type="text/javascript" src="org.js"></script>
+<script type="text/javascript" src="../../plugins/local/treeField.js"></script>
 <script type="text/javascript" src="orgTree.js"></script>
+<script type="text/javascript" src="org.js"></script>
 <script type="text/javascript">
 
 	document.title = "Org - Manage";
