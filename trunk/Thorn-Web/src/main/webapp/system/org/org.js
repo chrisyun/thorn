@@ -93,7 +93,7 @@ Ext.onReady(function() {
 		store.reload( {
 			params : {
 				start : 0,
-				limit : pageSize
+				limit : org_grid.pageSize
 			}
 		});
 	};
@@ -339,16 +339,16 @@ Ext.onReady(function() {
 	function onSubmitQueryHandler() {
 		var thisForm = query_form.getForm();
 		var store = grid.getStore();
-
+		
 		var name = Ext.getCmp("query_name").getValue();
 		var code = Ext.getCmp("query_code").getValue();
-		var type = Ext.getCmp("query_type_show").getValue();
+		var type = Ext.getCmp("show_query_type").getValue();
 
 		store.baseParams.orgCode = code;
 		store.baseParams.orgName = name;
 		store.baseParams.orgType = type;
 
-		store.reload( {
+		store.load( {
 			params : {
 				start : 0,
 				limit : org_grid.pageSize

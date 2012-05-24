@@ -325,10 +325,6 @@ Ext.onReady(function() {
 		var thisForm = query_form.getForm();
 		var store = grid_dt.getStore();
 
-		if (store.baseParams == null) {
-			store.baseParams = {};
-		}
-
 		var cname = Ext.getCmp("query_cname").getValue();
 		var ename = Ext.getCmp("query_ename").getValue();
 		

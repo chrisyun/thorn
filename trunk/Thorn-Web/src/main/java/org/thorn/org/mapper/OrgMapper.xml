@@ -36,7 +36,7 @@
 				and O.PARENTORG = #{parentOrg,jdbcType=VARCHAR}
       		</if>
       		<if test="showName != null and showName != ''">
-				and O.SHOWNAME like '%' || #{showName,jdbcType=VARCHAR} || '%'
+				and O.SHOWNAME like CONCAT('%',#{showName,jdbcType=VARCHAR},'%')
       		</if>
       		<if test="orgType != null and orgType != ''">
 				and O.ORGTYPE = #{orgType,jdbcType=VARCHAR}

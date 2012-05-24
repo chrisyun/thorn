@@ -21,8 +21,7 @@
 				and r.ROLECODE = #{roleCode,jdbcType=VARCHAR}
       		</if>
 			<if test="roleName != null and roleName != ''">
-				and r.ROLENAME like '%' || #{roleName,jdbcType=VARCHAR} ||
-				'%'
+				and r.ROLENAME like CONCAT('%',#{roleName,jdbcType=VARCHAR},'%')
       		</if>
 			<if test="isDisabled != null and isDisabled != ''">
 				and r.ISDISABLED = #{isDisabled,jdbcType=VARCHAR}

@@ -41,7 +41,7 @@
 				AND ENAME = #{ename,jdbcType=VARCHAR}
       		</if>
 			<if test="cname != null and cname != ''">
-				AND CNAME = #{cname,jdbcType=VARCHAR}
+				AND CNAME like CONCAT('%',#{cname,jdbcType=VARCHAR},'%')
       		</if>
 		</where>
 	</sql>

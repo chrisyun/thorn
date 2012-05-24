@@ -96,7 +96,7 @@ function getTextArea(id, text, width, height) {
 function getComboBox(id, text, width, array, isReadonly) {
 	var select = new Object();
 
-	select.id = "_show" + id;
+	select.id = "show_" + id;
 	select.hiddenName = id;
 	select.width = width;
 	select.fieldLabel = text;

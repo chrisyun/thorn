@@ -169,7 +169,7 @@ Ext.onReady(function() {
 			parentSource : selectedRecord.get("parentSource"),
 			isShow : selectedRecord.get("isShow"),
 			sortNum : selectedRecord.get("sortNum"),
-			opType : Configuration.opType.modify
+			opType : Configuration.opType.MODIFY
 		};
 		source_form.getForm().setValues(values);
 	}
@@ -181,6 +181,13 @@ Ext.onReady(function() {
 			Ext.Msg.alert("提示信息", "请填写完整的资源信息!");
 			return;
 		}
+		
+		var isLeaf = source_form.findById("show_isleaf").getValue();
+		var url = source_form.findById("sourceUrl").getValue();
+		if(Ext.isEmpty(url) && isLeaf == Configuration.yOrN.YES) {
+			Ext.Msg.alert("提示信息", "叶子节点必须填写菜单访问入口地址!");
+			return ;
+		}
 
 		var ajaxClass = new AjaxUtil(sourceSubmitUrl);
 
@@ -189,7 +196,7 @@ Ext.onReady(function() {
 		callBack_obj.win = source_win;
 		callBack_obj.form = source_form;
 
-		ajaxClass.submitForm(form, null, true, callBack_obj, function(obj) {
+		ajaxClass.submit(form, null, true, callBack_obj, function(obj) {
 			obj.grid.getStore().reload();
 			var thisForm = obj.form;
 			var opType = thisForm.findById("opType").getValue();
@@ -259,10 +266,10 @@ Ext.onReady(function() {
 		store.baseParams.sourceCode = code;
 		store.baseParams.sourceName = name;
 
-		store.reload( {
+		store.load( {
 			params : {
 				start : 0,
-				limit : grid.pageSize
+				limit : grid_rs.pageSize
 			}
 		});
 	}
@@ -275,7 +282,7 @@ Ext.onReady(function() {
 			region : "center",
 			layout : "border",
 			split : true,
-			items : [ query_form.getPanel(), grid.getGridPanel() ]
+			items : [ query_form.getPanel(), grid_rs.getGrid() ]
 		} ]
 	});
 
@@ -283,7 +290,7 @@ Ext.onReady(function() {
 		params : {
 			pid : "0",
 			start : 0,
-			limit : grid.pageSize
+			limit : grid_rs.pageSize
 		}
 	});
 	completePage();

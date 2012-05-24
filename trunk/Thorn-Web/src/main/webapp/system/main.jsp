@@ -36,7 +36,7 @@
 			rootVisible: false,
 		 	loader: loader,
 			root : new Ext.tree.AsyncTreeNode({
-				text : "系统管理",
+				text : "系统菜单",
 				id: 'SYS',
 				leaf: false
 			})
@@ -48,7 +48,7 @@
 			rootVisible: false,
 			loader: loader,
 			root : new Ext.tree.AsyncTreeNode({
-				text : "导航菜单",
+				text : "应用菜单",
 				id: 'NAV',
 				leaf: false
 			})

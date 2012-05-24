@@ -26,19 +26,19 @@
 		<where>
 			<if test="sourceCode != null and sourceCode != ''">
 				AND s.SOURCECODE = #{sourceCode,jdbcType=VARCHAR}
-      </if>
+      		</if>
 			<if test="sourceName != null and sourceName != ''">
-				AND s.SOURCENAME like '%' || #{sourceName,jdbcType=VARCHAR} || '%'
-      </if>
+				AND s.SOURCENAME like CONCAT('%',#{sourceName,jdbcType=VARCHAR},'%')
+     		 </if>
 			<if test="isleaf != null and isleaf != ''">
 				AND s.ISLEAF = #{isleaf,jdbcType=VARCHAR}
-      </if>
+     	 	</if>
 			<if test="isShow != null and isShow != ''">
 				AND s.ISSHOW = #{isShow,jdbcType=VARCHAR}
-      </if>
+      		</if>
 			<if test="parentSource != null and parentSource != ''">
 				AND s.PARENTSOURCE = #{parentSource,jdbcType=VARCHAR}
-      </if>
+      		</if>
 		</where>
 	</sql>
 
