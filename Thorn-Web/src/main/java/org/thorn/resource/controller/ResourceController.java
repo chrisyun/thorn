@@ -151,9 +151,9 @@ public class ResourceController extends BaseController {
 		return json;
 	}
 	
-	@RequestMapping("/resource/saveOrModify")
+	@RequestMapping("/resource/saveOrModifySource")
 	@ResponseBody
-	public Status saveOrModifyOrg(Resource source, String opType) {
+	public Status saveOrModifySource(Resource source, String opType) {
 		Status status = new Status();
 
 		try {
@@ -175,9 +175,9 @@ public class ResourceController extends BaseController {
 		return status;
 	}
 	
-	@RequestMapping("/resource/delete")
+	@RequestMapping("/resource/deleteSource")
 	@ResponseBody
-	public Status deleteResource(String ids) {
+	public Status deleteSource(String ids) {
 		Status status = new Status();
 
 		try {
@@ -194,7 +194,7 @@ public class ResourceController extends BaseController {
 	
 	@RequestMapping("/resource/getSourcePage")
 	@ResponseBody
-	public Page<Resource> getOrgPage(long start, long limit, String sort,
+	public Page<Resource> getSourcePage(long start, long limit, String sort,
 			String dir, String pid, String sourceCode, String sourceName) {
 		Page<Resource> page = new Page<Resource>();
 
