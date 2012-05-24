@@ -112,7 +112,7 @@ Ext.onReady(function() {
 				store.reload( {
 					params : {
 						start : 0,
-						limit : grid.pageSize
+						limit : user_grid.pageSize
 					}
 				});
 			};
@@ -149,7 +149,7 @@ Ext.onReady(function() {
 			user_form.addComp(getNumberText("sortNum", "排序号", 150), 0.5, true);
 			user_form.addComp(getHidden("opType"), 0, true);
 
-			var user_win = new OpenWindow( {
+			var user_win = new WindowUtil( {
 				width : 600,
 				height : 300
 			}, user_form.getPanel(), saveOrModify);
@@ -168,7 +168,7 @@ Ext.onReady(function() {
 			}, role_form.getPanel(), saveUserRoleHandler);
 
 			function saveUserRoleHandler() {
-				var thisForm = role_form.getFormPanel();
+				var thisForm = role_form.getPanel();
 
 				var roleArray = thisForm.findByType("checkbox");
 				var roleIds = "";
@@ -181,7 +181,7 @@ Ext.onReady(function() {
 				var selectedRecord = grid.getSelectionModel().getSelected();
 				var userId = selectedRecord.get("userId");
 
-				var ajaxClass = new AjaxUtil(usersaveRoleUrl);
+				var ajaxClass = new AjaxUtil(userSaveRoleUrl);
 				ajaxClass.request( {
 					userId : userId,
 					roleCodes : roleIds
@@ -198,11 +198,11 @@ Ext.onReady(function() {
 				var selectedRecord = grid.getSelectionModel().getSelected();
 				var userId = selectedRecord.get("userId");
 
-				var thisForm = role_form.getFormPanel();
+				var thisForm = role_form.getPanel();
 				thisForm.removeAll(true);
 
-				var ajaxClass = new CommonAjax(getUserRoleUrl);
-				ajaxClass.requestData( {
+				var ajaxClass = new AjaxUtil(getUserRoleUrl);
+				ajaxClass.getData( {
 					userId : userId
 				}, null, function(obj, relationArray) {
 					for ( var i = 0; i < relationArray.length; i++) {
@@ -286,7 +286,7 @@ Ext.onReady(function() {
 				callBack_obj.win = user_win;
 				callBack_obj.form = user_form;
 				var ajaxClass = new AjaxUtil(userSubmitUrl);
-				ajaxClass.submitForm(form, null, true, callBack_obj, function(
+				ajaxClass.submit(form, null, true, callBack_obj, function(
 						obj) {
 					obj.grid.getStore().reload();
 					var thisForm = obj.form;
@@ -406,7 +406,8 @@ Ext.onReady(function() {
 				store.baseParams.userName = name;
 				store.baseParams.userAccount = code;
 				store.baseParams.cumail = mail;
-
+				store.baseParams.orgCode = "";
+				
 				store.load( {
 					params : {
 						start : 0,

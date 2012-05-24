@@ -1,21 +1,17 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="thorn" uri="/thorn"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-	<head>
-		<jsp:include page="../../reference/meta.jsp"></jsp:include>
-		<title>Role - Manage</title>
-	</head>
-	<jsp:include page="../../reference/core.jsp"></jsp:include>
-	<script type="text/javascript" src="../../plugins/local/tree3.js"></script>
-	<script type="text/javascript" src="role.js"></script>
-	<script type="text/javascript">
-		var defaultRole = <thorn:dd  typeId="DEFAULTROLE" />;
-		var defaultRoleRender = function(role) {
-			return Render.dictRender(defaultRole, role);
-		}
-	</script>
-	<body>
+<jsp:include page="/springTag/header.jmt"></jsp:include>
 
-	</body>
-</html>
+<script type="text/javascript" src="../../plugins/local/tree3.js"></script>
+<script type="text/javascript" src="role.js"></script>
+<script type="text/javascript">
+
+	document.title = "Role - Manage";
+	
+	var defaultRole = <thorn:dd  typeId="DEFAULTROLE" />;
+	var defaultRoleRender = function(role) {
+		return Render.dictRender(defaultRole, role);
+	}
+	
+</script>
+<jsp:include page="../../reference/footer.jsp"></jsp:include>
