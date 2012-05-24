@@ -36,9 +36,9 @@ public class RoleController extends BaseController {
 	@Qualifier("roleService")
 	private IRoleService service;
 
-	@RequestMapping("/role/delete")
+	@RequestMapping("/role/deleteRole")
 	@ResponseBody
-	public Status deleteResource(String ids) {
+	public Status deleteRole(String ids) {
 		Status status = new Status();
 
 		try {
@@ -142,9 +142,9 @@ public class RoleController extends BaseController {
 		return status;
 	}
 
-	@RequestMapping("/role/saveOrModify")
+	@RequestMapping("/role/saveOrModifyRole")
 	@ResponseBody
-	public Status saveOrModifyOrg(Role role, String opType) {
+	public Status saveOrModifyRole(Role role, String opType) {
 		Status status = new Status();
 
 		try {
