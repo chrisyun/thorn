@@ -58,7 +58,7 @@ function getOrgTreeSelect(id, width, isReadonly) {
 
 	var orgSel = new Object();
 
-	orgSel.id = "show" + id;
+	orgSel.id = "show_" + id;
 	orgSel.hiddenName = id;
 	orgSel.width = width;
 	orgSel.fieldLabel = "所属组织";
