@@ -1,5 +1,5 @@
 var orgPageUrl = sys.path + "/org/getOrgPage.jmt";
-var orgSaveOrModifyUrl = sys.path + "/org/saveOrModifyOrg.jmt";
+var orgSubmitUrl = sys.path + "/org/saveOrModifyOrg.jmt";
 var orgDeleteUrl = sys.path + "/org/deleteOrg.jmt";
 var orgQueryUrl = sys.path + "/org/getOrg.jmt";
 
@@ -218,7 +218,7 @@ Ext.onReady(function() {
 			return;
 		}
 
-		var ajaxClass = new AjaxUtil(orgSaveOrModifyUrl);
+		var ajaxClass = new AjaxUtil(orgSubmitUrl);
 
 		var callBack_obj = new Object();
 		callBack_obj.grid = grid;
