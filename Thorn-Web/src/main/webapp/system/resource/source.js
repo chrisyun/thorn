@@ -181,12 +181,12 @@ Ext.onReady(function() {
 			Ext.Msg.alert("提示信息", "请填写完整的资源信息!");
 			return;
 		}
-		
+
 		var isLeaf = source_form.findById("show_isleaf").getValue();
 		var url = source_form.findById("sourceUrl").getValue();
-		if(Ext.isEmpty(url) && isLeaf == Configuration.yOrN.YES) {
+		if (Ext.isEmpty(url) && isLeaf == Configuration.yOrN.YES) {
 			Ext.Msg.alert("提示信息", "叶子节点必须填写菜单访问入口地址!");
-			return ;
+			return;
 		}
 
 		var ajaxClass = new AjaxUtil(sourceSubmitUrl);
